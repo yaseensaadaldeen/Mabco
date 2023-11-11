@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.Product.ProductsFragment"
+    android:layout_gravity="top"
+    android:background="@color/lighGray"
+    android:paddingBottom="60dp"
+    android:orientation="horizontal">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="7dp"
+        android:id="@+id/brands_slider"
+        android:layout_width="match_parent"
+        android:layout_gravity="top"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/brand_item"
+
+        />
+
+<GridLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/brands_slider"
+    android:rowCount="@integer/material_motion_duration_medium_2"
+    android:id="@+id/products_grid"
+
+    >
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+
+        android:id="@+id/brand_products_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/brands_slider"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/product_item_home"
+        app:spanCount="2"/>
+</GridLayout>
+</RelativeLayout>

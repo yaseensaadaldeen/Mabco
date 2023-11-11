@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mobile_item_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_margin="5dp"
+    android:elevation="5dp"
+    android:minWidth="25dp"
+    android:orientation="horizontal"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/colorCard"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@color/white"
+        app:cardCornerRadius="250dp"
+        app:cardForegroundColor="@android:color/transparent"
+        app:strokeColor="@color/holo_red_dark"
+        app:strokeWidth="1dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            app:cardCornerRadius="250dp">
+
+            <ImageView
+                android:id="@+id/colorImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/holo_red_dark"
+                android:scaleType="fitXY" />
+        </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

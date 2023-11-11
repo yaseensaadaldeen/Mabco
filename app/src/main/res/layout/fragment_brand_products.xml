@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.Product.ProductsFragment"
+    android:layout_gravity="top"
+    android:background="@color/lighGray"
+    android:paddingBottom="80dp" >
+
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:layout_marginTop="7dp"
+        android:id="@+id/offer_products_slider"
+        android:layout_width="match_parent"
+        android:layout_gravity="top"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/product_brand_item"
+
+        />
+
+</LinearLayout>

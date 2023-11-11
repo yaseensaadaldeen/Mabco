@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="lighGray">#eeee</color>
+
+    <!--    <color name="colorPrimary">#ff33b5e5</color>-->
+    <color name="colorPrimary">#af0491cf</color>
+    <color name="colorPrimaryDark">#a71f9add</color>
+    <color name="colorPrimaryDarkNoAlpha">#1f9add</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="colorAccent">#ff33b5e5</color>
+    <color name="tabMedium">#2B2B2B</color>
+    <color name="tabDark">#000000</color>
+    <color name="tabTransparent">#10ffffff</color>
+
+    <color name="list_item_title">#fff</color>
+    <color name="list_background">#303030</color>
+    <color name="list_background_pressed">#992416</color>
+    <color name="list_divider">#272727</color>
+    <color name="counter_text_bg">#626262</color>
+    <color name="counter_text_color">#c5c4c4</color>
+    <color name="off_white">#e0e0e0</color>
+    <color name="no1">#ff2f3747</color>
+    <color name="no2">#ff1e2024</color>
+    <color name="grey05">#ACA899</color>
+
+    <color name="cast_libraries_material_featurehighlight_outer_highlight_default_color">#2196F3
+    </color>
+
+    <color name="nobghometxt2">#af0491cf</color>
+    <color name="backrooms2">#e5e5e5</color>
+    <color name="white2">#FFFFFFFF</color>
+    <color name="gray">#595959</color>
+
+
+    <!-- A light Holo shade of blue -->
+    <color name="holo_blue_light">#16e1de</color>
+    <!-- A light Holo shade of green -->
+    <color name="holo_green_light">#ff99cc00</color>
+    <!-- A light Holo shade of red -->
+    <color name="holo_red_light">#ffff4444</color>
+    <!-- A dark Holo shade of blue -->
+    <color name="holo_blue_dark">#ff0099cc</color>
+    <!-- A dark Holo shade of green -->
+    <color name="holo_green_dark">#ff669900</color>
+    <!-- A dark Holo shade of red -->
+    <color name="holo_red_dark">#ffcc0000</color>
+    <!-- A Holo shade of purple -->
+    <color name="holo_purple">#ffaa66cc</color>
+    <!-- A light Holo shade of orange -->
+    <color name="holo_orange_light">#ffffbb33</color>
+    <!-- A dark Holo shade of orange -->
+    <color name="holo_orange_dark">#ffff8800</color>
+    <!-- A really bright Holo shade of blue -->
+    <color name="holo_blue_bright">#ff00ddff</color>
+    <color name="nobghome">#ffffff</color>
+    <color name="nobghometxt">#0491cf</color>
+    <color name="nobghomeedge">#e5e5e5</color>
+    <color name="nobghomefont">#2A3D6C</color>
+    <!--    <color name="nobghome">#135ecf</color> -->
+    <color name="white">#fff</color>
+    <color name="whiter">#38495a</color>
+    <color name="textColor">#FFF</color>
+
+    <color name="backgroundAlphaColor">#adfafafa</color>
+    <color name="cyan">@color/colorAccent</color>
+    <color name="backgroundColor">#fafafa</color>
+    <color name="onlineColor">#59AE2B</color>
+    <color name="offlineColor">#E33530</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
+
+
+</resources>

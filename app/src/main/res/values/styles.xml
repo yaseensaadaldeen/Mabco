@@ -1,0 +1,246 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--        <item name="android:windowBackground">@drawable/intro</item>-->
+    </style>
+
+    <style name="app_theme" parent="android:Theme.NoTitleBar">
+        <!--        <item name="android:windowBackground">@drawable/app_background</item>-->
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+
+
+
+        -->
+
+    </style>
+
+    <!-- Application theme. -->
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/textColor</item>
+        <item name="colorControlHighlight">@color/textColor</item>
+        <item name="android:textColorHint">@color/textColor</item>
+        <item name="colorButtonNormal">@color/holo_blue_dark</item>
+
+    </style>
+
+    <style name="MyActionBarTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">#0000ff</item>
+    </style>
+
+    <style name="Theme.Main" parent="Theme.AppCompat.Light">
+        <item name="android:textStyle">bold</item>
+        <item name="android:actionBarStyle">@style/Widget.ActionBar</item>
+    </style>
+
+    <style name="Widget.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:displayOptions">showHome|showTitle|showCustom</item>
+        <!--        <item name="android:background">@drawable/app_ma</item>-->
+        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+    </style>
+
+    <style name="rafatTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="MyActionBar" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <!--        <item name="android:background">@drawable/app_ma</item>-->
+        <item name="android:displayOptions">showHome|showTitle|showCustom</item>
+        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:titleTextStyle">@style/MyActionBar.TitleTextStyle</item>
+        <item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>
+    </style>
+
+    <style name="MyActionBar.TitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:textSize">19dip</item>
+    </style>
+
+    <style name="MyActionBar.MenuTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#F0F</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:textSize">24dip</item>
+        <item name="android:fontFamily">@font/rafat</item>
+    </style>
+
+    <style name="ButtonContainer">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:background">#99000000</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ImageTitle">
+
+        <item name="android:layout_width">fill_parent</item>
+
+        <item name="android:layout_height">50dp</item>
+
+        <item name="android:layout_alignParentBottom">true</item>
+
+        <item name="android:background">#99000000</item>
+
+        <item name="android:gravity">center</item>
+
+        <item name="android:maxLines">2</item>
+
+        <item name="android:textColor">#fff</item>
+
+        <item name="android:textStyle">bold</item>
+
+        <item name="android:textSize">18dp</item>
+
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="scrollbar_style">
+        <item name="android:scrollbarAlwaysDrawVerticalTrack">false</item>
+        <item name="android:scrollbarStyle">outsideInset</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:fadeScrollbars">true</item>
+        <!--        <item name="android:scrollbarThumbVertical">@drawable/scrollablesthu</item>-->
+        <!--        <item name="android:scrollbarTrackVertical">@drawable/scrollablespa</item>-->
+        <item name="android:scrollbarSize">3dp</item>
+        <!--        <item name="android:scrollbarFadeDuration">800</item>-->
+        <!--        <item name="android:scrollbarDefaultDelayBeforeFade">500</item>-->
+        <item name="android:textSize">5sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="scrollbar_shape_style">
+        <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:fadeScrollbars">true</item>
+        <!--        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_vertical_thumb</item>-->
+        <!--        <item name="android:scrollbarTrackVertical">@drawable/scrollbar_vertical_track</item>-->
+        <item name="android:scrollbarSize">12dp</item>
+        <item name="android:scrollbarFadeDuration">2000</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">1000</item>
+    </style>
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--    <style name="SplashTheme" parent="AppTheme">-->
+    <!--        <item name="android:windowBackground">@drawable/progress_animation</item>-->
+    <!--    </style>-->
+
+    <style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="textViewLabel">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+
+    <style name="toolbar" parent="navigation_items">
+        <item name="android:shadowColor">@color/nobghometxt</item>
+        <item name="android:textSize">5sp</item>
+        <item name="android:fontFamily">@font/rafat</item>
+    </style>
+
+    <style name="myTextViewStyle">
+        <item name="android:textColor">@color/nobghometxt</item>
+        <item name="android:fontFamily">@font/rafat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+    <style name="textViewDialog">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:layout_gravity">start</item>
+
+        <item name="android:gravity">start</item>
+    </style>
+
+
+    <style name="navigation_items" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/nobghometxt</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:fontFamily">@font/rafat</item>
+        <!--<item name="android:textStyle">bold</item>-->
+    </style>
+    <!--
+
+    <style name="btm_navigation_items" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/nobghometxt</item>
+        <item name="android:fontFamily">@font/rafat</item>
+        <item name="android:textSize">16sp</item>
+        &lt;!&ndash; <item name="android:textStyle">bold </item>&ndash;&gt;
+        <item name="android:gravity">center</item>
+    </style>
+-->
+
+
+    <style name="btm_navigation_items" parent="@style/Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+        <item name="fontFamily">@font/rafat</item>
+    </style>
+
+
+    <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/rafat</item>
+    </style>
+
+    <style name="Widget.Theme.Mabco.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
+</resources>

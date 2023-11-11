@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MABCO</string>
+    <string-array name="Spinner_Content">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+    </string-array>
+    <string name="dir">
+       We  have The ability to drilling on your device cover with your name or picture of your choice
+\n
+We also have medals engraved with different names and pictures
+</string>
+    <string name="cover">
+        The ability to print on your silicon and plastic cover entirely image or decorative names
+ </string>
+    <string name="title_activity_list_view">ListViewActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="title_activity_scroll_view">ScrollViewActivity</string>
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+    <string name="mychar">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ دجحخهعغفقثصضشسيبلاتنمكطظزوةىلارؤءئذإأآ</string>
+    <string name="num">1234567890٠١٢٣٤٥٦٧٨٩</string>
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Home</item>
+        <item>Find People</item>
+        <item>Photos</item>
+        <item>Communities</item>
+        <item>Pages</item>
+        <item>What\'s Hot</item>
+    </string-array>
+    <string name="title_activity_map">Map</string>
+
+    <string name="FACEBOOK_APP_ID">1589697944399953</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">3fab139a216acbe3f0087aaf3dd9e241</string>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+<!--    <array name="nav_drawer_icons">-->
+<!--        <item>@drawable/ic_home</item>-->
+<!--        <item>@drawable/ic_people</item>-->
+<!--        <item>@drawable/ic_photos</item>-->
+<!--        <item>@drawable/ic_communities</item>-->
+<!--        <item>@drawable/ic_pages</item>-->
+<!--        <item>@drawable/ic_whats_hot</item>-->
+<!--    </array>-->
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="error_when_retrieving_data">Error in data</string>
+    <string name="checkwifi">Please check your internet connection!</string>
+    <string name="notsupport">يبدو أن جهازك لا يدعم هذه الميزة أو هناك مشكلة مؤقته في السيرفر المسؤول عن الخدمة</string>
+    <string name="showrooms"><![CDATA[[{\"Address\":\"Behind the stadium of Tishreen, in front of Musab Ibn Umair mosque.\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/baramkah.jpg\",\"Latitude\":\"33.5063858032227\",\"Loc_code\":\"S222\",\"Loc_name\":\"Baramkeh\",\"Longitude\":\"36.2850151062012\",\"Phone\":\"011-9909\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 07:00 PM\"},{\"Address\":\"Mabco Showroom Mazzeh. Mazzeh Road,next To Al Razi Hospital\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Mazzeh.jpg\",\"Latitude\":\"33.50512\",\"Loc_code\":\"S428\",\"Loc_name\":\"Mazzeh H.W\",\"Longitude\":\"36.26135\",\"Phone\":\"011-6111447\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 09:00 PM\"},{\"Address\":\"Mabco showroom, Damascus 29Ayar St\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/29 Ayar.jpg\",\"Latitude\":\"33.5188186862263\",\"Loc_code\":\"S036\",\"Loc_name\":\"29 Ayar Street\",\"Longitude\":\"36.2956523895264\",\"Phone\":\"011-2323288\",\"Winter_from_date\":\"From 09:30 AM\",\"Winter_to_date\":\"To 07:30 PM\"},{\"Address\":\"Mabco Showroom mohafaza. Yousef Alazmah Square mohafaza Bld\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Muhafazah.jpg\",\"Latitude\":\"33.5160456\",\"Loc_code\":\"S005\",\"Loc_name\":\"Mohafaza\",\"Longitude\":\"36.2959064\",\"Phone\":\"011-2325612\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 07:00 PM\"},{\"Address\":\"Yousef Al-Azmah St. in front of Venezia hotel.\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/bahsa.jpg\",\"Latitude\":\"33.5153992\",\"Loc_code\":\"S854\",\"Loc_name\":\"Acer Bahsa\",\"Longitude\":\"36.2970051\",\"Phone\":\"011-2319880\",\"Winter_from_date\":\"From 10:00 AM\",\"Winter_to_date\":\"To 07:30 PM\"},{\"Address\":\"Fakhri Al-Baroodi St. behind the Palace of Justice.\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Harika.jpg\",\"Latitude\":\"33.5098621\",\"Loc_code\":\"S739\",\"Loc_name\":\"Harika\",\"Longitude\":\"36.30032\",\"Phone\":\"011-2222933\",\"Winter_from_date\":\"From 10:00 AM\",\"Winter_to_date\":\"To 07:30 PM\"},{\"Address\":\"Abu-Rummaneh - Ahmad Shawki St. - Besides Nassouh Babil School\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Jahez.jpg\",\"Latitude\":\"33.5180682\",\"Loc_code\":\"S134\",\"Loc_name\":\"Al Jahiz\",\"Longitude\":\"36.2820684\",\"Phone\":\"011-3339282\",\"Winter_from_date\":\"From 12:00 AM\",\"Winter_to_date\":\"To 09:00 PM\"},{\"Address\":\"Mabco Showroom Jaramana-kheder. Jaramana, Kheder St\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Jaramanah.jpg\",\"Latitude\":\"33.4860148872976\",\"Loc_code\":\"S838\",\"Loc_name\":\"Jaramana Al-Khudir\",\"Longitude\":\"36.347279548645\",\"Phone\":\"011-5643438\",\"Winter_from_date\":\"From 11:00 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"President Square - beside Syriatel Services Center\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/New Jaramana.jpg\",\"Latitude\":\"33.4873352050781\",\"Loc_code\":\"S031\",\"Loc_name\":\"Njaramana Baladiah\",\"Longitude\":\"36.342113494873\",\"Phone\":\"011-5660445\",\"Winter_from_date\":\"From 11:00 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Mabco Showroom Kassa. Ghassani,Opposite of Zahrawi Hospital\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/kassa.jpg\",\"Latitude\":\"33.5212067\",\"Loc_code\":\"S003\",\"Loc_name\":\"Kassa\",\"Longitude\":\"36.3165733\",\"Phone\":\"011-4450292\",\"Winter_from_date\":\"From 10:30 AM\",\"Winter_to_date\":\"To 08:30 PM\"},{\"Address\":\"Khaled Ibn Al-Waleed St. in front of Al-Kendi hospital.\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Khaled abn alwaleed.jpg\",\"Latitude\":\"33.5060918\",\"Loc_code\":\"S674\",\"Loc_name\":\"Khaled Ebn Alwaleed\",\"Longitude\":\"36.2954848\",\"Phone\":\"011-2228147\",\"Winter_from_date\":\"From 10:30 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Marja Squer\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Marjeh.jpg\",\"Latitude\":\"33.5128351\",\"Loc_code\":\"S018\",\"Loc_name\":\"Marja\",\"Longitude\":\"36.2974696\",\"Phone\":\"011-2222354\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 07:00 PM\"},{\"Address\":\"Mabco Showroom Masaken Barzeh.1st Autoroad\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Barzeh.jpg\",\"Latitude\":\"33.5463333129883\",\"Loc_code\":\"S631\",\"Loc_name\":\"Masaken Barzeh - ohod\",\"Longitude\":\"36.314754486084\",\"Phone\":\"011-5146570\",\"Winter_from_date\":\"From 10:00 AM\",\"Winter_to_date\":\"To 07:00 PM\"},{\"Address\":\"Masaken Barzeh - Opposite of Al-Jabi\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Msaken Barzeh 2.jpg\",\"Latitude\":\"33.5465232\",\"Loc_code\":\"S648\",\"Loc_name\":\"Nmasaken Barzeh Al-Nasir\",\"Longitude\":\"36.314289\",\"Phone\":\"011-5111129\",\"Winter_from_date\":\"From 11:00 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Mabco Showroom Dummar. Dummar Almashro\'o central Market\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Dummar.jpg\",\"Latitude\":\"33.52995\",\"Loc_code\":\"S115\",\"Loc_name\":\"Dummar\",\"Longitude\":\"36.2325843\",\"Phone\":\"011-3127001\",\"Winter_from_date\":\"From 10:30 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Al-Waleed Ibn Abd Al-Malek St. the second 14 building.\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Shekh sa3d.jpg\",\"Latitude\":\"33.5063827\",\"Loc_code\":\"S057\",\"Loc_name\":\"Mazzeh Alshaekh Sa3d\",\"Longitude\":\"36.2557947\",\"Phone\":\"011-6638655\",\"Winter_from_date\":\"From 10:30 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Mabco Showroom Naser. Nasr St.tinkez Mosqu Bld.\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Naser.jpg\",\"Latitude\":\"33.5112556\",\"Loc_code\":\"S006\",\"Loc_name\":\"Nasser\",\"Longitude\":\"36.2969079\",\"Phone\":\"011-2225842\",\"Winter_from_date\":\"From 08:30 AM\",\"Winter_to_date\":\"To 07:00 PM\"},{\"Address\":\"Beside Albrj building\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/vektoria.jpg\",\"Latitude\":\"\",\"Loc_code\":\"S016\",\"Loc_name\":\"Victorya\",\"Longitude\":\"\",\"Phone\":\"011-2334004\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 07:00 PM\"},{\"Address\":\"Mabco Showroom Sahnaya. Near to STE centre\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/sahnaya.jpg\",\"Latitude\":\"33.4309616088867\",\"Loc_code\":\"S868\",\"Loc_name\":\"Sehnaya - Mafraq Aljadida\",\"Longitude\":\"36.2260055541992\",\"Phone\":\"011-6730963\",\"Winter_from_date\":\"From 10:30 AM\",\"Winter_to_date\":\"To 07:30 PM\"},{\"Address\":\"AL-Shohadaa Square\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/New 97naya.jpg\",\"Latitude\":\"33.4274379\",\"Loc_code\":\"S021\",\"Loc_name\":\"Nsehnaya Shuhada\",\"Longitude\":\"36.2235339\",\"Phone\":\"011-6720665\",\"Winter_from_date\":\"From 10:30 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Hafez Ibraheem St. <br\\/> Hobobi 3rd avenue, in front of Adidas.\",\"City_name\":\"Damascus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Sha3lan.jpg\",\"Latitude\":\"33.5182863\",\"Loc_code\":\"S135\",\"Loc_name\":\"Shaalan\",\"Longitude\":\"36.2879524\",\"Phone\":\"011-3344816\",\"Winter_from_date\":\"From 10:30 AM\",\"Winter_to_date\":\"To 09:00 PM\"},{\"Address\":\"Al-Jamilia - Beside the Artists Syndicate Theater\",\"City_name\":\"Aleppo\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Aleppo jamilia.jpg\",\"Latitude\":\"36.2074675\",\"Loc_code\":\"S119\",\"Loc_name\":\"Aljamilia\",\"Longitude\":\"37.1448599\",\"Phone\":\"021-2227081\",\"Winter_from_date\":\"From 10:30 AM\",\"Winter_to_date\":\"To 07:30 PM\"},{\"Address\":\"Mabco Showroom Alasi. Hamedieh Market\",\"City_name\":\"Hama\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Aasi.jpg\",\"Latitude\":\"35.1298208\",\"Loc_code\":\"S013\",\"Loc_name\":\"Assi\",\"Longitude\":\"36.7580034\",\"Phone\":\"033-2227088\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 06:00 PM\"},{\"Address\":\"Mabco Showroom Alalmain. Hafez Ibrahim St\",\"City_name\":\"Hama\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Alameen.jpg\",\"Latitude\":\"35.1296257\",\"Loc_code\":\"S794\",\"Loc_name\":\"Alamain\",\"Longitude\":\"36.7571947\",\"Phone\":\"033-2521096\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 06:00 PM\"},{\"Address\":\"Dabagha - Beside Al-Ras pharmacy - Opposite of Al-Haddadin market\",\"City_name\":\"Hama\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Hama dabagha.jpg\",\"Latitude\":\"35.1310035\",\"Loc_code\":\"S342\",\"Loc_name\":\"Al Ddabagha\",\"Longitude\":\"36.7512172\",\"Phone\":\"033-2536707\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 06:00 PM\"},{\"Address\":\"al-Quwatli. al-Quwatli St - opposite of Bank of Syria and Overseas\",\"City_name\":\"Hama\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Quwatli.jpg\",\"Latitude\":\"\",\"Loc_code\":\"S009\",\"Loc_name\":\"Quwatli\",\"Longitude\":\"\",\"Phone\":\"033-2516930\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 06:00 PM\"},{\"Address\":\"Mabco Showroom Homs AlGhota St\",\"City_name\":\"Homs\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Ghota.jpg\",\"Latitude\":\"34.7310818\",\"Loc_code\":\"S340\",\"Loc_name\":\"AL Ghota\",\"Longitude\":\"36.7039783\",\"Phone\":\"031-2460661\",\"Winter_from_date\":\"From 10:30 AM\",\"Winter_to_date\":\"To 07:30 PM\"},{\"Address\":\"8 Azar Street - Opposite of Al-Assad Hospital\",\"City_name\":\"Latakia\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/8azar.jpg\",\"Latitude\":\"35.5189088\",\"Loc_code\":\"S786\",\"Loc_name\":\"8Azar Street\",\"Longitude\":\"35.774915\",\"Phone\":\"041-486239\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Antakia Street - Building of the Tower of Antakia\",\"City_name\":\"Latakia\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Antakia.jpg\",\"Latitude\":\"\",\"Loc_code\":\"S026\",\"Loc_name\":\"Antakia\",\"Longitude\":\"\",\"Phone\":\"041-219319\",\"Winter_from_date\":\"From 10:00 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Baghdad Street - Engineers Building\",\"City_name\":\"Latakia\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/baghdad.jpg\",\"Latitude\":\"35.5154617\",\"Loc_code\":\"S012\",\"Loc_name\":\"Baghdad\",\"Longitude\":\"35.7749071\",\"Phone\":\"041-467999\",\"Winter_from_date\":\"From 09:30 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Al Amarah Street - Opposite of  Syriatel Center\",\"City_name\":\"Latakia\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/jableh.jpg\",\"Latitude\":\"35.3622393\",\"Loc_code\":\"S823\",\"Loc_name\":\"Jableh\",\"Longitude\":\"35.9306331\",\"Phone\":\"041-809747\",\"Winter_from_date\":\"From 09:00 AM\",\"Winter_to_date\":\"To 07:00 PM\"},{\"Address\":\"Al-Zeraa - Aleppo Street - Aspero Station\",\"City_name\":\"Latakia\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/Jam3a.jpg\",\"Latitude\":\"35.5260546\",\"Loc_code\":\"S023\",\"Loc_name\":\"Aljamah\",\"Longitude\":\"35.800028\",\"Phone\":\"041-556720\",\"Winter_from_date\":\"From 10:00 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Hanano Street - After the Big Store\",\"City_name\":\"Tartus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/tartus_thaw.JPG\",\"Latitude\":\"34.8877983093262\",\"Loc_code\":\"S035\",\"Loc_name\":\"Hanano\",\"Longitude\":\"35.880500793457\",\"Phone\":\"043-323240\",\"Winter_from_date\":\"From 09:30 AM\",\"Winter_to_date\":\"To 08:00 PM\"},{\"Address\":\"Hanano Street - Opposite of Al-Karamah School\",\"City_name\":\"Tartus\",\"Image_Link\":\"www.mabcoonline.biz\\/images\\/Branches\\/tartus.jpg\",\"Latitude\":\"34.8888136\",\"Loc_code\":\"S011\",\"Loc_name\":\"AlKaramah\",\"Longitude\":\"35.880753\",\"Phone\":\"043-326665\",\"Winter_from_date\":\"From 09:30 AM\",\"Winter_to_date\":\"To 08:00 PM\"}]]]></string>
+    <string name="title_activity_activate">Activate</string>
+    <string name="navigation_drawer_open">open navigation drawer</string>
+    <string name="navigation_drawer_close">close navigation drawer</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_products">Products</string>
+    <string name="title_activity_my_cart">My Cart</string>
+
+    <string name="add_to_shopping_cart">Add to shopping cart</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">notifications</string>
+    <string name="Mobiles">Mobiles</string>
+    <string name="tablets">Tablets </string>
+    <string name="power">P-station</string>
+    <string name="Mobile_acc">Accessory</string>
+    <string name="spare">Spares</string>
+    <string name="PC_acc">PC Accessories</string>
+    <string name="feed_back">Feed back</string>
+    <string name="share">Share this app</string>
+    <string name="career">Career</string>
+    <string name="services">Services</string>
+    <string name="showrooms_title">Showrooms</string>
+    <string name="language">App Language</string>
+    <string name="coupon">coupon</string>
+    <string name="offers_header">Offers</string>
+    <string name="disc_pro_header">Hot deals</string>
+    <string name="buy">buy</string>
+    <string name="FAQ">FAQ</string>
+    <string name="communicate">Communicate</string>
+    <string name="join_to_mabco_club">Join to MABCO club</string>
+    <string name="english">English/عربي</string>
+    <string name="services_title">Services</string>
+    <string name="verfy_warranty">Check your device warranty</string>
+    <string name="check_sim">Check your phone on SY network</string>
+    <string name="warranty_status">Check service order status</string>
+    <string name="personal_service">Personal service</string>
+    <string name="print_on_cover">Print on cover</string>
+    <string name="drilling_on_cover">drilling on cover</string>
+    <string name="Other_Services">Other Services</string>
+    <!--<string name="warranty_policy">تضمن شركة مابكو</string>-->
+    <string name="warranty_title">Warranty policy</string>
+    <string name="blue_list">Savings Lists</string>
+    <string name="blue_list_all">Click for more info about Savings Lists</string>
+   <string name="click">  Click   </string>
+    <string name="update_now">update now</string>
+    <string name="not_now">not now</string>
+    <string name="update_app">Update app</string>
+    <string name="update_desc">There is new version for this app , do you want to update now ?</string>
+    <string name="version"> Version : </string>
+    <string name="price_filter">Prices filter</string>
+    <string name="profile">Profile</string>
+    <string name="s_p">s.p</string>
+    <string name="ok">OK</string>
+    <string name="server_error">Server connection error</string>
+    <string name="refresh">Refresh</string>
+    <string name="try_again">please try again</string>
+    <string name="offline_mode">offline mode \n last update :</string>
+    <string name="confirm_call">press OK to confirm call</string>
+    <string name="show_invoices">My invoices</string>
+    <string name="compare">Compare</string>
+    <string name="long_press_compare">long press on any mobile to compare</string>
+    <string name="loading">loading ,, please wait</string>
+    <string name="rate_this_app">Rate this app</string>
+    <string name="your_phone">your phone number :</string>
+    <string name="logout_phone_number">logout phone number</string>
+    <string name="showroom">Showroom</string>
+    <string name="date_time">Date Time</string>
+    <string name="inv_id">Inv_ID</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+    <string name="warranty">Warranty</string>
+    <string name="serial">Serial</string>
+    <string name="title_invoice_list">Invoices</string>
+    <string name="title_invoice_detail">Invoice Detail</string>
+    <string name="invoice_found">invoices found</string>
+    <string name="invoices_not_found">can\'t find any invoices for this phone : </string>
+    <string name="sp">SP</string>
+    <string name="final_price">Final Price :</string>
+    <string name="discount">Discount:</string>
+    <string name="total_price">Total Price :</string>
+    <string name="phone">Phone</string>
+    <string name="city">City</string>
+    <string name="address">Address:</string>
+    <string name="duration">Duration:</string>
+    <string name="join">Join to MABCO club</string>
+    <string name="full_name">Full name</string>
+    <string name="letters">letters only</string>
+    <string name="numbers">numbers only</string>
+    <string name="my_device_warranty">check my device warranty</string>
+    <string name="barcode_warranty">capture serial barcode</string>
+    <string name="another_dervice_warranty">check input serial warranty</string>
+    <string name="imei"> input IMEI</string>
+    <string name="Service_Inquery">Service Inquiry</string>
+    <string name="input_order">input order number</string>
+    <string name="status">status</string>
+    <string name="input_IMEI">input device IMEI</string>
+    <string name="contact_us">Feed back</string>
+    <string name="feedback_description">Feed back description</string>
+    <string name="offer_description">Offer description</string>
+    <string name="submit">Submit</string>
+    <string name="note">* fullname is optional \n** phone is recommended to contact you</string>
+    <string name="phone_required">please input required phone</string>
+    <string name="search_filter">Advanced specs search</string>
+
+
+    <string name="full_name_optional">full name</string>
+
+    <string name="min_front_camera_hint">Min front camera (MB)</string>
+    <string name="min_rear_camera_hint">Min rear camera (MB)</string>
+    <string name="min_price_hint">min price (SP)</string>
+    <string name="max_price_hint">max price (SP)</string>
+    <string name="min_ram_hint">min ram (GB)</string>
+    <string name="max_ram_hint">max ram (GB)</string>
+    <string name="min_battery_hint">min battery (mAh)</string>
+    <string name="max_battery_hint">max battery (mAh)</string>
+    <string name="title_activity_advanced_search">Advanced search</string>
+    <string name="max_rear_camera_hint"> max rear camera (MB) </string>
+    <string name="max_front_camera_hint"> max front camera (MB) </string>
+    <string name="sub_brand">Mobile name</string>
+    <string name="min_screen_hint">min screen size (inch)</string>
+    <string name="max_screen_hint">max screen size (inch)</string>
+    <string name="min_storage_hint">min internal storage (GB)</string>
+    <string name="max_storage_hint">max internal storage (GB)</string>
+    <string name="feedback_text">please input required feedback text</string>
+    <string name="join_now">join now</string>
+    <string name="week_end">Week end :</string>
+    <string name="trending">Trending posts</string>
+
+    <string name="sms_permission">please allow this app to read SMS to read verification code </string>
+    <string name="verify_phone">*you should verify your phone number in next step by verification code</string>
+    <string name="login_required">login required !</string>
+    <string name="please_login">please login to continue ..</string>
+    <string name="done">done</string>
+    <string name="logout">Logout</string>
+    <string name="welcome">Welcome : </string>
+    <string name="cancel">Cancel</string>
+    <string name="please_wait">please wait .. Loading data</string>
+    <string name="details">Details</string>
+    <string name="specifications">Specifications</string>
+    <string name="suggested_product">Suggested Product</string>
+    <string name="new_arrive">New Arrivals</string>
+    <string name="check_permission">please check permissions</string>
+    <string name="Title">Title</string>
+    <string name="colors">colors</string>
+    <string name="chose_color">chose color</string>
+    <string name="yes">yes</string>
+    <string name="sure_buy">sure to buy this items ?</string>
+    <string name="input_address">input shipment address</string>
+    <string name="best">Best</string>
+    <string name="payment_price">Price</string>
+    <string name="no_items_in_cart">there is no items in your cart !</string>
+    <string name="out_time_to_buy">Purchase out of working time will be completed next day</string>
+    <string name="call_back_soon">we will call you back soon ..</string>
+    <string name="input_search_hint">search here ...</string>
+    <string name="search">search</string>
+    <string name="applications">Applications</string>
+    <string name="epayment">E-Payment</string>
+   <string name="add_24_customer">activate 24/21 warranty</string>
+    <string name="dont_show">don\'t show this hints again</string>
+   <string name="title_races">Competition</string>
+   <string name="empty_competition">there is no competition right now</string>
+   <string name="empty_notifications">there is no notifications right now</string>
+    <string name="Gaming">Gaming</string>
+    <string name="installment">Installment</string>
+    <string name="mtn">MTN Offers </string>
+
+    <string name="Add_customer">The Verification Code has been sent to your mobile Successfully</string>
+    <string name="cannot_send_SMS">sorry , we cannot send SMS code, please try again !</string>
+    <string name="verify_phone_next">* The remaining time for the code to expire </string>
+    <string name="new_pro_header">New Arrivals</string>
+    <string name="verify_code">verify code</string>
+    <string name="Vcode">Verify</string>
+    <string name="Privacy_Policy_title">Privacy Policy</string>
+    <string-array name="send_choise_arrays">
+        <item>Print</item>
+        <item>Download Pdf</item>
+    </string-array>
+
+
+    <string name="request_offer">Request offer on this item</string>
+    <string name="offer_list">Offer list for </string>
+    <string name="offer_list_ac">press on any offer to view details</string>
+    <string name="back">back</string>
+</resources>
