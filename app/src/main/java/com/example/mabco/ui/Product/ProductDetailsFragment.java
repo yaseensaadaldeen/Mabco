@@ -20,6 +20,8 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.DisplayMetrics;
@@ -85,18 +87,19 @@ public class ProductDetailsFragment extends Fragment {
     private FloatingActionButton backbtn;
     private RelativeLayout prod_det;
     private LinearLayout add_to_shopping_btn;
-    private MaterialCardView pro_img ;
-    SharedPreferences preferences ;
+    private MaterialCardView pro_img;
+    SharedPreferences preferences;
     View view;
+
     @SuppressLint("UseCompatLoadingForDrawables")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         try {
-        Detailesbinding = FragmentProductDetailesBinding.inflate(inflater, container, false);
+            Detailesbinding = FragmentProductDetailesBinding.inflate(inflater, container, false);
 
-        view = inflater.inflate(R.layout.fragment_product_detailes, container, false);
-        context = getContext();
+            view = inflater.inflate(R.layout.fragment_product_detailes, container, false);
+            context = getContext();
             assert context != null;
             preferences = context.getSharedPreferences("HomeData", Context.MODE_PRIVATE);
             hide();
@@ -105,7 +108,7 @@ public class ProductDetailsFragment extends Fragment {
             prod_det = Detailesbinding.prodDet;
             backbtn = Detailesbinding.backBtn;
             backbtn.setOnClickListener(v -> getActivity().onBackPressed());
-            product_main_name=Detailesbinding.productMainName;
+            product_main_name = Detailesbinding.productMainName;
             pro_img = Detailesbinding.proImg;
             product_images = Detailesbinding.productImages;
             ColorsRecycleview = Detailesbinding.productColors;
@@ -115,8 +118,7 @@ public class ProductDetailsFragment extends Fragment {
             AssetManager assets = standardResources.getAssets();
             DisplayMetrics metrics = standardResources.getDisplayMetrics();
             Configuration config = new Configuration(standardResources.getConfiguration());
-            if(config.getLayoutDirection() == Layout.DIR_LEFT_TO_RIGHT)
-            {
+            if (config.getLayoutDirection() == Layout.DIR_LEFT_TO_RIGHT) {
                 backbtn.setImageResource(R.drawable.back_rtl);
                 add_to_shopping_btn.setBackground(this.getResources().getDrawable(R.drawable.shopping_cart_btn_ltr));
             }
@@ -145,7 +147,8 @@ public class ProductDetailsFragment extends Fragment {
             }
             tabLayout = Detailesbinding.tabLayout;
             viewPager2 = Detailesbinding.pager;
-            ProductDetailsAPI(context);
+            boolean online = haveNetworkConnection();
+            ProductDetailsAPI(context, online);
 
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.details)), 0);
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.offers_header)), 1);
@@ -157,31 +160,47 @@ public class ProductDetailsFragment extends Fragment {
         return Detailesbinding.getRoot();
     }
 
-    public void ProductDetailsAPI(Context context) {
+    public void ProductDetailsAPI(Context context, boolean online) {
         requestQueue = Volley.newRequestQueue(context);
         com.example.mabco.HttpsTrustManager.allowAllSSL();
         String url = UrlEndPoint.General + "Service1.svc/getStockDetails/" + product.getStk_code() + ",AR";
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+        if (online) {
+            StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("ProductDetails"+product.getStk_code(), response);
+                        editor.apply();
+                        JSONObject jsonResponse = new JSONObject(response);
+                        JSONArray DetailsArray = jsonResponse.optJSONArray("getStockDetailsResult");
+                        LoadProductDetails(DetailsArray);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                public void onErrorResponse(VolleyError error) {
+                }
+            }) {
+            };
+            try {
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                requestQueue.add(jsonObjectRequest);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            String ProductDetails = preferences.getString("ProductDetails"+product.getStk_code(), "");
+            if (!ProductDetails.equals("")) {
                 try {
-                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONObject jsonResponse = new JSONObject(ProductDetails);
                     JSONArray DetailsArray = jsonResponse.optJSONArray("getStockDetailsResult");
                     LoadProductDetails(DetailsArray);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener() {
-            public void onErrorResponse(VolleyError error) {
-            }
-        }) {
-        };
-        try {
-            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            requestQueue.add(jsonObjectRequest);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -233,8 +252,7 @@ public class ProductDetailsFragment extends Fragment {
                     }
                 });
                 product_image.setVisibility(View.GONE);
-            }  else
-            {
+            } else {
                 prod_det.setVisibility(View.INVISIBLE);
                 product_main_name.setVisibility(View.VISIBLE);
                 product_main_name.setText(product.getProduct_title());
@@ -269,9 +287,11 @@ public class ProductDetailsFragment extends Fragment {
                     viewPager2.setCurrentItem(tab.getPosition());
                     productDetailsAdapter.createFragment(tab.getPosition());
                 }
+
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
                 }
+
                 @Override
                 public void onTabReselected(TabLayout.Tab tab) {
                 }
@@ -287,6 +307,7 @@ public class ProductDetailsFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
     //   because image slider class dose not have swipe method
     public void ProductSliderSwipe(int position) {
         try {
@@ -342,5 +363,22 @@ public class ProductDetailsFragment extends Fragment {
         super.onDestroyView();
         show();
         Detailesbinding = null;
+    }
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE.toString());
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
 }
