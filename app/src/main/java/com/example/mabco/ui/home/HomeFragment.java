@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import com.example.mabco.Adapters.CategoriesAdapter;
 import com.example.mabco.Adapters.OffersAdapter;
 import com.example.mabco.Adapters.ProductColorAdapter;
 import com.example.mabco.Adapters.ProductsHomeAdapter;
+import com.example.mabco.Adapters.SliderAdapter;
 import com.example.mabco.Classes.Brand;
 import com.example.mabco.Classes.CategoryModel;
 import com.example.mabco.Classes.Offer;
@@ -46,6 +48,8 @@ import com.example.mabco.UrlEndPoint;
 import com.example.mabco.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import org.json.JSONArray;
@@ -71,7 +75,7 @@ public class HomeFragment extends Fragment {
     private ActivityMainBinding binding;
     SharedPreferences preferences;
     View view;
-
+    private SliderAdapter adapter;
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -108,11 +112,9 @@ public class HomeFragment extends Fragment {
             imageSlider = view.findViewById(R.id.image_slider);
             requestQueue = Volley.newRequestQueue(this.getContext());
 
-            if (Slides == null) {
-                imageSlider.(LoadSliders(getContext(), haveNetworkConnection())) ;
-            } else {
-                imageSlider.setImageList(Slides);
-            }
+
+             LoadSliders(getContext(), haveNetworkConnection()) ;
+
             categoriesRecycler = view.findViewById(R.id.categories);
             categoriesRecycler.setAdapter(LoadCategories(context));
 
@@ -421,13 +423,20 @@ public class HomeFragment extends Fragment {
                         JSONObject jsonResponse = new JSONObject(response);
                         JSONArray array = jsonResponse.optJSONArray("getSliderImagesResult");
                         if (array != null) {
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject arrayObj = array.getJSONObject(i);
-                                Slides.add(new SlideModel("https://" + arrayObj.optString("slide_image_link"), "", ScaleTypes.FIT));
-                            }
-                            Slides.add(0, new SlideModel(R.drawable.samsung, ScaleTypes.CENTER_CROP));
-                            imageSlider.setImageList(Slides);
+
+                            adapter = new SliderAdapter(context,array);
+                            imageSlider.setSliderAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+                            imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                            imageSlider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
+                            imageSlider.setIndicatorSelectedColor(Color.WHITE);
+                            imageSlider.setIndicatorUnselectedColor(Color.GRAY);
+                            imageSlider.setScrollTimeInSec(3);
+                            imageSlider.setAutoCycle(true);
+                            imageSlider.startAutoCycle();
                         } else {
+                            LoadSliders(context , false);
 
                         }
                     } catch (Exception e) {
@@ -441,6 +450,7 @@ public class HomeFragment extends Fragment {
                         public void onErrorResponse(VolleyError error) {
                             JSONArray array = null;
                             try {
+                                LoadSliders(context , false);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -469,12 +479,19 @@ public class HomeFragment extends Fragment {
                     JSONObject jsonResponse = new JSONObject(sliderimages);
                     JSONArray array = jsonResponse.optJSONArray("getSliderImagesResult");
                     if (array != null) {
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject arrayObj = array.getJSONObject(i);
-                            Slides.add(new SlideModel("https://" + arrayObj.optString("slide_image_link"), "", ScaleTypes.FIT));
-                        }
-                        Slides.add(0, new SlideModel(R.drawable.samsung, ScaleTypes.CENTER_CROP));
-                        imageSlider.setImageList(Slides);
+
+                        adapter = new SliderAdapter(context,array);
+                        imageSlider.setSliderAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                        imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+                        imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                        imageSlider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
+                        imageSlider.setIndicatorSelectedColor(Color.WHITE);
+                        imageSlider.setIndicatorUnselectedColor(Color.GRAY);
+                        imageSlider.setScrollTimeInSec(3);
+                        imageSlider.setAutoCycle(true);
+                        imageSlider.startAutoCycle();
+
                     } else {
 
                     }
