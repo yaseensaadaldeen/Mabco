@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/offer_list"
+    android:name="com.example.mabco.ui.Product.ProductOfferFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    app:layoutManager="LinearLayoutManager"
+    tools:context=".ui.Product.ProductOfferFragment"
+    tools:listitem="@layout/product_offer_item" />

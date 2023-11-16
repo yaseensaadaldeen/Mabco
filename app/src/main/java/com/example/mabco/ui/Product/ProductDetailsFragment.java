@@ -51,6 +51,7 @@ import com.example.mabco.Adapters.ProductDetailsAdapter;
 import com.example.mabco.Adapters.ProductSpecsAdapter;
 import com.example.mabco.Classes.Product;
 import com.example.mabco.Classes.ProductColor;
+import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.ProductSpecs;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
@@ -62,10 +63,12 @@ import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ProductDetailsFragment extends Fragment {
     private FragmentProductDetailesBinding Detailesbinding;
@@ -74,11 +77,11 @@ public class ProductDetailsFragment extends Fragment {
     public RecyclerView ColorsRecycleview;
     public ArrayList<ProductSpecs> productSpecs;
     public ArrayList<ProductColor> productColors;
+    public ArrayList<Offer> productOffers;
     public ProductColorAdapter productColorAdapter;
     public ImageView product_image;
     public ImageSlider product_images;
     public TextView product_name, product_price, product_disc, product_main_name;
-    public ProductSpecsAdapter productSpecsAdapter;
     public Product product;
     public ArrayList<SlideModel> productSlide = new ArrayList<>();
     private TabLayout tabLayout;
@@ -114,6 +117,7 @@ public class ProductDetailsFragment extends Fragment {
             ColorsRecycleview = Detailesbinding.productColors;
             product_name = Detailesbinding.productName;
             add_to_shopping_btn = Detailesbinding.addToShoppingBtn;
+            productDetailsAdapter = new ProductDetailsAdapter(this);
             Resources standardResources = context.getResources();
             AssetManager assets = standardResources.getAssets();
             DisplayMetrics metrics = standardResources.getDisplayMetrics();
@@ -149,11 +153,32 @@ public class ProductDetailsFragment extends Fragment {
             viewPager2 = Detailesbinding.pager;
             boolean online = haveNetworkConnection();
             ProductDetailsAPI(context, online);
-
+            viewPager2.setAdapter(productDetailsAdapter);
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.details)), 0);
-            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.offers_header)), 1);
+
             if (product.getCategoryModel().getCat_code().equals("09"))
-                tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FAQ)), 2);
+                tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FAQ)), 1);
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                  viewPager2.setCurrentItem(tab.getPosition());
+                   // productDetailsAdapter.createFragment(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                }
+            });
+            viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                    tabLayout.selectTab(tabLayout.getTabAt(position));
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,11 +199,15 @@ public class ProductDetailsFragment extends Fragment {
                         editor.apply();
                         JSONObject jsonResponse = new JSONObject(response);
                         JSONArray DetailsArray = jsonResponse.optJSONArray("getStockDetailsResult");
+                        JSONArray offersArray = jsonResponse.optJSONArray("getStockOffers");
+                        LoadOffers(offersArray);
                         LoadProductDetails(DetailsArray);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+
+
             }, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
                 }
@@ -203,7 +232,31 @@ public class ProductDetailsFragment extends Fragment {
             }
         }
     }
+    @SuppressLint("NotifyDataSetChanged")
+    private void LoadOffers(JSONArray offersArray) throws JSONException {
+        try {
+        productOffers = new ArrayList<>();
+        for (int j = 0; j < offersArray.length(); j++) {
+            JSONObject offersOBJ = offersArray.getJSONObject(j);
+               productOffers.add(new Offer(offersOBJ.optString("offer_no"),offersOBJ.optString("offer_description"),offersOBJ.optString("offer_title"),offersOBJ.optString("offer_image"))) ;
+        }
+        if (productOffers.size() > 0 )
+        {
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.offers_header)), 1);
 
+        }
+        else if (!Objects.equals(product.getCategoryModel().getCat_code(), "09"))
+        {
+                tabLayout.removeAllTabs();
+        }
+        productDetailsAdapter.setProduct(product);
+        productDetailsAdapter.setProductoffer(productOffers);
+        viewPager2.setAdapter(productDetailsAdapter);
+        productDetailsAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @SuppressLint("NotifyDataSetChanged")
     public void LoadProductDetails(JSONArray DetailsArray) {
         try {
@@ -274,35 +327,11 @@ public class ProductDetailsFragment extends Fragment {
                 product_image.setVisibility(View.GONE);
             }
 
-            productSpecsAdapter = new ProductSpecsAdapter(productSpecs, context);
-            productSpecsAdapter.notifyDataSetChanged();
-            productDetailsAdapter = new ProductDetailsAdapter(this);
+
             productDetailsAdapter.setProduct(product);
             productDetailsAdapter.setProductSpecs(productSpecs);
-
             viewPager2.setAdapter(productDetailsAdapter);
-            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    viewPager2.setCurrentItem(tab.getPosition());
-                    productDetailsAdapter.createFragment(tab.getPosition());
-                }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-                }
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-                }
-            });
-            viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                @Override
-                public void onPageSelected(int position) {
-                    tabLayout.selectTab(tabLayout.getTabAt(position));
-                }
-            });
-
+            productDetailsAdapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,8 +1,10 @@
 package com.example.mabco.ui.Product;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,18 +44,23 @@ public class ProductSpecsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Specsbinding = FragmentProductSpecsBinding.inflate(inflater, container, false);
-        context = this .getContext();
-        product_desc = Specsbinding.productDesc;
-        DetailsRecycleview = Specsbinding.Specs;
-        product_desc.setText(product.getStk_desc());
-        productSpecsAdapter = new ProductSpecsAdapter(productSpecs, context);
-        DetailsRecycleview.setAdapter(productSpecsAdapter);//.notifyDataSetChanged();
-        productSpecsAdapter.notifyDataSetChanged();
+        context = this.getContext();
+        try {
+
+            product_desc = Specsbinding.productDesc;
+            DetailsRecycleview = Specsbinding.Specs;
+            product_desc.setText(product.getStk_desc());
+            productSpecsAdapter = new ProductSpecsAdapter(productSpecs, context);
+            DetailsRecycleview.setAdapter(productSpecsAdapter);//.notifyDataSetChanged();
+            productSpecsAdapter.notifyDataSetChanged();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Specsbinding.getRoot();
     }
 }

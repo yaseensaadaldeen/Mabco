@@ -1,14 +1,29 @@
 package com.example.mabco.Classes;
 
 public class Offer {
-    String offer_no ,offer_desc , discount , offer_title;
+    String offer_no ,offer_desc , discount , offer_title ,  offer_image_url;
     int offer_image;
+
+    public String getOffer_image_url() {
+        return offer_image_url;
+    }
+
+    public void setOffer_image_url(String offer_image_url) {
+        this.offer_image_url = offer_image_url;
+    }
+
+    public Offer(String offer_no, String offer_desc, String offer_title, String offer_image_url) {
+        this.offer_no = offer_no;
+        this.offer_desc = offer_desc;
+        this.offer_title = offer_title;
+        this.offer_image_url = offer_image_url;
+    }
 
     public Offer(String offer_title, int offer_image) {
         this.offer_title = offer_title;
         this.offer_image = offer_image;
     }
-    public Offer(String offer_no, String offer_desc, String discount, String offer_title, int offer_image) {
+    public Offer(String offer_no, String offer_desc, String offer_title, int offer_image) {
         this.offer_no = offer_no;
         this.offer_desc = offer_desc;
         this.discount = discount;
@@ -38,6 +53,14 @@ public class Offer {
 
     public void setDiscount(String discount) {
         this.discount = discount;
+    }
+
+    public String getOffer_title() {
+        return offer_title;
+    }
+
+    public void setOffer_title(String offer_title) {
+        this.offer_title = offer_title;
     }
 
     public int getOffer_image() {

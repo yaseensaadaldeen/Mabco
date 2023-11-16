@@ -26,7 +26,7 @@
             app:cardCornerRadius="7dp">
 
             <com.smarteist.autoimageslider.SliderView
-                    android:id="@+id/image_slider"
+                android:id="@+id/image_slider"
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 app:sliderAnimationDuration="600"
@@ -42,18 +42,18 @@
                 app:sliderIndicatorUnselectedColor="#FFF"
                 app:sliderScrollTimeInSec="1"
                 app:sliderStartAutoCycle="true" />
-<!--            <com.denzcoskun.imageslider.ImageSlider-->
-<!--                android:id="@+id/image_slider"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="190dp"-->
-<!--                android:forceHasOverlappingRendering="true"-->
-<!--                app:iss_auto_cycle="true"-->
-<!--                app:iss_corner_radius="7"-->
-<!--                app:iss_delay="1000"-->
-<!--                app:iss_error_image="@color/transparent"-->
-<!--                app:iss_period="5000"-->
-<!--                app:iss_placeholder="@color/transparent"-->
-<!--                app:iss_title_background="@color/transparent" />-->
+            <!--            <com.denzcoskun.imageslider.ImageSlider-->
+            <!--                android:id="@+id/image_slider"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="190dp"-->
+            <!--                android:forceHasOverlappingRendering="true"-->
+            <!--                app:iss_auto_cycle="true"-->
+            <!--                app:iss_corner_radius="7"-->
+            <!--                app:iss_delay="1000"-->
+            <!--                app:iss_error_image="@color/transparent"-->
+            <!--                app:iss_period="5000"-->
+            <!--                app:iss_placeholder="@color/transparent"-->
+            <!--                app:iss_title_background="@color/transparent" />-->
 
         </androidx.cardview.widget.CardView>
 

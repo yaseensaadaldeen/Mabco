@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="13dp">
+
+        <ImageView
+            android:id="@+id/offer_image"
+            android:layout_width="160dp"
+            android:layout_height="150dp"
+            android:contentDescription="Offer image" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/offer_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="5sp"
+        android:paddingTop="5sp"
+        android:text="offer description"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+</LinearLayout>

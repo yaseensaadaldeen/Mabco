@@ -36,7 +36,8 @@
             android:layout_marginBottom="25dp"
             android:padding="6dp"
             android:textColor="#FFF"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone"/>
 
     </FrameLayout>
 
