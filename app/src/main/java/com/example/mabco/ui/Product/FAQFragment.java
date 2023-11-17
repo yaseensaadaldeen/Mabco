@@ -12,9 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mabco.Adapters.FAQAdapter;
 import com.example.mabco.R;
-import com.example.mabco.ui.Product.placeholder.PlaceholderContent;
+
 
 /**
  * A fragment representing a list of Items.
@@ -57,17 +56,7 @@ public class FAQFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_faq_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new FAQAdapter(PlaceholderContent.ITEMS));
-        }
+
         return view;
     }
 }

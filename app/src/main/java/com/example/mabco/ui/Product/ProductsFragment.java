@@ -28,6 +28,7 @@ import com.example.mabco.Adapters.BrandAdapter;
 import com.example.mabco.Adapters.CategoriesAdapter;
 import com.example.mabco.Adapters.ProductsAdapter;
 import com.example.mabco.Adapters.ProductsBrandAdapter;
+import com.example.mabco.Adapters.ProductsHomeAdapter;
 import com.example.mabco.Classes.Brand;
 import com.example.mabco.Classes.CategoryModel;
 import com.example.mabco.Classes.Product;
@@ -50,7 +51,7 @@ public class ProductsFragment extends Fragment {
     public ArrayList<Brand> brands;
     public ArrayList<Product> brandProducts;
     public BrandAdapter brandAdapter;
-    public ProductsAdapter productsAdapter;
+    public ProductsHomeAdapter productsAdapter;
     public String cat_name = "";
 
     public ProductsFragment() {
@@ -146,7 +147,7 @@ public class ProductsFragment extends Fragment {
             }
         }
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(args.getCatName() + brand_name);
-        productsAdapter = new ProductsAdapter(context, products);
+        productsAdapter = new ProductsHomeAdapter(context, products);
         ProductsRecycleview.setAdapter(productsAdapter);//.notifyDataSetChanged();
         productsAdapter.notifyDataSetChanged();
     }

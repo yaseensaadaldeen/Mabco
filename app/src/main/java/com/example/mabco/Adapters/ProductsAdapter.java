@@ -43,7 +43,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     @NonNull
     @Override
     public ProductsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.product_item_home,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.product_item,parent,false);
         return new ProductsAdapter.ViewHolder(view);
     }
 
@@ -63,17 +63,17 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         else if (product.getTag().equals("best") ) {
             holder.product_tag.setTextColor(Color.WHITE);
             holder.product_tag.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
-        } else if (!product.getDiscount().equals("0")) {
+        } else if (!product.getDiscount().equals("0") && !product.getDiscount().equals(".00")&& !product.getDiscount().equals("")) {
             holder.product_tag.setTextColor(Color.WHITE);
             holder.product_tag.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#af0491cf")));
         }
         else   holder.product_tag.setVisibility(View.GONE);
 
-        if ( !product.getDiscount().equals("0"))
+        if ( !product.getDiscount().equals("0")&& !product.getDiscount().equals(".00")&& !product.getDiscount().equals(""))
         {
             holder.product_disc.setVisibility(View.VISIBLE);
 
-            if (product.getCoupon().equals("0"))
+            if (product.getCoupon().equals("0")&& !product.getCoupon().equals(".00")&& !product.getCoupon().equals(""))
             {
                 holder.product_disc.setText(String.valueOf((Long.parseLong(product.getShelf_price())))+" SP");
                 String final_price = String.valueOf((Long.parseLong(product.getShelf_price())-(Long.parseLong(product.getDiscount()))));

@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.ProductColor;
 import com.example.mabco.Classes.Offer;
-import com.example.mabco.ui.Product.placeholder.PlaceholderContent.PlaceholderItem;
 import com.example.mabco.databinding.ProductOfferItemBinding;
 
 import java.util.ArrayList;
