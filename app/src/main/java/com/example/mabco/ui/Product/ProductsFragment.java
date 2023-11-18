@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 
 public class ProductsFragment extends Fragment {
     private String cat_code = "00";
+    NavController navController;
     private RequestQueue requestQueue;
     public Context context;
     public RecyclerView BrandRecycleview;
@@ -53,6 +55,7 @@ public class ProductsFragment extends Fragment {
     public BrandAdapter brandAdapter;
     public ProductsHomeAdapter productsAdapter;
     public String cat_name = "";
+    private  View view;
 
     public ProductsFragment() {
     }
@@ -65,7 +68,7 @@ public class ProductsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_products, container, false);
+         view = inflater.inflate(R.layout.fragment_products, container, false);
         try {
 
             context = getContext();
@@ -148,7 +151,16 @@ public class ProductsFragment extends Fragment {
         }
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(args.getCatName() + brand_name);
         productsAdapter = new ProductsHomeAdapter(context, products);
-        ProductsRecycleview.setAdapter(productsAdapter);//.notifyDataSetChanged();
+        ProductsRecycleview.setAdapter(productsAdapter);
+        productsAdapter.setOnClickListener(new ProductsHomeAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Product product) {
+                navController = Navigation.findNavController(view);
+                Navigation.findNavController(view).navigate(R.id.action_nav_products_to_productDetailsFragment);
+                navController.navigateUp();
+                navController.navigate((NavDirections) ProductsFragmentDirections.actionNavProductsToProductDetailsFragment(product));
+            }
+        });//.notifyDataSetChanged();
         productsAdapter.notifyDataSetChanged();
     }
 

@@ -248,6 +248,7 @@ public class ProductDetailsFragment extends Fragment {
         else if (!Objects.equals(product.getCategoryModel().getCat_code(), "09"))
         {
                 tabLayout.removeAllTabs();
+            tabLayout.setVisibility(View.GONE);
         }
         productDetailsAdapter.setProduct(product);
         productDetailsAdapter.setProductoffer(productOffers);

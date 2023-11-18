@@ -1,6 +1,8 @@
 package com.example.mabco.ui.Product;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -75,9 +77,10 @@ public class ProductOfferFragment extends Fragment {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(listDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = 1000  ;
+        lp.height = 1400  ;
         listDialog.show();
         listDialog.getWindow().setAttributes(lp);
+        listDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     }
 }

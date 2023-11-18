@@ -7,38 +7,55 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="500dp"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="10dp"
-        android:background="#F4F4F4">
+        android:layout_marginTop="20dp"
 
-        <TextView
-            android:id="@+id/offer_desc"
+        >
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:cardCornerRadius="13dp">
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="30dp"
-            android:fontFamily="@font/rafat"
-            android:text="Discount on ...."
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_height="500dp"
+            android:layout_alignParentTop="true"
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/offer_products"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/offer_desc"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="7dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/product_item" />
-        <!--Main Body of your custom dialog-->
-    </RelativeLayout>
+            android:background="#F4F4F4">
 
+            <TextView
+                android:id="@+id/offer_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/rafat"
+                android:text="Discount on ...."
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/offer_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/offer_desc"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="7dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/product_item" />
+            <!--Main Body of your custom dialog-->
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
     <LinearLayout
         android:id="@+id/llTop"
         android:layout_width="wrap_content"
@@ -52,9 +69,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:contentDescription="Close"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             app:tint="@color/black"
-            android:contentDescription="Close" />
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"/>
 
     </LinearLayout>
 
