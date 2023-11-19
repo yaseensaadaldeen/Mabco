@@ -106,7 +106,9 @@ public class ProductDetailsFragment extends Fragment {
             assert context != null;
             preferences = context.getSharedPreferences("HomeData", Context.MODE_PRIVATE);
             hide();
+
             ProductDetailsFragmentArgs args = ProductDetailsFragmentArgs.fromBundle(getArguments());
+
             product = args.getProduct();
             prod_det = Detailesbinding.prodDet;
             backbtn = Detailesbinding.backBtn;
@@ -118,6 +120,14 @@ public class ProductDetailsFragment extends Fragment {
             product_name = Detailesbinding.productName;
             add_to_shopping_btn = Detailesbinding.addToShoppingBtn;
             productDetailsAdapter = new ProductDetailsAdapter(this);
+            tabLayout = Detailesbinding.tabLayout;
+            viewPager2 = Detailesbinding.pager;
+            viewPager2.setAdapter(productDetailsAdapter);
+
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.details)), 0);
+
+            if (product.getCategoryModel().getCat_code().equals("09"))
+                tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FAQ)), 1);
             Resources standardResources = context.getResources();
             AssetManager assets = standardResources.getAssets();
             DisplayMetrics metrics = standardResources.getDisplayMetrics();
@@ -149,15 +159,12 @@ public class ProductDetailsFragment extends Fragment {
                     product_disc.setText(" قسيمة شرائية بقيمة" + Long.parseLong(product.getDiscount()) + " ل.س ");
                 }
             }
-            tabLayout = Detailesbinding.tabLayout;
-            viewPager2 = Detailesbinding.pager;
+
             boolean online = haveNetworkConnection();
             ProductDetailsAPI(context, online);
-            viewPager2.setAdapter(productDetailsAdapter);
-            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.details)), 0);
+            productDetailsAdapter.setProduct(product);
 
-            if (product.getCategoryModel().getCat_code().equals("09"))
-                tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FAQ)), 1);
+
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
@@ -167,10 +174,12 @@ public class ProductDetailsFragment extends Fragment {
 
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
+
                 }
 
                 @Override
                 public void onTabReselected(TabLayout.Tab tab) {
+
                 }
             });
             viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -196,6 +205,7 @@ public class ProductDetailsFragment extends Fragment {
                     try {
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("ProductDetails"+product.getStk_code(), response);
+                        editor.putString("ProductOffers"+product.getStk_code(), response);
                         editor.apply();
                         JSONObject jsonResponse = new JSONObject(response);
                         JSONArray DetailsArray = jsonResponse.optJSONArray("getStockDetailsResult");
@@ -221,11 +231,21 @@ public class ProductDetailsFragment extends Fragment {
             }
         } else {
             String ProductDetails = preferences.getString("ProductDetails"+product.getStk_code(), "");
+            String ProductOffers = preferences.getString("ProductDetails"+product.getStk_code(), "");
             if (!ProductDetails.equals("")) {
                 try {
                     JSONObject jsonResponse = new JSONObject(ProductDetails);
                     JSONArray DetailsArray = jsonResponse.optJSONArray("getStockDetailsResult");
                     LoadProductDetails(DetailsArray);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (!ProductOffers.equals("")) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(ProductOffers);
+                    JSONArray offersArray = jsonResponse.optJSONArray("getStockOffers");
+                    LoadOffers(offersArray);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -242,12 +262,15 @@ public class ProductDetailsFragment extends Fragment {
         }
         if (productOffers.size() > 0 )
         {
-            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.offers_header)), 1);
+            if (product.getCategoryModel().getCat_code().equals("09"))
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.offers_header)), 2);
+            else
+                tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.offers_header)), 1);
 
         }
         else if (!Objects.equals(product.getCategoryModel().getCat_code(), "09"))
         {
-                tabLayout.removeAllTabs();
+            tabLayout.removeAllTabs();
             tabLayout.setVisibility(View.GONE);
         }
         productDetailsAdapter.setProduct(product);

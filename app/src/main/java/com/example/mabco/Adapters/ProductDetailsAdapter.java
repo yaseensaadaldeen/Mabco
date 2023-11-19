@@ -64,9 +64,16 @@ public class ProductDetailsAdapter extends FragmentStateAdapter {
             case 0:
                 return new ProductSpecsFragment(productSpecs, product);
             case 1:
+                if (product.getCategoryModel().getCat_code().equals("09"))
+                {
+                    return new FAQFragment(product);
+                }
+                else
+                {
                 return new ProductOfferFragment( productoffer);
+                }
             case 2:
-                return new FAQFragment();
+                return new ProductOfferFragment( productoffer);
 
         }
 
@@ -75,7 +82,7 @@ public class ProductDetailsAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 }
 

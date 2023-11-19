@@ -50,14 +50,14 @@ public class ProductSpecsFragment extends Fragment {
         Specsbinding = FragmentProductSpecsBinding.inflate(inflater, container, false);
         context = this.getContext();
         try {
-
-            product_desc = Specsbinding.productDesc;
-            DetailsRecycleview = Specsbinding.Specs;
-            product_desc.setText(product.getStk_desc());
-            productSpecsAdapter = new ProductSpecsAdapter(productSpecs, context);
-            DetailsRecycleview.setAdapter(productSpecsAdapter);//.notifyDataSetChanged();
-            productSpecsAdapter.notifyDataSetChanged();
-
+            if (productSpecs != null) {
+                product_desc = Specsbinding.productDesc;
+                DetailsRecycleview = Specsbinding.Specs;
+                product_desc.setText(product.getStk_desc());
+                productSpecsAdapter = new ProductSpecsAdapter(productSpecs, context);
+                DetailsRecycleview.setAdapter(productSpecsAdapter);//.notifyDataSetChanged();
+                productSpecsAdapter.notifyDataSetChanged();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

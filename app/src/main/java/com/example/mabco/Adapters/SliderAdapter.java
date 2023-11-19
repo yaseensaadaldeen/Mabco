@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import com.bumptech.glide.Glide;
+import com.example.mabco.Classes.ProductColor;
 import com.example.mabco.R;
 import com.example.mabco.SingletonSession;
 import com.smarteist.autoimageslider.SliderViewAdapter;
@@ -21,16 +22,37 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
 
     private Context context;
     private JSONArray mSliderItems = null;
+    private ArrayList<String> ImagesURL ;
+    public int position = 0;
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    private ProductColorAdapter.OnClickListener onClickListener;
     private boolean zoomOut = false;
 
     public SliderAdapter(Context context, JSONArray mSliderItems) {
         this.context = context;
         this.mSliderItems = mSliderItems;
 
+    }
+    public SliderAdapter(Context context, ArrayList<String> ImagesURL) {
+        this.context = context;
+        this.ImagesURL = ImagesURL;
+
+    }
+    public void setOnClickListener(ProductColorAdapter.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+    public interface OnClickListener {
+        void onClick(int position, ProductColor productColor);
     }
 
     public void renewItems(JSONArray sliderItems) {
@@ -59,35 +81,44 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
     public void onBindViewHolder(final SliderAdapterVH viewHolder, final int position) {
 
 //        SliderItem sliderItem = mSliderItems.get(position);
-        JSONObject pp = null;
-        try {
-            pp = mSliderItems.getJSONObject(position);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        String slide_image_link = "https://" + pp.optString("slide_image_link");
+        if (mSliderItems != null) {
+            JSONObject pp = null;
+            try {
+                pp = mSliderItems.getJSONObject(position);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String slide_image_link = "https://" + pp.optString("slide_image_link");
 //                String slide_image_link = "https://mabcoonline.com/images/Slides/ShopOnline26CoverMABCOSite.jpg";
-        String title = pp.optString("title");
-        String slide_link = pp.optString("slide_link");
+            String title = pp.optString("title");
+            String slide_link = pp.optString("slide_link");
 
-        viewHolder.textViewDescription.setText(title);
-        viewHolder.textViewDescription.setTextSize(16);
-        viewHolder.textViewDescription.setTextColor(Color.WHITE);
-        Glide.with(viewHolder.itemView.getContext()).load(slide_image_link)
-//                .fitCenter()
-                .into(viewHolder.imageViewBackground);
-//        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-////            public void onClick(View v) {
-////                String s = String.valueOf(position-1);
-////
-//////                Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show();
-////                SingletonSession.Instance().setPositionslider(position);
-////                Intent intent = new Intent(context,FullSlide.class);
-////                intent.putExtra("position",String.valueOf(position));
-////                context.startActivity(intent);
-////            }
-//        });
+            viewHolder.textViewDescription.setText(title);
+            viewHolder.textViewDescription.setTextSize(16);
+            viewHolder.textViewDescription.setTextColor(Color.WHITE);
+            Glide.with(viewHolder.itemView.getContext()).load(slide_image_link).into(viewHolder.imageViewBackground);
+        }
+        else if (ImagesURL .size() >0) {
+
+          //  viewHolder.textViewDescription.setText(title);
+            viewHolder.textViewDescription.setTextSize(16);
+            viewHolder.textViewDescription.setTextColor(Color.WHITE);
+            Glide.with(viewHolder.itemView.getContext()).load(ImagesURL.get(position)).into(viewHolder.imageViewBackground);
+        }
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = String.valueOf(position-1);
+                setPosition(position-1);
+
+//                Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show();
+                SingletonSession.Instance().setPositionslider(position);
+//               Intent intent = new Intent(context,FullSlide.class);
+//                intent.putExtra("position",String.valueOf(position));
+//                context.startActivity(intent);
+            }
+        });
     }
 
 

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.view.WindowManager;
 import com.example.mabco.Adapters.OfferRecyclerViewAdapter;
 import com.example.mabco.Classes.Offer;
 import com.example.mabco.R;
+
 import java.util.ArrayList;
 
 public class ProductOfferFragment extends Fragment {
@@ -38,16 +40,14 @@ public class ProductOfferFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_offer_list, container, false);
         try {
             if (view instanceof RecyclerView) {
+               
                 context = view.getContext();
                 RecyclerView recyclerView = (RecyclerView) view;
-
-                    recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
-
+                recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
                 offerRecyclerViewAdapter = new OfferRecyclerViewAdapter(productOffer, context);
                 recyclerView.setAdapter(offerRecyclerViewAdapter);
                 offerRecyclerViewAdapter.setOnClickListener(new OfferRecyclerViewAdapter.OnClickListener() {
@@ -67,8 +67,7 @@ public class ProductOfferFragment extends Fragment {
 
     public void openDialog(Offer offer) {
 
-        OfferProductDialog listDialog = new OfferProductDialog(
-                context, offer) {
+        OfferProductDialog listDialog = new OfferProductDialog(context, offer) {
             @Override
             public void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
@@ -77,7 +76,7 @@ public class ProductOfferFragment extends Fragment {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(listDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = 1400  ;
+        lp.height = 1400;
         listDialog.show();
         listDialog.getWindow().setAttributes(lp);
         listDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

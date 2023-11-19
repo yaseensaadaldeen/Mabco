@@ -1,7 +1,10 @@
 package com.example.mabco.ui.Product;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -51,13 +54,13 @@ public abstract class OfferProductDialog extends Dialog {
     NavController navController;
     SharedPreferences preferences;
     private Offer offer;
-    public String offer_no ;
+    public String offer_no;
     private View view;
     TextView offer_desc;
     ImageButton btnCancel;
     private RecyclerView OfferProductsRecyler;
 
-    public OfferProductDialog(@NonNull Context context,  Offer offer) {
+    public OfferProductDialog(@NonNull Context context, Offer offer) {
         super(context);
         this.offer = offer;
     }
@@ -69,7 +72,7 @@ public abstract class OfferProductDialog extends Dialog {
 
         view = LayoutInflater.from(getContext()).inflate(R.layout.offer_products_dialog, null);
         btnCancel = view.findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(v ->cancel());
+        btnCancel.setOnClickListener(v -> cancel());
         context = view.getContext();
         preferences = context.getSharedPreferences("HomeData", Context.MODE_PRIVATE);
         offer_no = offer.getOffer_no();
@@ -82,9 +85,9 @@ public abstract class OfferProductDialog extends Dialog {
     }
 
     private void setUpRecyclerView(View view) {
-        OfferProductsRecyler =view.findViewById(R.id.offer_products);
+        OfferProductsRecyler = view.findViewById(R.id.offer_products);
         OfferProductsRecyler.setLayoutManager(new LinearLayoutManager(getContext()));
-        OfferProductsAPI(context ,haveNetworkConnection());
+        OfferProductsAPI(context, haveNetworkConnection());
     }
 
     public void OfferProductsAPI(Context context, boolean online) {
@@ -133,6 +136,17 @@ public abstract class OfferProductDialog extends Dialog {
                     throw new RuntimeException(e);
                 }
             }
+            else
+            {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                alertDialog.setMessage("No items to show");
+                alertDialog.setTitle("Sorry");
+                alertDialog.setPositiveButton("OK", (dialog, which) -> {
+                    cancel();
+                    btnCancel.callOnClick();});
+                alertDialog.setCancelable(true);
+                alertDialog.create().show();
+            }
         }
     }
 
@@ -142,11 +156,11 @@ public abstract class OfferProductDialog extends Dialog {
             offerproducts = new ArrayList<Product>();
             try {
                 for (int i = 0; i < array.length(); i++) {
-
                     JSONObject arrayObj = array.getJSONObject(i);
+                    if (arrayObj.optString("stk_code").equals("")) continue;
                     String coupon = "0";
-                    if (arrayObj.optString("offer_spec").contains("on all invoice")){
-                         coupon =  arrayObj.optString("discount");
+                    if (arrayObj.optString("offer_spec").contains("on all invoice")) {
+                        coupon = arrayObj.optString("discount");
                     }
                     Product product = new Product(arrayObj.optString("stk_code"),
                             arrayObj.optString("device_title"),
@@ -168,21 +182,34 @@ public abstract class OfferProductDialog extends Dialog {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        productsAdapter = new ProductsAdapter(context, offerproducts);
-        OfferProductsRecyler.setAdapter(productsAdapter);//.notifyDataSetChanged();
-        productsAdapter.setOnClickListener(new ProductsAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position, Brand brand) {
+        if (offerproducts.size() == 0) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+            alertDialog.setMessage("No items to show");
+            alertDialog.setTitle("Sorry");
+            alertDialog.setPositiveButton("OK", (dialog, which) -> {
+                cancel();
+                btnCancel.callOnClick();});
+            alertDialog.setCancelable(true);
+            alertDialog.create().show();
+
+        } else {
+            productsAdapter = new ProductsAdapter(context, offerproducts);
+            OfferProductsRecyler.setAdapter(productsAdapter);//.notifyDataSetChanged();
+            productsAdapter.setOnClickListener(new ProductsAdapter.OnClickListener() {
+                @Override
+                public void onClick(int position, Brand brand) {
 //                navController = Navigation.findNavController(view);
 //                Navigation.findNavController(view).navigate(R.id.action_nav_home_to_productDetailsFragment);
 //                navController.navigateUp();
 //                navController.navigate((NavDirections) HomeFragmentDirections.actionNavHomeToProductDetailsFragment(product));
-            }
+                }
 
 
-        });
-        productsAdapter.notifyDataSetChanged();
+            });
+            productsAdapter.notifyDataSetChanged();
+        }
     }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
