@@ -422,4 +422,17 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="back">back</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">كلمة المرور</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="Login">تسجيل الدخول</string>
+    <string name="user_name">اسم المستخدم</string>
+    <string name="signup">اشتراك</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
 </resources>
