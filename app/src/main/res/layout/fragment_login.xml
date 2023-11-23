@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".ui.Signin.LoginFragment">
+
     <TextView
         android:id="@+id/header_title"
         android:layout_width="match_parent"
@@ -17,55 +18,100 @@
         android:layout_marginBottom="30dp"
         android:fontFamily="@font/rafat"
         android:text="@string/Login"
-
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/txt_user_name"
+    <TextView
+        android:id="@+id/Login_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/header_title"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/rafat"
+        android:gravity="start"
+        android:text="error"
+        android:textColor="@color/holo_red_dark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:drawableStartCompat="@drawable/error_outline_24"
+        app:drawableTint="@color/holo_red_dark" />
+
+    <EditText
+        android:id="@+id/login_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="10dp"
+        android:autofillHints=""
         android:background="@drawable/textedit_shape"
         android:drawableStart="@drawable/person_vector"
         android:fontFamily="@font/rafat"
-        android:hint="@string/user_name"
+        android:hint="@string/login_user"
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textAlignment="viewStart" />
 
-
-    <EditText
-        android:id="@+id/txt_password"
+    <TextView
+        android:id="@+id/login_user_name_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_user_name"
+        android:layout_marginStart="10dp"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/rafat"
+        android:gravity="start"
+        android:text="error"
+        android:textColor="@color/holo_red_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:drawableStartCompat="@drawable/error_outline_24"
+        app:drawableTint="@color/holo_red_dark" />
+
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:autofillHints=""
         android:background="@drawable/textedit_shape"
         android:drawableStart="@drawable/lock_vector"
-
+        android:fontFamily="@font/rafat"
         android:hint="@string/prompt_password"
         android:inputType="textPassword"
-
         android:padding="10dp"
-        android:fontFamily="@font/rafat"
         android:textAlignment="viewStart" />
+
+    <TextView
+        android:id="@+id/login_password_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/rafat"
+        android:gravity="start"
+        android:text="error"
+        android:textColor="@color/holo_red_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:drawableStartCompat="@drawable/error_outline_24"
+        app:drawableTint="@color/holo_red_dark" />
 
     <Button
         android:id="@+id/login_button"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@id/txt_password"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="80dp"
+
         android:fontFamily="@font/rafat"
         android:text="@string/Login"
         android:textColor="@color/white"

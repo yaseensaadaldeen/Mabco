@@ -432,6 +432,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="Login">تسجيل الدخول</string>
     <string name="user_name">اسم المستخدم</string>
+    <string name="login_user">الاسم أو البريد أو رقم الهاتف</string>
     <string name="signup">اشتراك</string>
     <string name="email">البريد الالكتروني</string>
     <string name="confirm_password">تأكيد كلمة المرور</string>

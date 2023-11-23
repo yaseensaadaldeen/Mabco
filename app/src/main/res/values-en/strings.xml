@@ -241,6 +241,7 @@ We also have medals engraved with different names and pictures
     <string name="back">back</string>
     <string name="Login">Login</string>
     <string name="user_name">user name</string>
+    <string name="login_user">name,email,password</string>
     <string name="prompt_password">password</string>
     <string name="signup">Signup</string>
     <string name="email">Email</string>
