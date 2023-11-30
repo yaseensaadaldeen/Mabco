@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_productDetailsFragment_to_nav_products"
             app:destination="@id/nav_products" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_showrooms"
@@ -55,4 +58,9 @@
             android:id="@+id/action_mapsFragment_to_nav_home"
             app:destination="@id/nav_home" />
     </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.mabco.ui.Signin.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
 </navigation>

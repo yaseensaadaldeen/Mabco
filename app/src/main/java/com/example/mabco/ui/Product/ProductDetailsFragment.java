@@ -3,15 +3,6 @@ package com.example.mabco.ui.Product;
 import static androidx.fragment.app.FragmentManager.TAG;
 
 import android.annotation.SuppressLint;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -19,7 +10,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -33,6 +23,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -48,10 +49,9 @@ import com.denzcoskun.imageslider.interfaces.ItemChangeListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.mabco.Adapters.ProductColorAdapter;
 import com.example.mabco.Adapters.ProductDetailsAdapter;
-import com.example.mabco.Adapters.ProductSpecsAdapter;
+import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.Product;
 import com.example.mabco.Classes.ProductColor;
-import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.ProductSpecs;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
@@ -67,13 +67,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 
 public class ProductDetailsFragment extends Fragment {
     private FragmentProductDetailesBinding Detailesbinding;
     private RequestQueue requestQueue;
     public Context context;
+    NavController navController;
     public RecyclerView ColorsRecycleview;
     public ArrayList<ProductSpecs> productSpecs;
     public ArrayList<ProductColor> productColors;
@@ -93,7 +93,7 @@ public class ProductDetailsFragment extends Fragment {
     private MaterialCardView pro_img;
     SharedPreferences preferences;
     View view;
-
+    String Destenation = "";
     @SuppressLint("UseCompatLoadingForDrawables")
     @Nullable
     @Override
@@ -113,12 +113,22 @@ public class ProductDetailsFragment extends Fragment {
             prod_det = Detailesbinding.prodDet;
             backbtn = Detailesbinding.backBtn;
             backbtn.setOnClickListener(v -> getActivity().onBackPressed());
+            add_to_shopping_btn = Detailesbinding.addToShoppingBtn;
+            //navController = Navigation.findNavController(view);
+            final NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
+            navController = navHostFragment.getNavController();
+            add_to_shopping_btn.setOnClickListener(v -> {
+                //Navigation.findNavController(view).navigate(R.id.action_productDetailsFragment_to_signUpFragment);
+                //navController.navigateUp();
+                Destenation = "SignUp";
+                navController.navigate((NavDirections) ProductDetailsFragmentDirections.actionProductDetailsFragmentToSignUpFragment());
+            });
             product_main_name = Detailesbinding.productMainName;
             pro_img = Detailesbinding.proImg;
             product_images = Detailesbinding.productImages;
             ColorsRecycleview = Detailesbinding.productColors;
             product_name = Detailesbinding.productName;
-            add_to_shopping_btn = Detailesbinding.addToShoppingBtn;
+
             productDetailsAdapter = new ProductDetailsAdapter(this);
             tabLayout = Detailesbinding.tabLayout;
             viewPager2 = Detailesbinding.pager;
@@ -414,7 +424,8 @@ public class ProductDetailsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        show();
+        if(!Destenation .equals("SignUp"))
+            show();
         Detailesbinding = null;
     }
 

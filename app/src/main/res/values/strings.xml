@@ -433,7 +433,19 @@
     <string name="Login">تسجيل الدخول</string>
     <string name="user_name">اسم المستخدم</string>
     <string name="login_user">الاسم أو البريد أو رقم الهاتف</string>
-    <string name="signup">اشتراك</string>
+    <string name="signup">تسجيل</string>
+    <string name="signupheader">التسجيل كمستخدم جديد</string>
     <string name="email">البريد الالكتروني</string>
     <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="MustFillError">لطفاً الإدخال</string>
+    <string name="PasswordConfirmError">كلمتا المرور غير متطابقتان</string>
+    <string name="PasswordLengthCheck">يجب أن تحتوي كلمة المرور على الأقل 6 أحرف </string>
+    <string name="PasswordDegitCheck">يجب أن تحتوي كلمة المرور على رقم واحد على الأقل</string>
+    <string name="PasswordLetterCheck">يجب أن تحتوي كلمة المرور على حرف واحد على الأقل</string>
+    <string name="PasswordSpecialCharCheck">يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل</string>
+    <string name="EmailValidate">لطفا إدخال بريد الكتروني صحيح</string>
+    <string name="NotValid">لطفا التأكد من البينات المدخلة</string>
+    <string name="SignUpSuccess">تم تسجيل المعلومات و الاشتراك بنجاح</string>
+
+
 </resources>
