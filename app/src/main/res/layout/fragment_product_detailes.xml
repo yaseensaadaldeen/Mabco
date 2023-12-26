@@ -16,14 +16,15 @@
         android:layout_height="50dp"
         android:layout_gravity="start"
         android:layout_margin="10dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="#F4F4F4"
         android:contextClickable="true"
         android:src="@drawable/back"
-        app:tint="@color/white"
+        app:fabSize="mini"
         app:backgroundTint="@color/white"
         app:elevation="1dp"
         app:layout_anchorGravity="start"
-        app:fabSize="mini"/>
+        app:tint="@color/colorPrimary" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -82,6 +83,7 @@
                             app:iss_placeholder="@color/transparent"
                             app:iss_title_background="@color/transparent" />
                     </com.google.android.material.card.MaterialCardView>
+
                     <!--product name/colors part-->
                     <RelativeLayout
                         android:id="@+id/prod_det"
@@ -151,6 +153,69 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/cartRelativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end">
+
+                <com.varunest.sparkbutton.SparkButton
+                    android:id="@+id/shopping_cart_btn"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="-5dp"
+                    android:layout_marginTop="-15dp"
+                    android:layout_marginEnd="-15dp"
+                    android:layout_marginBottom="5dp"
+                    app:sparkbutton_activeImage="@drawable/shopping_cart_floating_btn"
+                    app:sparkbutton_iconSize="50dp"
+                    app:sparkbutton_inActiveImage="@drawable/shopping_cart_floating_btn"
+                    app:sparkbutton_primaryColor="@color/colorPrimary"
+                    app:sparkbutton_secondaryColor="@color/white" >
+
+                    <TextView
+                        android:id="@+id/txt_items_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/notification_circle"
+                        android:text="0"
+                        android:layout_gravity="right|bottom"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </com.varunest.sparkbutton.SparkButton>
+                <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+                <!--                android:id="@+id/shopping_cart_btn"-->
+                <!--                android:layout_width="50dp"-->
+                <!--                android:layout_height="50dp"-->
+                <!--                android:layout_alignParentEnd="true"-->
+                <!--                android:layout_gravity="center"-->
+                <!--                android:layout_marginStart="5dp"-->
+                <!--                android:layout_marginTop="5dp"-->
+                <!--                android:layout_marginEnd="5dp"-->
+                <!--                android:layout_marginBottom="5dp"-->
+                <!--                android:backgroundTint="#F4F4F4"-->
+                <!--                android:contentDescription="shopping_cart"-->
+                <!--                android:contextClickable="true"-->
+                <!--                android:src="@drawable/shopping_cart"-->
+                <!--                app:backgroundTint="@color/white"-->
+                <!--                app:elevation="1dp"-->
+                <!--                app:layout_anchorGravity="center"-->
+                <!--                app:maxImageSize="35dp"-->
+                <!--                android:textAlignment="center"-->
+                <!--                app:tint="@color/colorPrimary" />-->
+
+
+            </RelativeLayout>
+        </FrameLayout>
         <TextView
             android:id="@+id/product_main_name"
             android:layout_width="wrap_content"

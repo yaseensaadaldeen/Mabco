@@ -31,15 +31,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.mabco.Adapters.CategoriesAdapter;
 import com.example.mabco.Adapters.OffersAdapter;
-import com.example.mabco.Adapters.ProductColorAdapter;
 import com.example.mabco.Adapters.ProductsHomeAdapter;
 import com.example.mabco.Adapters.SliderAdapter;
-import com.example.mabco.Classes.Brand;
 import com.example.mabco.Classes.CategoryModel;
 import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.Product;
@@ -47,7 +43,7 @@ import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
 import com.example.mabco.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
+
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -98,8 +94,7 @@ public class HomeFragment extends Fragment {
         try {
             assert context != null;
             preferences = context.getSharedPreferences("HomeData", Context.MODE_PRIVATE);
-
-            Resources standardResources = context.getResources();
+                     Resources standardResources = context.getResources();
             AssetManager assets = standardResources.getAssets();
             DisplayMetrics metrics = standardResources.getDisplayMetrics();
             Configuration config = new Configuration(standardResources.getConfiguration());

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "550561747432",
+    "project_id": "mabco-app",
+    "storage_bucket": "mabco-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550561747432:android:24db4a6e9b5b1f8434145d",
+        "android_client_info": {
+          "package_name": "com.example.application.mmmm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550561747432-d7asl8e6ee4pontr6g5h9j43a9hf2bgp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUfUZN2FF3ElT-9cHN9yg1er1V2wRRNWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550561747432-d7asl8e6ee4pontr6g5h9j43a9hf2bgp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550561747432:android:7da942de9b9ac99934145d",
+        "android_client_info": {
+          "package_name": "com.example.mabco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550561747432-d7asl8e6ee4pontr6g5h9j43a9hf2bgp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUfUZN2FF3ElT-9cHN9yg1er1V2wRRNWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550561747432-d7asl8e6ee4pontr6g5h9j43a9hf2bgp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

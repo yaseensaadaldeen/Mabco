@@ -177,7 +177,8 @@
     <string name="final_price">المبلغ المدفوع</string>
     <string name="payment_price">المبلغ:</string>
     <string name="discount">الـحـسـم:</string>
-    <string name="total_price">المجموع</string>
+    <string name="total_price">المجموع :</string>
+    <string name="payment_details">تفاصيل الشراء :</string>
     <string name="phone">الهاتف</string>
     <string name="city">المدينة</string>
     <string name="address">العنوان:</string>
@@ -222,7 +223,9 @@
     <string name="min_storage_hint">min internal storage (GB)</string>
     <string name="max_storage_hint">max internal storage (GB)</string>
     <string name="sms_permission">الرجاء السماح للتطبيق باستقبال الرسائل لقراءة رمز التحقق مباشرة</string>
-    <string name="verify_phone">* عليك التحقق من رقم الهاتف المدخل عن طريق رمز التأكيد في الخطوة التالية</string>
+    <string name="verify_phone">* عند الضغط على التالي , سيتم ارسال كود تحقق الى رقم الهاتف المدخل . يجب ادخاله لاتمام عملية التسجيل</string>
+    <string name="next">التالي</string>
+    <string name="back">رجوع</string>
     <string name="verify_phone_next">*الوقت المتبقي لأنتهاء صلاحية الكود </string>
     <string name="login_required">تسجيل الدخول مطلوب !</string>
     <string name="please_login">يرجى تسيجل الدخول لاستكمال العملية ..</string>
@@ -265,7 +268,7 @@
     <string name="new_pro_header">وصل حديثاً</string>
     <string name="gen_please_wait">please_wait</string>
     <string name="gen_pdf_file">pdf_file</string>
-    <string name="buy">شراء</string>
+    <string name="buy">  ارسال طلب الشراء </string>
     <string name="FAQ">الأسئلة الشائعة</string>
     <string name="arabicDate">
 التاريخ :
@@ -421,7 +424,7 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="back">back</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">كلمة المرور</string>
@@ -435,17 +438,26 @@
     <string name="login_user">الاسم أو البريد أو رقم الهاتف</string>
     <string name="signup">تسجيل</string>
     <string name="signupheader">التسجيل كمستخدم جديد</string>
+    <string name="last_step">ستصلك رسالة بكود التفعيل , يرجى الادخال </string>
     <string name="email">البريد الالكتروني</string>
     <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="verification_code">رمز التأكيد</string>
     <string name="MustFillError">لطفاً الإدخال</string>
     <string name="PasswordConfirmError">كلمتا المرور غير متطابقتان</string>
+    <string name="Verification_resend">لم تصلك الرسالة ؟ اعادة ارسال الرمز</string>
     <string name="PasswordLengthCheck">يجب أن تحتوي كلمة المرور على الأقل 6 أحرف </string>
+    <string name="userLengthCheck">يجب أن يحتوي اسم المستخدم على الأقل 6 أحرف </string>
     <string name="PasswordDegitCheck">يجب أن تحتوي كلمة المرور على رقم واحد على الأقل</string>
     <string name="PasswordLetterCheck">يجب أن تحتوي كلمة المرور على حرف واحد على الأقل</string>
     <string name="PasswordSpecialCharCheck">يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل</string>
     <string name="EmailValidate">لطفا إدخال بريد الكتروني صحيح</string>
     <string name="NotValid">لطفا التأكد من البينات المدخلة</string>
     <string name="SignUpSuccess">تم تسجيل المعلومات و الاشتراك بنجاح</string>
-
+    <string name="error_code">رمز التفعيل خاطئ</string>
+    <string name="sign_up_successful">تم انشاء المستخدم بنجاح</string>
+    <string name="Back_to_Home">العودة للصفحة الرئيسية</string>
+    <string name="continue_shopping_btn">متابعة التسوق</string>
+    <string name="added_successfully">تمت الإضافة بنجاح تابع التسوق ....</string>
+    <string name="already_in_cart">لايمكن الإضافة المنتج موجود مسبقاً</string>
 
 </resources>

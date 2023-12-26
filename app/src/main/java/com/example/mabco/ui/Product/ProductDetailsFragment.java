@@ -2,6 +2,7 @@ package com.example.mabco.ui.Product;
 
 import static androidx.fragment.app.FragmentManager.TAG;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +32,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -53,6 +54,9 @@ import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.Product;
 import com.example.mabco.Classes.ProductColor;
 import com.example.mabco.Classes.ProductSpecs;
+import com.example.mabco.Classes.ShoppingCart;
+import com.example.mabco.FlyToCartAnimation.CircleAnimationUtil;
+import com.example.mabco.MainActivity;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
 import com.example.mabco.databinding.FragmentProductDetailesBinding;
@@ -61,6 +65,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
+import com.varunest.sparkbutton.SparkButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,19 +86,22 @@ public class ProductDetailsFragment extends Fragment {
     public ProductColorAdapter productColorAdapter;
     public ImageView product_image;
     public ImageSlider product_images;
-    public TextView product_name, product_price, product_disc, product_main_name;
+    public TextView product_name, product_price, product_disc, product_main_name, txt_items_count;
     public Product product;
     public ArrayList<SlideModel> productSlide = new ArrayList<>();
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private ProductDetailsAdapter productDetailsAdapter;
-    private FloatingActionButton backbtn;
+    private FloatingActionButton backbtn ;
     private RelativeLayout prod_det;
     private LinearLayout add_to_shopping_btn;
     private MaterialCardView pro_img;
-    SharedPreferences preferences;
+    SharedPreferences preferences, ShoppingCartData;
+    int shoppingcartItems;
+    SparkButton shopping_cart_btn;
     View view;
     String Destenation = "";
+
     @SuppressLint("UseCompatLoadingForDrawables")
     @Nullable
     @Override
@@ -105,9 +113,18 @@ public class ProductDetailsFragment extends Fragment {
             context = getContext();
             assert context != null;
             preferences = context.getSharedPreferences("HomeData", Context.MODE_PRIVATE);
+            ShoppingCartData = context.getSharedPreferences("ShoppingCartData", Context.MODE_PRIVATE);
             hide();
-
+            shoppingcartItems = ShoppingCartData.getInt("items_count", 0);
             ProductDetailsFragmentArgs args = ProductDetailsFragmentArgs.fromBundle(getArguments());
+            txt_items_count = Detailesbinding.txtItemsCount;
+            if (shoppingcartItems == 0) {
+                txt_items_count.setVisibility(View.GONE);
+            } else {
+                txt_items_count.setVisibility(View.VISIBLE);
+                txt_items_count.setText(String.valueOf(shoppingcartItems));
+            }
+            shopping_cart_btn = Detailesbinding.shoppingCartBtn;
 
             product = args.getProduct();
             prod_det = Detailesbinding.prodDet;
@@ -117,25 +134,22 @@ public class ProductDetailsFragment extends Fragment {
             //navController = Navigation.findNavController(view);
             final NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
             navController = navHostFragment.getNavController();
-            add_to_shopping_btn.setOnClickListener(v -> {
-                //Navigation.findNavController(view).navigate(R.id.action_productDetailsFragment_to_signUpFragment);
-                //navController.navigateUp();
-                Destenation = "SignUp";
-                navController.navigate((NavDirections) ProductDetailsFragmentDirections.actionProductDetailsFragmentToSignUpFragment());
-            });
+
             product_main_name = Detailesbinding.productMainName;
             pro_img = Detailesbinding.proImg;
             product_images = Detailesbinding.productImages;
             ColorsRecycleview = Detailesbinding.productColors;
             product_name = Detailesbinding.productName;
-
+           // shopping_cart_btn = Detailesbinding.shoppingCartBtn;
+            shopping_cart_btn.setOnClickListener(v -> {
+                navController.navigate(R.id.action_productDetailsFragment_to_shoppingCartFragment);
+            });
             productDetailsAdapter = new ProductDetailsAdapter(this);
             tabLayout = Detailesbinding.tabLayout;
             viewPager2 = Detailesbinding.pager;
             viewPager2.setAdapter(productDetailsAdapter);
-
+            add_to_shopping_btn.setOnClickListener(v -> addItemToCart());
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.details)), 0);
-
             if (product.getCategoryModel().getCat_code().equals("09"))
                 tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FAQ)), 1);
             Resources standardResources = context.getResources();
@@ -151,7 +165,7 @@ public class ProductDetailsFragment extends Fragment {
             product_image = Detailesbinding.productImage;
             product_name.setText(product.getProduct_title());
             product_price.setText(product.getShelf_price() + " SP");
-            Glide.with(context).load(R.drawable.loading).centerCrop().into(product_image);
+            Glide.with(context).load(R.drawable.loading).fitCenter().into(product_image);
             product_image.setHorizontalFadingEdgeEnabled(true);
             product_image.setVerticalFadingEdgeEnabled(true);
             product_image.setFadingEdgeLength(40);
@@ -301,7 +315,7 @@ public class ProductDetailsFragment extends Fragment {
                 try {
                     if (DetailOBJ.optString("value").startsWith("#") || DetailOBJ.optString("value_Ar").startsWith("#")) {
 
-                        productColors.add(new ProductColor(DetailOBJ.optString("spec_title"), DetailOBJ.optString("value"), DetailOBJ.optString("image_link")));
+                        productColors.add(new ProductColor(DetailOBJ.optString("stk_code"), DetailOBJ.optString("spec_title"), DetailOBJ.optString("value"), DetailOBJ.optString("image_link")));
                     } else {
                         productSpecs.add(new ProductSpecs(DetailOBJ.optString("spec_title"), DetailOBJ.optString("value"), DetailOBJ.optString("image_link")));
                     }
@@ -311,6 +325,8 @@ public class ProductDetailsFragment extends Fragment {
             }
             if (product.getCategoryModel().getCat_code().equals("00")) {
                 productColorAdapter = new ProductColorAdapter(context, productColors);
+                product.setProductColor(productColors.get(0));
+                product.setStk_code(productColors.get(0).getStk_code());
                 ColorsRecycleview.setAdapter(productColorAdapter);//.notifyDataSetChanged();
                 productColorAdapter.notifyDataSetChanged();
                 productColorAdapter.setOnClickListener(new ProductColorAdapter.OnClickListener() {
@@ -319,6 +335,9 @@ public class ProductDetailsFragment extends Fragment {
                         Picasso.get().load(productColor.getImage_Link()).fit().centerInside().into(product_image);
                         productColorAdapter.setSelectedItem(position);
                         productColorAdapter.notifyDataSetChanged();
+                        product.setStk_code(productColor.getStk_code());
+                        product.setProduct_image(productColor.getImage_Link());
+                        product.setProductColor(productColor);
                         ProductSliderSwipe(position);
                     }
                 });
@@ -335,6 +354,9 @@ public class ProductDetailsFragment extends Fragment {
                     public void onItemChanged(int i) {
                         productColorAdapter.setSelectedItem(i);
                         productColorAdapter.notifyDataSetChanged();
+                        product.setStk_code(productColorAdapter.selectedColor.getStk_code());
+                        product.setProduct_image(productColorAdapter.selectedColor.getImage_Link());
+                        product.setProductColor(productColorAdapter.selectedColor);
                         Log.d(TAG, "pos :" + i);
                     }
                 });
@@ -350,6 +372,7 @@ public class ProductDetailsFragment extends Fragment {
                 );
                 pro_img.setLayoutParams(param);
                 productColorAdapter = new ProductColorAdapter(context, productColors);
+                product.setProductColor(productColors.get(0));
                 ColorsRecycleview.setAdapter(productColorAdapter);//.notifyDataSetChanged();
                 productColorAdapter.notifyDataSetChanged();
                 int count = 0;
@@ -424,8 +447,7 @@ public class ProductDetailsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(!Destenation .equals("SignUp"))
-            show();
+        if (!Destenation.equals("SignIn")) show();
         Detailesbinding = null;
     }
 
@@ -437,12 +459,28 @@ public class ProductDetailsFragment extends Fragment {
         NetworkInfo[] netInfo = cm.getAllNetworkInfo();
         for (NetworkInfo ni : netInfo) {
             if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
+                if (ni.isConnected()) haveConnectedWifi = true;
             if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
+                if (ni.isConnected()) haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    private void addItemToCart() {
+        if (ShoppingCart.addToCart(context, product)) {
+            try {
+                shoppingcartItems = ShoppingCart.getItemCount(context);
+                txt_items_count.setText(String.valueOf(shoppingcartItems));
+                txt_items_count.setVisibility(View.VISIBLE);
+                // for updating the main top bar shopping cart items count
+                if (getActivity() instanceof MainActivity)
+                    ((MainActivity) getActivity()).updateNotificationCount(shoppingcartItems);
+                Toast.makeText(context, getString(R.string.added_successfully), Toast.LENGTH_SHORT).show();
+                shopping_cart_btn.playAnimation();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else
+            Toast.makeText(context, getString(R.string.already_in_cart), Toast.LENGTH_SHORT).show();
     }
 }

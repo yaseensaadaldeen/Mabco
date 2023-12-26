@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background Color or Border Color -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#F4F4F4" />
+            <corners
+                android:bottomLeftRadius="250dp"
+                android:bottomRightRadius="250dp"
+                android:topLeftRadius="250dp"
+                android:topRightRadius="250dp" />
+        </shape>
+
+    </item>
+
+    <!-- Image with Rounded Corners -->
+    <item
+        android:bottom="10dp"
+        android:drawable="@drawable/shopping_cart"
+        android:gravity="center"
+        android:left="10dp"
+        android:right="7dp"
+        android:top="10dp" />
+
+
+</layer-list>

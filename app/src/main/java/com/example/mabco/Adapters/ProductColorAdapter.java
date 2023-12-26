@@ -75,7 +75,7 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
                 holder.colorcardView.setStrokeColor(Color.parseColor(productColor.getColor_code()));
             } else
                 holder.colorcardView.setStrokeColor(Color.parseColor("#00FFFFFF"));
-
+            selectedColor=productColor;
             holder.colorimage.setBackgroundColor(Color.parseColor(productColor.getColor_code()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,6 +84,7 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
                         int previousItem = selectedItem;
                         selectedItem = position;
                         onClickListener.onClick(position, productColor);
+                        selectedColor=productColor;
                         notifyItemChanged(previousItem);
                         notifyItemChanged(position);
                     } catch (Exception e) {

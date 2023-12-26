@@ -30,20 +30,18 @@
                 android:id="@+id/image_card"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="3dp"
-                android:layout_marginRight="10dp"
                 android:background="@color/white"
-
+                android:layout_centerHorizontal="true"
                 app:cardCornerRadius="250dp">
 
                 <ImageView
                     android:id="@+id/category_image"
                     android:layout_width="63dp"
                     android:layout_height="65dp"
+
                     android:layout_gravity="center"
                     android:background="@color/colorPrimary"
                     android:padding="15dp"  />

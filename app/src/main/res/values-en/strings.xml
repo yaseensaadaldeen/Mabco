@@ -32,6 +32,7 @@ We also have medals engraved with different names and pictures
         <item>Pages</item>
         <item>What\'s Hot</item>
     </string-array>
+    <string name="ga_trackingId">UA-114686059-1</string>
     <string name="title_activity_map">Map</string>
 
     <string name="FACEBOOK_APP_ID">1589697944399953</string>
@@ -82,7 +83,7 @@ We also have medals engraved with different names and pictures
     <string name="coupon">coupon</string>
     <string name="offers_header">Offers</string>
     <string name="disc_pro_header">Hot deals</string>
-    <string name="buy">buy</string>
+    <string name="buy">Submit Purchase Order</string>
     <string name="FAQ">FAQ</string>
     <string name="communicate">Communicate</string>
     <string name="join_to_mabco_club">Join to MABCO club</string>
@@ -136,6 +137,8 @@ We also have medals engraved with different names and pictures
     <string name="final_price">Final Price :</string>
     <string name="discount">Discount:</string>
     <string name="total_price">Total Price :</string>
+    <string name="payment_details">Payment details :</string>
+
     <string name="phone">Phone</string>
     <string name="city">City</string>
     <string name="address">Address:</string>
@@ -185,7 +188,7 @@ We also have medals engraved with different names and pictures
     <string name="trending">Trending posts</string>
 
     <string name="sms_permission">please allow this app to read SMS to read verification code </string>
-    <string name="verify_phone">*you should verify your phone number in next step by verification code</string>
+    <string name="verify_phone">* When you click on "Next", a verification code will be sent to the entered phone number. It must be entered to complete the registration process. </string>
     <string name="login_required">login required !</string>
     <string name="please_login">please login to continue ..</string>
     <string name="done">done</string>
@@ -238,7 +241,7 @@ We also have medals engraved with different names and pictures
     <string name="request_offer">Request offer on this item</string>
     <string name="offer_list">Offer list for </string>
     <string name="offer_list_ac">press on any offer to view details</string>
-    <string name="back">back</string>
+
     <string name="Login">Login</string>
     <string name="user_name">user name</string>
     <string name="login_user">name,email,password</string>
@@ -247,15 +250,26 @@ We also have medals engraved with different names and pictures
     <string name="signupheader">Signup</string>
     <string name="email">Email</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="verification_code">Verification code</string>
+    <string name="last_step"> we sent to you a text message with verification code please enter the code . </string>
+    <string name="Verification_resend">"Did you not receive the message? Resend the code</string>
     <string name="MustFillError">Please fill</string>
     <string name="PasswordConfirmError">Passwords are not compatible</string>
-    <string name="PasswordLengthCheck">Password must be at least 8 characters long </string>
+    <string name="PasswordLengthCheck">Password must be at least 6 characters long </string>
+    <string name="userLengthCheck">user name must be at least 6 characters long </string>
     <string name="PasswordDegitCheck">Password must contain at least one digit</string>
     <string name="PasswordLetterCheck">Password must contain at least one letter</string>
     <string name="PasswordSpecialCharCheck">Password must contain at least one special character</string>
     <string name="EmailValidate">Please enter valid email</string>
     <string name="NotValid">Please check entered data</string>
     <string name="SignUpSuccess">SignUp Completed successfully</string>
-
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="error_code">Error with verification code</string>
+    <string name="sign_up_successful">تم انشاء المستجدم بنجاح</string>
+    <string name="Back_to_Home">Back to Home</string>
+    <string name="continue_shopping_btn">continue shopping</string>
+    <string name="added_successfully">Added Successfully Continue Shopping... </string>
+    <string name="already_in_cart">Product is already in the cart </string>
 
 </resources>

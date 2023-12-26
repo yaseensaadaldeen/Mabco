@@ -5,10 +5,15 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
+
 public class Product implements Parcelable {
-    String stk_code,stk_desc,shelf_price,discount,coupon,tag,product_title,product_image;
+    String stk_code, stk_desc, shelf_price, discount, coupon, tag, product_title, product_image;
     CategoryModel categoryModel;
     Brand brand;
+    ProductColor productColor;
+
+
 
     public Product(String stk_code, String stk_desc, String shelf_price, String discount, String coupon, String product_title) {
         this.stk_code = stk_code;
@@ -19,7 +24,7 @@ public class Product implements Parcelable {
         this.product_title = product_title;
     }
 
-    public Product(String stk_code, String product_title, String stk_desc, String shelf_price, CategoryModel categoryModel , String discount, String coupon, String tag, String product_image) {
+    public Product(String stk_code, String product_title, String stk_desc, String shelf_price, CategoryModel categoryModel, String discount, String coupon, String tag, String product_image) {
         this.stk_code = stk_code;
         this.stk_desc = stk_desc;
         this.shelf_price = shelf_price;
@@ -146,12 +151,31 @@ public class Product implements Parcelable {
         this.product_image = product_image;
     }
 
+    public ProductColor getProductColor() {
+        return productColor;
+    }
+
+    public void setProductColor(ProductColor productColor) {
+        this.productColor = productColor;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
+
     @Override
     public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeStringArray(new String[] {this.stk_code,this.stk_desc,this.shelf_price,this.discount,this.coupon,this.tag,this.product_title,this.product_image});
+        parcel.writeStringArray(new String[]{this.stk_code, this.stk_desc, this.shelf_price, this.discount, this.coupon, this.tag, this.product_title, this.product_image});
+    }
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    // Create a Product object from a JSON string
+    public static Product fromJson(String jsonString) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonString, Product.class);
     }
 }
