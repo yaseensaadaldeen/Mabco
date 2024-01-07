@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="top"
+    android:background="@color/lighGray"
+    android:orientation="horizontal"
+    android:paddingBottom="60dp"
+    tools:context=".ui.Product.CategoryProductsFragment">
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/brand_shimmer_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        >
+
+        <!-- Your existing product item layout -->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/brand_item_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:elevation="5dp"
+            android:minWidth="180dp"
+            android:orientation="horizontal"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <include layout="@layout/shimmering_brand_item" />
+
+                <include layout="@layout/shimmering_brand_item" />
+
+                <include layout="@layout/shimmering_brand_item" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/brands_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="top"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/brand_item" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/brands_slider">
+
+        <!-- Your GridLayout containing RecyclerView -->
+        <GridLayout
+            android:id="@+id/products_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:rowCount="@integer/material_motion_duration_medium_2">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/product_shimmer_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="7dp">
+
+                <!-- Your existing product item layout -->
+                <LinearLayout
+                    android:id="@+id/shimmer_products_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:rowCount="@integer/material_motion_duration_medium_2"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                       >
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:spanCount="2">
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+                        <include layout="@layout/shimmering_product_item" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/brand_products_slider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/brands_slider"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="7dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/product_item_home" />
+        </GridLayout>
+
+        <!-- TextView to show when RecyclerView is empty -->
+        <TextView
+            android:id="@+id/emptyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/rafat"
+            android:text="@string/no_items"
+            android:textSize="30sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>

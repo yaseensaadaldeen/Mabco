@@ -2,227 +2,194 @@ package com.example.mabco.ui.Product;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
+import android.text.Editable;
+import android.text.Layout;
+import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.mabco.Adapters.BrandAdapter;
-import com.example.mabco.Adapters.CategoriesAdapter;
-import com.example.mabco.Adapters.ProductsAdapter;
-import com.example.mabco.Adapters.ProductsBrandAdapter;
-import com.example.mabco.Adapters.ProductsHomeAdapter;
-import com.example.mabco.Classes.Brand;
-import com.example.mabco.Classes.CategoryModel;
-import com.example.mabco.Classes.Product;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.mabco.Adapters.CategoryProductsAdapter;
+import com.example.mabco.Classes.ShoppingCart;
 import com.example.mabco.R;
-import com.example.mabco.UrlEndPoint;
-import com.example.mabco.ui.home.HomeFragmentDirections;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import com.example.mabco.databinding.FragmentProductsBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.varunest.sparkbutton.SparkButton;
 
 public class ProductsFragment extends Fragment {
-    private String cat_code = "00";
-    NavController navController;
-    private RequestQueue requestQueue;
-    public Context context;
-    public RecyclerView BrandRecycleview;
-    public RecyclerView ProductsRecycleview;
 
-    public ArrayList<Brand> brands;
-    public ArrayList<Product> brandProducts;
-    public BrandAdapter brandAdapter;
-    public ProductsHomeAdapter productsAdapter;
-    public String cat_name = "";
-    private  View view;
+    private FragmentProductsBinding productsBinding;
+    Context context;
+    SparkButton shopping_cart_btn;
+    NavController navController;
+    int shoppingcartItems;
+    EditText Edtxt_search;
+    FloatingActionButton btn_back;
+    private TabLayout category_tab_layout;
+    private ViewPager2 category_products_pager;
+    CategoryProductsAdapter categoryProductsAdapter;
+    TextView txt_items_count;
+    String Destenation = "";
+    int selectedTab = 0 ;
 
     public ProductsFragment() {
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_products, container, false);
         try {
-
+            productsBinding = FragmentProductsBinding.inflate(inflater, container, false);
             context = getContext();
-            BrandRecycleview = view.findViewById(R.id.brands_slider);
-            ProductsRecycleview = view.findViewById(R.id.brand_products_slider);
-            int orientation = getResources().getConfiguration().orientation;
-            int spanCount;
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                // code for portrait mode
-                spanCount = 2;
+            shopping_cart_btn = productsBinding.shoppingCartBtn;
+            Edtxt_search = productsBinding.categoryProductsSearch;
+            btn_back = productsBinding.backBtn;
+            category_tab_layout = productsBinding.categoryTabLayout;
+            category_products_pager = productsBinding.categoryProductsPager;
+            txt_items_count = productsBinding.txtItemsCount;
+            final NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
+            navController = navHostFragment.getNavController();
+            if( ShoppingCart.getItemCount(context)==0)
+                txt_items_count.setVisibility(View.GONE);
+            else
+                txt_items_count.setVisibility(View.VISIBLE);
 
-            } else {
-                // code for landscape mode
-                spanCount = 4;
+            txt_items_count.setText(String.valueOf( ShoppingCart.getItemCount(context)));
+            btn_back.setOnClickListener(v -> getActivity().onBackPressed());
+            categoryProductsAdapter = new CategoryProductsAdapter(this);
+            category_products_pager.setAdapter(categoryProductsAdapter);
+            category_products_pager.setUserInputEnabled(false);
+            category_tab_layout.addTab(category_tab_layout.newTab().setText(getString(R.string.Mobiles)), 0);
+            category_tab_layout.addTab(category_tab_layout.newTab().setText(getString(R.string.power)), 1);
+            category_tab_layout.addTab(category_tab_layout.newTab().setText(getString(R.string.Mobile_acc)), 2);
+            category_tab_layout.addTab(category_tab_layout.newTab().setText(getString(R.string.spare)), 3);
+            category_tab_layout.addTab(category_tab_layout.newTab().setText(getString(R.string.Gaming)), 4);
+            //cat_codes been set in the adapter manually due to tab position
+
+            Resources standardResources = context.getResources();
+            Configuration config = new Configuration(standardResources.getConfiguration());
+            if (config.getLayoutDirection() == Layout.DIR_LEFT_TO_RIGHT) {
+                btn_back.setImageResource(R.drawable.back_rtl);
             }
-
-            gridLayoutManager.setSpanCount(spanCount);
-            ProductsRecycleview.setLayoutManager(gridLayoutManager);
-            ProductsFragmentArgs args = ProductsFragmentArgs.fromBundle(getArguments());
-            cat_code = args.getCatCode();
-            cat_name = args.getCatName();
-            BrandProductsAPI(context);
-
-            ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(cat_name);
-
-        } catch (Exception e) {
-            Log.i("Products Exception", e.getMessage());
-        }
-        return view;
-    }
-
-    public void BrandProductsAPI(Context context) {
-        requestQueue = Volley.newRequestQueue(context);
-        com.example.mabco.HttpsTrustManager.allowAllSSL();
-        String url = UrlEndPoint.General + "Service1.svc/getStocksByCat/" + cat_code;
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray BrandsArray = jsonResponse.optJSONArray("getBrands");
-                    JSONArray ProductsArray = jsonResponse.optJSONArray("getStocks");
-
-                    if (ProductsArray != null) {
-                        LoadBrands(BrandsArray, ProductsArray);
-                        brandAdapter.notifyDataSetChanged();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        },
-                new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
-                    }
-                }) {
-        };
-        try {
-            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    15000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
-            );
-            requestQueue.add(jsonObjectRequest);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void LoadBrandProducts(String brand_code) {
-        ProductsFragmentArgs args = ProductsFragmentArgs.fromBundle(getArguments());
-        String brand_name = "";
-        ArrayList<Product> products = new ArrayList<>();
-        for (int j = 0; j < brands.size(); j++) {
-            if (brands.get(j).getBrand_code().equals(brand_code)) {
-                products = brands.get(j).getProducts();
-                brand_name = " - " + brands.get(j).getBrand_name();
-            }
-        }
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(args.getCatName() + brand_name);
-        productsAdapter = new ProductsHomeAdapter(context, products);
-        ProductsRecycleview.setAdapter(productsAdapter);
-        productsAdapter.setOnClickListener(new ProductsHomeAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position, Product product) {
-                navController = Navigation.findNavController(view);
-                Navigation.findNavController(view).navigate(R.id.action_nav_products_to_productDetailsFragment);
-                navController.navigateUp();
-                navController.navigate((NavDirections) ProductsFragmentDirections.actionNavProductsToProductDetailsFragment(product));
-            }
-        });//.notifyDataSetChanged();
-        productsAdapter.notifyDataSetChanged();
-    }
-
-    public void LoadBrands(JSONArray BrandsArray, JSONArray ProductsArray) {
-        try {
-            brands = new ArrayList<>();
-            for (int j = 0; j < BrandsArray.length(); j++) {
-                brandProducts = new ArrayList<>();
-                JSONObject BrandOBJ = BrandsArray.getJSONObject(j);
-                try {
-                    for (int i = 0; i < ProductsArray.length(); i++) {
-                        JSONObject ProductOBJ = ProductsArray.getJSONObject(i);
-                        Product product = new Product();
-                        if ((!cat_code.equals("01") && BrandOBJ.optString("brand_code").equals(ProductOBJ.optString("brand_code")))
-                                || (cat_code.equals("01") && BrandOBJ.optString("acc_cat_id").equals(ProductOBJ.optString("brand_code")))
-                        ) {
-                            product = new Product(ProductOBJ.optString("stk_code"),
-                                    ProductOBJ.optString("device_title"),
-                                    ProductOBJ.optString("stk_desc"),
-                                    ProductOBJ.optString("shelf_price"),
-                                    new CategoryModel(cat_code),
-                                    "0",
-                                    "0",
-                                    "",
-                                    "https://" + ProductOBJ.optString("image_link"));
-                        } else continue;
-                        brandProducts.add(product);
-                    }
-                    if (brandProducts.size() > 0) {
-                        String brand_Code;
-                        String brand_name;
-                        if (cat_code.equals("01")) {
-                            brand_Code = BrandOBJ.optString("acc_cat_id");
-                            brand_name = BrandOBJ.optString("acc_cat_name");
-                        } else {
-                            brand_Code = BrandOBJ.optString("brand_code");
-                            brand_name = BrandOBJ.optString("brand_title");
-                        }
-                        brands.add(new Brand(brand_name,
-                                brand_Code,
-                                "https://" + BrandOBJ.optString("image_link"),
-                                brandProducts
-                        ));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            brandAdapter = new BrandAdapter(context, brands);
-            BrandRecycleview.setAdapter(brandAdapter);//.notifyDataSetChanged();
-            brandAdapter.notifyDataSetChanged();
-            LoadBrandProducts(brands.get(0).getBrand_code());
-            brandAdapter.setOnClickListener(new BrandAdapter.OnClickListener() {
+            shopping_cart_btn.setOnClickListener(v -> {
+                navController.navigate(R.id.action_productsFragment_to_shoppingCartFragment);
+            });
+            category_tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
-                public void onClick(int position, Brand brand) {
-                    LoadBrandProducts(brands.get(position).getBrand_code());
+                public void onTabSelected(TabLayout.Tab tab) {
+                    category_products_pager.setCurrentItem(tab.getPosition());
+                    selectedTab = tab.getPosition();
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
                 }
             });
+            category_products_pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                    category_tab_layout.selectTab(category_tab_layout.getTabAt(position));
+                }
+            });
+            categoryProductsAdapter.notifyDataSetChanged();
+            Edtxt_search.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    categoryProductsAdapter.setSearchtext(String.valueOf(Edtxt_search.getText()));
+                    category_products_pager.setAdapter(categoryProductsAdapter);
+                    category_products_pager.setCurrentItem(selectedTab);
+                    categoryProductsAdapter.notifyDataSetChanged();
+                }
+            });
+            hide();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+        return productsBinding.getRoot();
     }
 
+    public void hide() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
+        navBar.setVisibility(View.VISIBLE);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
+
+    public void show() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.show();
+        }
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
+        navBar.setVisibility(View.VISIBLE);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+    }
+
+    private ActionBar getSupportActionBar() {
+        ActionBar actionBar = null;
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            actionBar = activity.getSupportActionBar();
+        }
+        return actionBar;
+    }
+
+    @Override
+    public void onDestroyView() {
+
+        try {
+            super.onDestroyView();
+            NavDestination currentDestination = navController.getCurrentDestination();
+            if (currentDestination != null && currentDestination.getId() == R.id.nav_home) {
+                show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

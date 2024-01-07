@@ -1,8 +1,5 @@
 package com.example.mabco.ui.Product;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-
-import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,7 +13,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +51,6 @@ import com.example.mabco.Classes.Product;
 import com.example.mabco.Classes.ProductColor;
 import com.example.mabco.Classes.ProductSpecs;
 import com.example.mabco.Classes.ShoppingCart;
-import com.example.mabco.FlyToCartAnimation.CircleAnimationUtil;
 import com.example.mabco.MainActivity;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
@@ -192,8 +187,8 @@ public class ProductDetailsFragment extends Fragment {
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-                  viewPager2.setCurrentItem(tab.getPosition());
-                   // productDetailsAdapter.createFragment(tab.getPosition());
+                    viewPager2.setCurrentItem(tab.getPosition());
+                    // productDetailsAdapter.createFragment(tab.getPosition());
                 }
 
                 @Override
@@ -314,7 +309,6 @@ public class ProductDetailsFragment extends Fragment {
                 JSONObject DetailOBJ = DetailsArray.getJSONObject(j);
                 try {
                     if (DetailOBJ.optString("value").startsWith("#") || DetailOBJ.optString("value_Ar").startsWith("#")) {
-
                         productColors.add(new ProductColor(DetailOBJ.optString("stk_code"), DetailOBJ.optString("spec_title"), DetailOBJ.optString("value"), DetailOBJ.optString("image_link")));
                     } else {
                         productSpecs.add(new ProductSpecs(DetailOBJ.optString("spec_title"), DetailOBJ.optString("value"), DetailOBJ.optString("image_link")));
@@ -341,6 +335,7 @@ public class ProductDetailsFragment extends Fragment {
                         ProductSliderSwipe(position);
                     }
                 });
+                productSlide = new ArrayList<>();
 
                 int count = 0;
                 for (ProductColor item : productColors) {
@@ -352,12 +347,14 @@ public class ProductDetailsFragment extends Fragment {
                     @SuppressLint("RestrictedApi")
                     @Override
                     public void onItemChanged(int i) {
-                        productColorAdapter.setSelectedItem(i);
+                        SlideModel current_item = productSlide.get(i);
+                        int selected_color_index = productColorAdapter.getSelectedimage(current_item.getImageUrl());
+                        productColorAdapter.setSelectedItem(selected_color_index);
+                        ColorsRecycleview.scrollToPosition(selected_color_index);
                         productColorAdapter.notifyDataSetChanged();
                         product.setStk_code(productColorAdapter.selectedColor.getStk_code());
                         product.setProduct_image(productColorAdapter.selectedColor.getImage_Link());
                         product.setProductColor(productColorAdapter.selectedColor);
-                        Log.d(TAG, "pos :" + i);
                     }
                 });
                 product_image.setVisibility(View.GONE);
@@ -375,6 +372,7 @@ public class ProductDetailsFragment extends Fragment {
                 product.setProductColor(productColors.get(0));
                 ColorsRecycleview.setAdapter(productColorAdapter);//.notifyDataSetChanged();
                 productColorAdapter.notifyDataSetChanged();
+                productSlide = new ArrayList<>();
                 int count = 0;
                 for (ProductColor item : productColors) {
                     productSlide.add(count, new SlideModel(item.getImage_Link(), "", ScaleTypes.CENTER_INSIDE));
@@ -383,8 +381,6 @@ public class ProductDetailsFragment extends Fragment {
                 product_images.setImageList(productSlide);
                 product_image.setVisibility(View.GONE);
             }
-
-
             productDetailsAdapter.setProduct(product);
             productDetailsAdapter.setProductSpecs(productSpecs);
             viewPager2.setAdapter(productDetailsAdapter);
@@ -447,7 +443,7 @@ public class ProductDetailsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (!Destenation.equals("SignIn")) show();
+        //if (!Destenation.equals("SignIn")) show();
         Detailesbinding = null;
     }
 

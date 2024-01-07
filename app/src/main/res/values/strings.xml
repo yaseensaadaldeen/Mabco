@@ -57,7 +57,7 @@
     <string name="Mobiles">هواتف</string>
     <string name="tablets">تابلت</string>
     <string name="power">وحدة كهرباء</string>
-    <string name="Mobile_acc">اكسسوارات</string>
+    <string name="Mobile_acc">اكسسوار</string>
     <string name="spare">قطع التبديل</string>
     <string name="PC_acc">اكسسوارات حاسب</string>
     <string name="feed_back">ارسال شكوى</string>
@@ -459,5 +459,22 @@
     <string name="continue_shopping_btn">متابعة التسوق</string>
     <string name="added_successfully">تمت الإضافة بنجاح تابع التسوق ....</string>
     <string name="already_in_cart">لايمكن الإضافة المنتج موجود مسبقاً</string>
+    <string name="no_items">لا يوجد عناصر للعرض</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 </resources>

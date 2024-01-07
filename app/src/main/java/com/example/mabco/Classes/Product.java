@@ -178,4 +178,13 @@ public class Product implements Parcelable {
         Gson gson = new Gson();
         return gson.fromJson(jsonString, Product.class);
     }
+    public boolean matchesSearchText(String searchText) {
+        // Convert both product title and description to lowercase for case-insensitive search
+        String lowercaseSearchText = searchText.toLowerCase();
+        String lowercaseProductName = product_title.toLowerCase();
+        String lowercaseProductDescription = stk_desc.toLowerCase();
+
+        // Check if either product name or description contains the search text
+        return lowercaseProductName.contains(lowercaseSearchText) || lowercaseProductDescription.contains(lowercaseSearchText);
+    }
 }

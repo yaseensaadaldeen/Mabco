@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +34,7 @@ import com.example.mabco.Classes.ShoppingCart;
 import com.example.mabco.MainActivity;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -68,7 +71,7 @@ public class ShoppingCartFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         ShoppingcartData = context.getSharedPreferences("ShoppingCartData", Context.MODE_PRIVATE);
         Userdata = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
-
+        show();
         ShoppingcartItemsRecycle = view.findViewById(R.id.ShoppingcartItemsRecycle);
         Total_price = view.findViewById(R.id.txt_total_val);
         TotalDiscount = view.findViewById(R.id.total_discount_val);
@@ -168,5 +171,38 @@ public class ShoppingCartFragment extends Fragment {
 
             }
         }
+    }
+    public void hide() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
+        navBar.setVisibility(View.INVISIBLE);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
+
+    public void show() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.show();
+        }
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
+        navBar.setVisibility(View.VISIBLE);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+    }
+
+    private ActionBar getSupportActionBar() {
+        ActionBar actionBar = null;
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            actionBar = activity.getSupportActionBar();
+        }
+        return actionBar;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

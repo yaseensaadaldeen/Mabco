@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="48dp"
+    android:layout_width="50dp"
+    android:layout_gravity="right"
     android:layout_height="fill_parent"
-    android:layout_gravity="right" >
+    android:padding="5dp">
 
     <!-- Menu Item Image -->
     <ImageView
         android:id="@+id/shopping_icon_topbar"
-        android:layout_width="33dp"
+        android:layout_width="30dp"
         android:layout_height="fill_parent"
         android:clickable="true"
-        android:paddingEnd="5dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="7dp"
         android:src="@drawable/shopping_cart"
         android:backgroundTint="@color/white"
         android:tint="@color/white"
@@ -26,7 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="6dp"
         android:layout_marginLeft="15dp"
         android:textSize="11sp"
         android:text="0"

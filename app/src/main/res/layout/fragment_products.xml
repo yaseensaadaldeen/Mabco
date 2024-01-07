@@ -1,51 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.Product.ProductsFragment"
-    android:layout_gravity="top"
-    android:background="@color/lighGray"
-    android:paddingBottom="60dp"
-    android:orientation="horizontal">
+    tools:context=".ui.Product.ProductsFragment">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="7dp"
-        android:id="@+id/brands_slider"
+    <RelativeLayout
+        android:id="@+id/Products_hdr"
         android:layout_width="match_parent"
-        android:layout_gravity="top"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/brand_item"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp">
 
-        />
+        <EditText
+            android:id="@+id/category_products_search"
+            android:layout_width="170dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/textedit_shape"
+            android:drawableEnd="@drawable/baseline_search_24"
+            android:fontFamily="@font/rafat"
+            android:hint="@string/search"
+            android:inputType="textFilter"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textAlignment="viewStart"
+            android:textSize="15sp" />
 
-<GridLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/brands_slider"
-    android:rowCount="@integer/material_motion_duration_medium_2"
-    android:id="@+id/products_grid"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="start"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#F4F4F4"
+            android:contentDescription="@string/back"
+            android:contextClickable="true"
+            android:src="@drawable/back"
+            app:backgroundTint="@color/white"
+            app:elevation="1dp"
+            app:fabSize="mini"
+            app:tint="@color/colorPrimary" />
 
-    >
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginStart="13dp"
-        android:layout_marginEnd="13dp"
+        <FrameLayout
+            android:id="@+id/cartFrame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/back_btn"
+            android:layout_toStartOf="@+id/category_products_search">
 
-        android:id="@+id/brand_products_slider"
+            <RelativeLayout
+                android:id="@+id/cartRelativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start">
+
+                <com.varunest.sparkbutton.SparkButton
+                    android:id="@+id/shopping_cart_btn"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="-17dp"
+                    android:layout_marginTop="-8dp"
+                    android:layout_marginEnd="-5dp"
+                    android:layout_marginBottom="5dp"
+                    app:sparkbutton_activeImage="@drawable/shopping_cart_floating_btn"
+                    app:sparkbutton_iconSize="45dp"
+                    app:sparkbutton_inActiveImage="@drawable/shopping_cart_floating_btn"
+                    app:sparkbutton_primaryColor="@color/colorPrimary"
+                    app:sparkbutton_secondaryColor="@color/white">
+
+                    <TextView
+                        android:id="@+id/txt_items_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:layout_marginRight="22dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/notification_circle"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </com.varunest.sparkbutton.SparkButton>
+            </RelativeLayout>
+        </FrameLayout>
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/brands_slider"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/Products_hdr"
         android:layout_marginTop="10dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/product_item_home"
-        app:spanCount="2"/>
-</GridLayout>
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:cardCornerRadius="7dp">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/category_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimaryDarkNoAlpha"
+                app:tabGravity="fill"
+                app:tabIndicator="@drawable/tab_indecator"
+                app:tabIndicatorAnimationMode="elastic"
+                app:tabIndicatorGravity="stretch"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextAppearance="@style/category_navigation_items" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/category_products_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
 </RelativeLayout>

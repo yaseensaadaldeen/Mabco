@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="lighGray">#eeee</color>
-
+    <color name="shimmerColor">#C2C2C2</color>
     <!--    <color name="colorPrimary">#ff33b5e5</color>-->
     <color name="colorPrimary">#af0491cf</color>
     <color name="colorPrimaryDark">#a71f9add</color>

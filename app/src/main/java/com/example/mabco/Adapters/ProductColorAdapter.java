@@ -34,28 +34,8 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
         this.productColors = productColors;
     }
 
-    public ProductColor getSelectedColor() {
-        return selectedColor;
-    }
-
-    public void setSelectedColor(ProductColor selectedColor) {
-        this.selectedColor = selectedColor;
-    }
-
-    public int getSelectedItem() {
-        return selectedItem;
-    }
-
     public void setSelectedItem(int selectedItem) {
         this.selectedItem = selectedItem;
-    }
-
-    public int getSelectedPos() {
-        return selectedPos;
-    }
-
-    public void setSelectedPos(int selectedPos) {
-        this.selectedPos = selectedPos;
     }
 
     @NonNull
@@ -75,6 +55,8 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
                 holder.colorcardView.setStrokeColor(Color.parseColor(productColor.getColor_code()));
             } else
                 holder.colorcardView.setStrokeColor(Color.parseColor("#00FFFFFF"));
+
+
             selectedColor=productColor;
             holder.colorimage.setBackgroundColor(Color.parseColor(productColor.getColor_code()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -116,4 +98,15 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
     public interface OnClickListener {
         void onClick(int position, ProductColor productColor);
     }
+
+    public int getSelectedimage(String selected_image) {
+
+        for (int i = 0; i < productColors.size(); i++) {
+            if (productColors.get(i).getImage_Link().equals(selected_image)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
 }

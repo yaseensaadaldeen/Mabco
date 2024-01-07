@@ -271,5 +271,6 @@ We also have medals engraved with different names and pictures
     <string name="continue_shopping_btn">continue shopping</string>
     <string name="added_successfully">Added Successfully Continue Shopping... </string>
     <string name="already_in_cart">Product is already in the cart </string>
+    <string name="no_items">No items to display</string>
 
 </resources>

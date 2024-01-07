@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -41,9 +42,8 @@ import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.Product;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
-import com.example.mabco.databinding.ActivityMainBinding;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -68,10 +68,12 @@ public class HomeFragment extends Fragment {
     public RequestQueue requestQueue;
     public Context context;
     NavController navController;
-    private ActivityMainBinding binding;
     SharedPreferences preferences;
+
     View view;
+    ShimmerFrameLayout offershimmerViewContainer, newshimmerViewContainer;
     private SliderAdapter adapter;
+
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -108,20 +110,26 @@ public class HomeFragment extends Fragment {
             requestQueue = Volley.newRequestQueue(this.getContext());
 
 
-             LoadSliders(getContext(), haveNetworkConnection()) ;
+            LoadSliders(getContext(), haveNetworkConnection());
 
             categoriesRecycler = view.findViewById(R.id.categories);
             categoriesRecycler.setAdapter(LoadCategories(context));
 
+
             offersRecycler = view.findViewById(R.id.offers_slider);
             offersRecycler.setAdapter(LoadOffers(context));
-
+            offershimmerViewContainer = view.findViewById(R.id.offershimmerViewContainer);
+            offershimmerViewContainer.startShimmer();
+            newshimmerViewContainer = view.findViewById(R.id.new_shimmer_view_container);
+            newshimmerViewContainer.startShimmer();
             offerproductsRecycler = view.findViewById(R.id.offer_products_slider);
             if (offerproducts == null) {
                 ProductsWithDiscountAPI(context, haveNetworkConnection());
             } else {
                 offerproductsHomeAdapter = new ProductsHomeAdapter(context, offerproducts);
                 offerproductsRecycler.setAdapter(offerproductsHomeAdapter);//.notifyDataSetChanged();
+                offershimmerViewContainer.stopShimmer();
+                offershimmerViewContainer.setVisibility(View.GONE);
                 offerproductsHomeAdapter.notifyDataSetChanged();
                 offerproductsHomeAdapter.setOnClickListener(new ProductsHomeAdapter.OnClickListener() {
                     @Override
@@ -132,6 +140,7 @@ public class HomeFragment extends Fragment {
                         navController.navigate((NavDirections) HomeFragmentDirections.actionNavHomeToProductDetailsFragment(product));
                     }
                 });
+
             }
             newproductsRecycler = view.findViewById(R.id.new_products_slider);
             if (newproducts == null) {
@@ -149,6 +158,8 @@ public class HomeFragment extends Fragment {
 
                     }
                 });
+                newshimmerViewContainer.stopShimmer();
+                newshimmerViewContainer.setVisibility(View.GONE);
                 newproductsHomeAdapter.notifyDataSetChanged();
             }
 
@@ -217,8 +228,11 @@ public class HomeFragment extends Fragment {
                         editor.apply();
                         JSONObject jsonResponse = new JSONObject(response);
                         JSONArray array = jsonResponse.optJSONArray("GetAllProductsWithDiscount");
+
                         if (array != null) {
                             LoadProducts(array);
+                            offershimmerViewContainer.stopShimmer();
+                            offershimmerViewContainer.setVisibility(View.GONE);
                             offerproductsHomeAdapter.notifyDataSetChanged();
                         }
                     } catch (Exception e) {
@@ -276,6 +290,8 @@ public class HomeFragment extends Fragment {
                         JSONArray array = jsonResponse.optJSONArray("getNewArrivalsResult");
                         if (array != null) {
                             LoadNewProducts(array);
+                            newshimmerViewContainer.stopShimmer();
+                            newshimmerViewContainer.setVisibility(View.GONE);
                             newproductsHomeAdapter.notifyDataSetChanged();
                         }
                     } catch (Exception e) {
@@ -520,4 +536,5 @@ public class HomeFragment extends Fragment {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
 }

@@ -82,7 +82,42 @@
             android:textStyle="bold"
 
             />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/offershimmerViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <!-- Your existing product item layout -->
+            <LinearLayout
+                android:minWidth="180dp"
+                android:id="@+id/mobile_item_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="5dp"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:configChanges="orientation|screenSize|keyboardHidden">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmering_product_item" />
+
+                    <include layout="@layout/shimmering_product_item" />
+
+                    <include layout="@layout/shimmering_product_item" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/offer_products_slider"
             android:layout_width="match_parent"
@@ -110,7 +145,42 @@
             android:textStyle="bold"
 
             />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/new_shimmer_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <!-- Your existing product item layout -->
+            <LinearLayout
+                android:minWidth="180dp"
+                android:id="@+id/mobile_item_layout_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="5dp"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:configChanges="orientation|screenSize|keyboardHidden">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmering_product_item" />
+
+                    <include layout="@layout/shimmering_product_item" />
+
+                    <include layout="@layout/shimmering_product_item" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/new_products_slider"
             android:layout_width="match_parent"
@@ -152,4 +222,5 @@
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
+
 </ScrollView>

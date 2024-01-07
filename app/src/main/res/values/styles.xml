@@ -162,6 +162,9 @@
         <item name="android:scrollbarFadeDuration">2000</item>
         <item name="android:scrollbarDefaultDelayBeforeFade">1000</item>
     </style>
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:fontFamily">@font/rafat</item>
+    </style>
 
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -214,6 +217,13 @@
         <item name="android:textSize">15dp</item>
         <item name="android:fontFamily">@font/rafat</item>
         <!--<item name="android:textStyle">bold</item>-->
+    </style>
+    <style name="category_navigation_items" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/nobghometxt</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/rafat</item>
+        <item name="android:textStyle">bold</item>
+
     </style>
     <!--
 

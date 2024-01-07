@@ -192,28 +192,6 @@
                         android:textSize="11sp"
                         android:textStyle="bold" />
                 </com.varunest.sparkbutton.SparkButton>
-                <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-                <!--                android:id="@+id/shopping_cart_btn"-->
-                <!--                android:layout_width="50dp"-->
-                <!--                android:layout_height="50dp"-->
-                <!--                android:layout_alignParentEnd="true"-->
-                <!--                android:layout_gravity="center"-->
-                <!--                android:layout_marginStart="5dp"-->
-                <!--                android:layout_marginTop="5dp"-->
-                <!--                android:layout_marginEnd="5dp"-->
-                <!--                android:layout_marginBottom="5dp"-->
-                <!--                android:backgroundTint="#F4F4F4"-->
-                <!--                android:contentDescription="shopping_cart"-->
-                <!--                android:contextClickable="true"-->
-                <!--                android:src="@drawable/shopping_cart"-->
-                <!--                app:backgroundTint="@color/white"-->
-                <!--                app:elevation="1dp"-->
-                <!--                app:layout_anchorGravity="center"-->
-                <!--                app:maxImageSize="35dp"-->
-                <!--                android:textAlignment="center"-->
-                <!--                app:tint="@color/colorPrimary" />-->
-
-
             </RelativeLayout>
         </FrameLayout>
         <TextView

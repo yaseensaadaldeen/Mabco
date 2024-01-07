@@ -8,10 +8,10 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.mabco.ui.home.HomeFragment"
-        android:label="Mabco">
+        android:label="">
         <action
             android:id="@+id/action_nav_home_to_nav_products"
-            app:destination="@id/nav_products" />
+            app:destination="@id/nav_category_products" />
         <action
             android:id="@+id/action_nav_home_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
@@ -21,13 +21,16 @@
         <action
             android:id="@+id/action_nav_home_to_shoppingCartFragment"
             app:destination="@id/shoppingCartFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_productsFragment"
+            app:destination="@id/productsFragment" />
     </fragment>
 
 
     <fragment
-        android:id="@+id/nav_products"
-        android:name="com.example.mabco.ui.Product.ProductsFragment"
-        tools:layout="@layout/fragment_products" >
+        android:id="@+id/nav_category_products"
+        android:name="com.example.mabco.ui.Product.CategoryProductsFragment"
+        tools:layout="@layout/fragment_category_products" >
         <argument android:name="cat_code" app:argType="string" />
         <argument android:name="cat_name" app:argType="string" />
         <action
@@ -47,19 +50,22 @@
             app:destination="@id/nav_home" />
         <action
             android:id="@+id/action_productDetailsFragment_to_nav_products"
-            app:destination="@id/nav_products" />
+            app:destination="@id/nav_category_products" />
         <action
             android:id="@+id/action_productDetailsFragment_to_signInMain"
             app:destination="@id/signInMain" />
         <action
             android:id="@+id/action_productDetailsFragment_to_shoppingCartFragment"
             app:destination="@id/shoppingCartFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_productsFragment"
+            app:destination="@id/productsFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_showrooms"
         android:name="com.example.mabco.MapsFragment"
-        android:label="Maps"
-        tools:layout="@layout/fragment_maps" >
+        tools:layout="@layout/fragment_maps"
+        android:label="">
         <action
             android:id="@+id/action_mapsFragment_to_nav_home"
             app:destination="@id/nav_home" />
@@ -67,7 +73,6 @@
     <fragment
         android:id="@+id/signInMain"
         android:name="com.example.mabco.ui.Signin.SignInMain"
-        android:label="fragment_sign_in_main"
         tools:layout="@layout/fragment_sign_in_main" >
         <action
             android:id="@+id/action_signInMain_to_productDetailsFragment"
@@ -79,14 +84,32 @@
     <fragment
         android:id="@+id/shoppingCartFragment"
         android:name="com.example.mabco.ui.ShoppingCart.ShoppingCartFragment"
-        tools:layout="@layout/fragment_shopping_cart" >
+        tools:layout="@layout/fragment_shopping_cart"
+        android:label="">
         <action
             android:id="@+id/action_shoppingCartFragment_to_nav_home"
             app:destination="@id/nav_home" />
         <action
             android:id="@+id/action_shoppingCartFragment_to_nav_products"
-            app:destination="@id/nav_products"
+            app:destination="@id/nav_category_products"
             />
+    </fragment>
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.example.mabco.ui.Product.ProductsFragment"
+        tools:layout="@layout/fragment_products" >
+        <action
+            android:id="@+id/action_productsFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_productsFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+        <action
+            android:id="@+id/action_nav_products_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+        <argument
+            android:name="product"
+            app:argType="com.example.mabco.Classes.Product" />
     </fragment>
 
 </navigation>

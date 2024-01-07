@@ -10,7 +10,7 @@
             android:title="@string/title_home"/>
 
         <item
-            android:id="@+id/nav_products"
+            android:id="@+id/productsFragment"
             android:icon="@drawable/products"
             android:title="@string/title_activity_products"/>
 

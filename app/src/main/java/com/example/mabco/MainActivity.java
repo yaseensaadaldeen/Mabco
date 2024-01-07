@@ -28,6 +28,8 @@ import com.example.mabco.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Objects;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,18 +56,21 @@ public class MainActivity extends AppCompatActivity {
             NavigationView navigationView = binding.navView;
             // Passing each menu ID as a set of Ids because each
             // menu should be considered as top level destinations.
-            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services).setOpenableLayout(drawer).build();
+            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services , R.id.productsFragment).setOpenableLayout(drawer).build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(navigationView, navController);
+
 
             BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
 //         Passing each menu ID as a set of Ids because each
 //         menu should be considered as top level destinations.
-            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.navigation_search, R.id.navigation_personal, R.id.navigation_showrooms).build();
+            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.productsFragment, R.id.navigation_personal, R.id.navigation_showrooms).build();
             NavController bottomnavController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             //NavigationUI.setupActionBarWithNavController(this, bottomnavController, appBarConfiguration);
             NavigationUI.setupWithNavController(navView, bottomnavController);
+
         } catch (Exception ex) {
             Log.i("brandAdapter exception", ex.getMessage());
         }
