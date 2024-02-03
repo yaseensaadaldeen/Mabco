@@ -1,7 +1,6 @@
 package com.example.mabco.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -48,9 +47,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         this.ImagesURL = ImagesURL;
 
     }
-    public void setOnClickListener(ProductColorAdapter.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-    }
+
     public interface OnClickListener {
         void onClick(int position, ProductColor productColor);
     }
@@ -96,6 +93,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
             viewHolder.textViewDescription.setText(title);
             viewHolder.textViewDescription.setTextSize(16);
             viewHolder.textViewDescription.setTextColor(Color.WHITE);
+            viewHolder.imageViewBackground.setScaleType(ImageView.ScaleType.FIT_XY);
             Glide.with(viewHolder.itemView.getContext()).load(slide_image_link).into(viewHolder.imageViewBackground);
         }
         else if (ImagesURL .size() >0) {
@@ -103,7 +101,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
           //  viewHolder.textViewDescription.setText(title);
             viewHolder.textViewDescription.setTextSize(16);
             viewHolder.textViewDescription.setTextColor(Color.WHITE);
-            Glide.with(viewHolder.itemView.getContext()).load(ImagesURL.get(position)).into(viewHolder.imageViewBackground);
+            Glide.with(viewHolder.itemView.getContext()).load(ImagesURL.get(position)).centerInside().into(viewHolder.imageViewBackground);
         }
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +140,6 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
     @Override
     public int getCount() {
         //slider view count could be dynamic size
-        return mSliderItems.length();
+        return ImagesURL != null && ImagesURL.size() > 0 ? ImagesURL.size() : (mSliderItems != null ? mSliderItems.length() : 0);
     }
 }

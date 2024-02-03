@@ -57,6 +57,10 @@
         android:layout_gravity="top"
         android:background="@color/white"
         android:orientation="horizontal"
+
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:padding="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/brand_item" />
@@ -150,6 +154,10 @@
                 android:layout_marginEnd="7dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 app:spanCount="2"
                 tools:listitem="@layout/product_item_home" />
         </GridLayout>

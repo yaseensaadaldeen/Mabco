@@ -460,7 +460,7 @@
     <string name="added_successfully">تمت الإضافة بنجاح تابع التسوق ....</string>
     <string name="already_in_cart">لايمكن الإضافة المنتج موجود مسبقاً</string>
     <string name="no_items">لا يوجد عناصر للعرض</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">اعدادات التطبيق</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -476,5 +476,22 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="notification">الإشعارات</string>
+    <string name="Language">اللغة</string>
+    <string-array name="Languages">
+        <item>العربية</item>
+        <item>الانكليزية</item>
+
+    </string-array>
+    <string name="my_carts">سلاتي</string>
+    <string name="edit_info">تعديل  الحساب</string>
+    <string name="personal_header">معلومات شخصية</string>
+    <string name="about">عن مابكو</string>
+    <string name="about_app">معلومات التطبيق</string>
+    <string name="terms_of_use">سياسة الإستخدام</string>
+    <string name="english_item">الانكليزية</string>
+    <string name="arabic_item">العربية</string>
+    <string name="login_succeded">Welcom</string>
+    <string name="submit_empty">يرجى إضافة عناصر لإتمام عملية الشراء</string>
 
 </resources>

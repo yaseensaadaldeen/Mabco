@@ -1,7 +1,5 @@
 package com.example.mabco.Classes;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 public class CategoryModel {
     String title ,cat_code ;
     int image;

@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -68,7 +67,7 @@ public class HomeFragment extends Fragment {
     public RequestQueue requestQueue;
     public Context context;
     NavController navController;
-    SharedPreferences preferences;
+    SharedPreferences preferences, PersonalPreference;
 
     View view;
     ShimmerFrameLayout offershimmerViewContainer, newshimmerViewContainer;
@@ -96,13 +95,10 @@ public class HomeFragment extends Fragment {
         try {
             assert context != null;
             preferences = context.getSharedPreferences("HomeData", Context.MODE_PRIVATE);
-                     Resources standardResources = context.getResources();
-            AssetManager assets = standardResources.getAssets();
-            DisplayMetrics metrics = standardResources.getDisplayMetrics();
-            Configuration config = new Configuration(standardResources.getConfiguration());
-            config.setLocale(new Locale("ar"));//getDefault());
-            config.setLayoutDirection(new Locale("ar"));
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
+            String local = PersonalPreference.getString("Language", "ar");
+            SetLanguage(local);
+
             BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
             if (navBar != null && navBar.getVisibility() == View.INVISIBLE)
                 showNavigationBar();
@@ -264,6 +260,8 @@ public class HomeFragment extends Fragment {
                     JSONArray array = jsonResponse.optJSONArray("GetAllProductsWithDiscount");
                     if (array != null) {
                         LoadProducts(array);
+                        offershimmerViewContainer.stopShimmer();
+                        offershimmerViewContainer.setVisibility(View.GONE);
                         offerproductsHomeAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
@@ -322,6 +320,8 @@ public class HomeFragment extends Fragment {
                     JSONArray array = jsonResponse.optJSONArray("getNewArrivalsResult");
                     if (array != null) {
                         LoadNewProducts(array);
+                        newshimmerViewContainer.stopShimmer();
+                        newshimmerViewContainer.setVisibility(View.GONE);
                         newproductsHomeAdapter.notifyDataSetChanged();
                     }
                 }
@@ -404,6 +404,8 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
         offerproductsHomeAdapter = new ProductsHomeAdapter(context, offerproducts);
+        offershimmerViewContainer.stopShimmer();
+        offershimmerViewContainer.setVisibility(View.GONE);
         offerproductsRecycler.setAdapter(offerproductsHomeAdapter);//.notifyDataSetChanged();
         offerproductsHomeAdapter.setOnClickListener(new ProductsHomeAdapter.OnClickListener() {
             @Override
@@ -417,7 +419,7 @@ public class HomeFragment extends Fragment {
         offerproductsHomeAdapter.notifyDataSetChanged();
     }
 
-    public ArrayList<SlideModel> LoadSliders(Context context, boolean online) {
+    public void LoadSliders(Context context, boolean online) {
         requestQueue = Volley.newRequestQueue(context);
         com.example.mabco.HttpsTrustManager.allowAllSSL();
         String url = UrlEndPoint.General + "Service1.svc/getsliderimages";
@@ -511,7 +513,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         }
-        return Slides;
     }
 
     public void showNavigationBar() {
@@ -535,6 +536,16 @@ public class HomeFragment extends Fragment {
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    public void SetLanguage(String local) {
+        Resources standardResources = context.getResources();
+            AssetManager assets = standardResources.getAssets();
+            DisplayMetrics metrics = standardResources.getDisplayMetrics();
+            Configuration config = new Configuration(standardResources.getConfiguration());
+            config.setLocale(new Locale(local));//getDefault());
+            config.setLayoutDirection(new Locale(local));
+            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 
 }

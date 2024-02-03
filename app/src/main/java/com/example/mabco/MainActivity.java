@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,12 +21,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.mabco.Classes.ShoppingCart;
 import com.example.mabco.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +32,12 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     SharedPreferences ShoppingCartData;
     TextView notification_cnt;
+     TextView userNameTextView;
 
+
+    public void updateUserName(String newUserName) {
+        userNameTextView.setText(newUserName);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
             DrawerLayout drawer = binding.drawerLayout;
             NavigationView navigationView = binding.navView;
+            View headerView = navigationView.getHeaderView(0);
+             userNameTextView = headerView.findViewById(R.id.sidebar_user_name);
+            userNameTextView.setText("Yaseen");
             // Passing each menu ID as a set of Ids because each
             // menu should be considered as top level destinations.
             mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services , R.id.productsFragment).setOpenableLayout(drawer).build();
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
 //         Passing each menu ID as a set of Ids because each
 //         menu should be considered as top level destinations.
-            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.productsFragment, R.id.navigation_personal, R.id.navigation_showrooms).build();
+            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.productsFragment, R.id.profileFragment, R.id.navigation_showrooms).build();
             NavController bottomnavController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             //NavigationUI.setupActionBarWithNavController(this, bottomnavController, appBarConfiguration);
             NavigationUI.setupWithNavController(navView, bottomnavController);
@@ -138,4 +141,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
+
 }

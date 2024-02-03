@@ -7,7 +7,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mabco.Adapters.FAQ_Adapter;
-import com.example.mabco.Classes.CategoryModel;
 import com.example.mabco.Classes.FAQ;
 import com.example.mabco.Classes.Product;
 import com.example.mabco.R;

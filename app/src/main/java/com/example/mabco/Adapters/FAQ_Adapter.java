@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mabco.Classes.FAQ;
 import com.example.mabco.R;
 
-import java.lang.invoke.LambdaConversionException;
 import java.util.ArrayList;
 import java.util.List;
 

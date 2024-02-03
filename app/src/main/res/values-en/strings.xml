@@ -242,6 +242,7 @@ We also have medals engraved with different names and pictures
     <string name="offer_list">Offer list for </string>
     <string name="offer_list_ac">press on any offer to view details</string>
 
+    <string name="login_failed">فشل تسجيل الدخول</string>
     <string name="Login">Login</string>
     <string name="user_name">user name</string>
     <string name="login_user">name,email,password</string>
@@ -272,5 +273,18 @@ We also have medals engraved with different names and pictures
     <string name="added_successfully">Added Successfully Continue Shopping... </string>
     <string name="already_in_cart">Product is already in the cart </string>
     <string name="no_items">No items to display</string>
+    <string name="title_activity_settings">App settings</string>
+    <string name="notification">Notification</string>
+    <string name="Language">Language</string>
+    <string name="my_carts">My carts</string>
+    <string name="edit_info">Edit account</string>
+    <string name="personal_header">Personal Info</string>
+    <string name="about">About MABCO</string>
+    <string name="about_app">About App</string>
+    <string name="terms_of_use">Terms of use</string>
+    <string name="english_item">English</string>
+    <string name="arabic_item">Arabic</string>
+    <string name="login_succeded">"اهلا "</string>
+    <string name="submit_empty">please add items to be submitted</string>
 
 </resources>

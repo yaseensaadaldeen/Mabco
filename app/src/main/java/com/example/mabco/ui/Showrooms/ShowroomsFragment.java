@@ -1,5 +1,8 @@
 package com.example.mabco.ui.Showrooms;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +11,41 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.mabco.Adapters.ShowroomAdapter;
+import com.example.mabco.Classes.NetworkStatus;
+import com.example.mabco.Classes.Showroom;
 import com.example.mabco.R;
+import com.example.mabco.UrlEndPoint;
+import com.facebook.shimmer.ShimmerFrameLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class ShowroomsFragment extends Fragment {
+    Context context;
+    View view;
+    RecyclerView showroomitems;
+    ShowroomAdapter showroomAdapter;
+    SharedPreferences showroomsPreferance;
+    public RequestQueue requestQueue;
+    ShimmerFrameLayout showroomshimmerViewContainer;
+    String local = "en";
+    SharedPreferences PersonalPreference;
+    ArrayList<Showroom> showrooms;
 
-    private ShowroomsViewModel mViewModel;
 
     public static ShowroomsFragment newInstance() {
         return new ShowroomsFragment();
@@ -23,14 +54,114 @@ public class ShowroomsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_showrooms, container, false);
+        view = inflater.inflate(R.layout.fragment_showrooms, container, false);
+        context = getContext();
+        showroomsPreferance = context.getSharedPreferences("ShowroomData", Context.MODE_PRIVATE);
+        PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
+         local = PersonalPreference.getString("Language", "ar");
+        showroomitems = view.findViewById(R.id.showrooms_recycle);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        showroomitems.setLayoutManager(layoutManager);
+        showroomshimmerViewContainer = view.findViewById(R.id.showroomshimmerViewContainer);
+        showrooms=new ArrayList<>();
+
+        showroomAdapter = new ShowroomAdapter(context, showrooms);
+        showroomitems.setAdapter(showroomAdapter);
+        ShowroomsAPI(context, NetworkStatus.isOnline(context));
+        return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ShowroomsViewModel.class);
-        // TODO: Use the ViewModel
+    @SuppressLint("NotifyDataSetChanged")
+    public void ShowroomsAPI(Context context, boolean online) {
+        if (online) {
+            requestQueue = Volley.newRequestQueue(context);
+            com.example.mabco.HttpsTrustManager.allowAllSSL();
+            String url = UrlEndPoint.General + "Service1.svc/getshowroomssites/"+local;
+            StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        SharedPreferences.Editor editor = showroomsPreferance.edit();
+                        editor.putString("Showrooms", response);
+                        editor.apply();
+                        JSONObject jsonResponse = new JSONObject(response);
+                        JSONArray array = jsonResponse.optJSONArray("GetShowroomsSitesResult");
+                        if (array != null) {
+                            LoadShowrooms(array);
+                            showroomshimmerViewContainer.stopShimmer();
+                            showroomshimmerViewContainer.setVisibility(View.GONE);
+                            showroomAdapter.notifyDataSetChanged();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            },
+                    new Response.ErrorListener() {
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    }) {
+            };
+            try {
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                        15000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+                );
+                requestQueue.add(jsonObjectRequest);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                String NewArrivals = showroomsPreferance.getString("Showrooms", "");
+                if (!NewArrivals.equals("")) {
+                    JSONObject jsonResponse = new JSONObject(NewArrivals);
+                    JSONArray array = jsonResponse.optJSONArray("GetShowroomsSitesResult");
+                    if (array != null) {
+                        LoadShowrooms(array);
+                        showroomshimmerViewContainer.stopShimmer();
+                        showroomshimmerViewContainer.setVisibility(View.GONE);
+                        showroomAdapter.notifyDataSetChanged();
+                    }
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    void LoadShowrooms(JSONArray array) throws JSONException {
+        try {
+            showrooms.clear();
+            try {
+                for (int i = 0; i < array.length(); i++) {
+
+                    JSONObject arrayObj = array.getJSONObject(i);
+                    Showroom showroom = new Showroom(arrayObj.optString("Loc_code"),
+                            arrayObj.optString("Loc_name"),
+                            "https://" + arrayObj.optString("image_link"),
+                            arrayObj.optString("Phone"),
+                            arrayObj.optString("City_name"),
+                            arrayObj.optString("Address")
+                    );
+
+                    showrooms.add(showroom);
+                }
+                showroomitems.setAdapter(showroomAdapter);
+                showroomAdapter.notifyDataSetChanged();
+                showroomshimmerViewContainer.stopShimmer();
+                showroomshimmerViewContainer.setVisibility(View.GONE);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -13,11 +13,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.ProductColor;
-import com.example.mabco.Classes.Offer;
 import com.example.mabco.databinding.ProductOfferItemBinding;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class OfferRecyclerViewAdapter extends RecyclerView.Adapter<OfferRecyclerViewAdapter.ViewHolder> {
 

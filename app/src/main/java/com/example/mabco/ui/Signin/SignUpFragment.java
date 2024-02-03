@@ -34,6 +34,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mabco.Classes.NetworkStatus;
+import com.example.mabco.MainActivity;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
 import com.example.mabco.databinding.FragmentSignUpBinding;
@@ -205,6 +206,7 @@ public class SignUpFragment extends Fragment {
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject arrayObj = array.getJSONObject(i);
                                 String result = arrayObj.getString("result");
+                                String custm_Code =  arrayObj.getString("custm_code");
                                 if (result.equals("1")) {
                                     showSuccessDialog();
                                 }
@@ -281,8 +283,9 @@ public class SignUpFragment extends Fragment {
                     editor.putString("UserName", String.valueOf(EdTxt_user_name.getText()));
                     editor.putString("PhoneNO", String.valueOf(EdTxt_phone_no.getText()));
                     editor.putString("Password", String.valueOf(EdTxt_password.getText()));
-                    editor.putString("Verified", "true");
+                    editor.putBoolean("Verified", true);
                     editor.apply();
+                    ((MainActivity) getActivity()).updateUserName(String.valueOf(EdTxt_user_name.getText()));
                 } else {
                     // User cannot sign up at the moment
                     long remainingTime = signUpManager.getRemainingTime();

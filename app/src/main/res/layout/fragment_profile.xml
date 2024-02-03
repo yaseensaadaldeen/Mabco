@@ -1,22 +1,658 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.profile.ProfileFragment">
-    <TextView
-        android:id="@+id/textprofile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/account_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lighGray"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/rafat"
+                android:padding="20dp"
+                android:text="Yaseen Sa3d Aldeen"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDarkNoAlpha"
+                android:textSize="22sp" />
+
+            <Button
+                android:id="@+id/edit_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:drawableEnd="@drawable/baseline_mode_edit_24"
+                android:drawableTint="@color/white"
+                android:fontFamily="@font/rafat"
+                android:text="@string/edit_info"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/setting_Area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/account_info"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="50dp"
+            android:padding="10dp"
+            app:cardCornerRadius="7dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/setting_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/lighGray"
+                    android:drawableStart="@drawable/outline_settings_24"
+                    android:drawableTint="@color/colorPrimary"
+                    android:fontFamily="@font/rafat"
+                    android:text="@string/title_activity_settings"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorPrimaryDarkNoAlpha"
+                    android:textSize="18sp" />
+                <!--notification-->
+                <RelativeLayout
+                    android:id="@+id/notification_Area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/setting_header"
+                    android:background="@color/lightgray"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:cardCornerRadius="7dp"
+                    android:elevation="5dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/notification_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:outlineSpotShadowColor="@color/lighGray"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/baseline_edit_notifications_24"
+                        app:fabSize="mini"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_Notification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/notification_icon"
+                        android:fontFamily="@font/rafat"
+                        android:text="@string/notification"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDarkNoAlpha"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/notification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:checked="true"
+                        android:textColor="@color/colorPrimary"  />
+
+
+                </RelativeLayout>
+                <!--Language-->
+                <RelativeLayout
+                    android:id="@+id/Language_Area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/notification_Area"
+                    android:background="@color/lightgray"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:cardCornerRadius="7dp"
+                    android:elevation="5dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/language_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:outlineSpotShadowColor="@color/lighGray"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/baseline_language_24"
+                        app:fabSize="mini"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/language_icon"
+                        android:fontFamily="@font/rafat"
+                        android:text="@string/language"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDarkNoAlpha"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <Spinner
+                        android:id="@+id/Language_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:drawSelectorOnTop="true"
+                        android:entries="@array/Languages"
+                        android:entryValues="@array/Languages"
+                        android:layoutDirection="locale"
+
+                        />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/personal_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/setting_Area"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            app:cardCornerRadius="7dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/personal_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/lighGray"
+                    android:fontFamily="@font/rafat"
+                    android:text="@string/personal_header"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorPrimaryDarkNoAlpha"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/person_vector"
+                    app:drawableTint="@color/colorPrimaryDarkNoAlpha" />
+                <!--invoices-->
+                <RelativeLayout
+                    android:id="@+id/invoice_Area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/personal_header"
+                    android:background="@color/lightgray"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:cardCornerRadius="7dp"
+                    android:elevation="5dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/invoice_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:outlineSpotShadowColor="@color/colorPrimary"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/baseline_receipt_long_24"
+                        app:fabSize="mini"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_inovoices"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/invoice_icon"
+                        android:fontFamily="@font/rafat"
+                        android:text="@string/show_invoices"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDarkNoAlpha"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/transparent"
+                        android:layoutDirection="locale"
+                        android:src="@drawable/baseline_arrow_back_ios_new_24"
+                        app:tint="@color/white" />
+
+                </RelativeLayout>
+                <!--shopping carts-->
+                <RelativeLayout
+                    android:id="@+id/shopping_Area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/invoice_Area"
+                    android:background="@color/lightgray"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:cardCornerRadius="7dp"
+                    android:elevation="5dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/carts_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:outlineSpotShadowColor="@color/lighGray"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/shopping_cart"
+                        app:fabSize="mini"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_cart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/carts_icon"
+                        android:fontFamily="@font/rafat"
+                        android:text="@string/my_carts"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDarkNoAlpha"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/transparent"
+                        android:layoutDirection="locale"
+                        android:src="@drawable/baseline_arrow_back_ios_new_24"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+                <!--Log-->
+                <RelativeLayout
+                    android:id="@+id/log_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/shopping_Area"
+                    android:background="@color/lightgray"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:cardCornerRadius="7dp"
+                    android:elevation="5dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/log_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:outlineSpotShadowColor="@color/lighGray"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/baseline_login_24"
+                        app:fabSize="mini"
+                        app:tint="@color/lighGray" />
+
+                    <TextView
+                        android:id="@+id/txt_log"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/log_icon"
+                        android:fontFamily="@font/rafat"
+                        android:text="@string/Login"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDarkNoAlpha"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/transparent"
+                        android:layoutDirection="locale"
+                        android:src="@drawable/baseline_arrow_back_ios_new_24"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/personal_area"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="100dp"
+            android:padding="10dp"
+            app:cardCornerRadius="7dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/lighGray">
+
+                <TextView
+                    android:id="@+id/about_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_toEndOf="@+id/mabcologo"
+                    android:fontFamily="@font/rafat"
+                    android:text="@string/about"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorPrimaryDarkNoAlpha"
+                    android:textSize="18sp"
+                    app:drawableTint="@color/colorPrimaryDarkNoAlpha" />
+
+                <ImageView
+                    android:id="@+id/mabcologo"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@color/lightgray"
+                    android:src="@drawable/mabco" />
+                <!--warranty-->
+                <RelativeLayout
+                    android:id="@+id/warranty_Area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mabcologo"
+                    android:background="@color/lightgray"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:cardCornerRadius="7dp"
+                    android:elevation="5dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/warranty_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:outlineSpotShadowColor="@color/gray"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/outline_shield_24"
+                        app:fabSize="mini"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_warranty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/warranty_icon"
+                        android:fontFamily="@font/rafat"
+                        android:text="@string/warranty_title"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDarkNoAlpha"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/transparent"
+                        android:layoutDirection="locale"
+                        android:src="@drawable/baseline_arrow_back_ios_new_24"
+                        app:tint="@color/white" />
+
+                </RelativeLayout>
+                <!--privacy-->
+                <RelativeLayout
+                    android:id="@+id/policy_Area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/warranty_Area"
+                    android:background="@color/lightgray"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:cardCornerRadius="7dp"
+                    android:elevation="5dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/policy_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:outlineSpotShadowColor="@color/lighGray"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/outline_security_24"
+                        app:fabSize="mini"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_policy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/policy_icon"
+                        android:fontFamily="@font/rafat"
+                        android:text="@string/Privacy_Policy_title"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDarkNoAlpha"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/transparent"
+                        android:layoutDirection="locale"
+                        android:src="@drawable/baseline_arrow_back_ios_new_24"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+                <!--use policy-->
+                <RelativeLayout
+                    android:id="@+id/use_terms_Area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/policy_Area"
+                    android:background="@color/lightgray"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:cardCornerRadius="7dp"
+                    android:elevation="5dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/use_terms_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:layoutDirection="locale"
+                        android:outlineSpotShadowColor="@color/lighGray"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/baseline_playlist_add_check_24"
+                        app:fabSize="mini"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_use_terms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/use_terms_icon"
+                        android:fontFamily="@font/rafat"
+                        android:text="@string/terms_of_use"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDarkNoAlpha"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/transparent"
+                        android:layoutDirection="locale"
+                        android:src="@drawable/baseline_arrow_back_ios_new_24"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+                <!--about-->
+                <RelativeLayout
+                    android:id="@+id/about_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/use_terms_Area"
+                    android:background="@color/lightgray"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:cardCornerRadius="7dp"
+                    android:elevation="5dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/about_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:outlineSpotShadowColor="@color/lighGray"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/outline_info_24"
+                        app:fabSize="mini"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_about"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/about_icon"
+                        android:fontFamily="@font/rafat"
+                        android:text="@string/about_app"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDarkNoAlpha"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/transparent"
+                        android:layoutDirection="locale"
+                        android:src="@drawable/baseline_arrow_back_ios_new_24"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</ScrollView>

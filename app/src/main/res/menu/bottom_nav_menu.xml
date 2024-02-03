@@ -16,7 +16,7 @@
         android:icon="@drawable/showrooms"
         android:title="@string/showroom" />
     <item
-        android:id="@+id/navigation_personal"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/account"
         android:title="@string/profile" />
 

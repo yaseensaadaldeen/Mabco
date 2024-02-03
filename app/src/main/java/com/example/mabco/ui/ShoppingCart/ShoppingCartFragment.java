@@ -1,7 +1,10 @@
 package com.example.mabco.ui.ShoppingCart;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
@@ -9,15 +12,23 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -31,10 +42,13 @@ import com.example.mabco.Adapters.ShoppingCartItemsAdapter;
 import com.example.mabco.Classes.NetworkStatus;
 import com.example.mabco.Classes.Product;
 import com.example.mabco.Classes.ShoppingCart;
+import com.example.mabco.HttpsTrustManager;
 import com.example.mabco.MainActivity;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,6 +65,9 @@ public class ShoppingCartFragment extends Fragment {
     SharedPreferences ShoppingcartData, Userdata;
     LinearLayout Submit_Purchase_Order_btn;
     public RequestQueue requestQueue;
+    NavController navController;
+    private RequestQueue queue;
+    private MainActivity mainActivity;
 
     public ShoppingCartFragment() {
     }
@@ -80,14 +97,37 @@ public class ShoppingCartFragment extends Fragment {
         Resources standardResources = context.getResources();
         AssetManager assets = standardResources.getAssets();
         DisplayMetrics metrics = standardResources.getDisplayMetrics();
+        queue = Volley.newRequestQueue(context);
         Configuration config = new Configuration(standardResources.getConfiguration());
-        if (NetworkStatus.isOnline(context) && ShoppingCart.isExpired(context))
-        {
+        if (NetworkStatus.isOnline(context) && ShoppingCart.isExpired(context)) {
             UpdateProductsPrices(NetworkStatus.isOnline(context));
         }
         if (config.getLayoutDirection() == Layout.DIR_LEFT_TO_RIGHT) {
             Submit_Purchase_Order_btn.setBackground(this.getResources().getDrawable(R.drawable.shopping_cart_btn_ltr));
         }
+        if (ShoppingCart.getItemCount(context) == 0)
+            Toast.makeText(context, context.getResources().getString(R.string.submit_empty), Toast.LENGTH_LONG).show();
+
+        Submit_Purchase_Order_btn.setOnClickListener(v -> {
+            if (ShoppingCart.getItemCount(context) > 0) {
+                boolean UserSigninCheck = Userdata.getBoolean("Verified", false);
+                if (UserSigninCheck) {
+                    Snackbar.make(view, R.string.sure_buy, Snackbar.LENGTH_LONG)
+                            .setAction(R.string.yes, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    showInput(context.getResources().getString(R.string.input_address));
+                                }
+                            }).show();
+
+                } else {
+                    navController = Navigation.findNavController(view);
+                    navController.navigate((NavDirections) ShoppingCartFragmentDirections.actionShoppingCartFragmentToSignInMain());
+                }
+            } else
+                Toast.makeText(context, context.getResources().getString(R.string.submit_empty), Toast.LENGTH_LONG).show();
+
+        });
         GetItemsFromPref();
         return view;
     }
@@ -199,6 +239,167 @@ public class ShoppingCartFragment extends Fragment {
             actionBar = activity.getSupportActionBar();
         }
         return actionBar;
+    }
+
+    private void showInput(final String msg) {
+        LinearLayout linearLayout = new LinearLayout(context);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        final ProgressBar progressBar = new ProgressBar(context);
+        progressBar.setVisibility(View.GONE);
+        final TextInputLayout textLayout = new TextInputLayout(context);
+        textLayout.setHint(msg);
+        final EditText editText = new EditText(context);
+//        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        textLayout.addView(editText);
+        linearLayout.addView(progressBar);
+        linearLayout.addView(textLayout);
+
+
+        final AlertDialog createdAlert = showMessageDialog(context, msg, getString(R.string.out_time_to_buy), null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }, linearLayout, false);
+        createdAlert.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+                Button button = createdAlert.getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        //Dismiss once everything is OK.
+                        String textAddress = editText.getText().toString().trim();
+                        if (textAddress.isEmpty()) {
+                            editText.setError(msg);
+                            editText.requestFocus();
+                            return;
+                        }
+                        submitOnline(textAddress, createdAlert, progressBar, textLayout);
+                    }
+                });
+            }
+        });
+        createdAlert.show();
+    }
+
+    private void submitOnline(final String textAddress, final AlertDialog createdAlert, final ProgressBar progressBar, final TextInputLayout textLayout) {
+        //hide alert when done
+        StringBuilder prices = new StringBuilder(), stocks = new StringBuilder();
+
+        List<Product> shoppingcartProducts = ShoppingCart.getProducts(context);
+
+        for (Product listViewItem : shoppingcartProducts) {
+            prices.append(listViewItem.getShelf_price()).append(";");
+            stocks.append(listViewItem.getStk_code()).append(";");
+        }
+
+
+        progressBar.setVisibility(View.VISIBLE);
+        HttpsTrustManager.allowAllSSL();
+        String url = UrlEndPoint.General + "Service1.svc/buy/" + stocks
+                + "," + prices.toString().replace(",", "")
+                + "," + Userdata.getString("PhoneNO", "empty")
+                + "," + Userdata.getString("UserName", "empty")
+                + "," + textAddress;
+        StringRequest strRequest1 = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressBar.setVisibility(View.GONE);
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            JSONArray jsonArray;
+
+                            String res = jsonResponse.getString("buyResult");
+
+                            if (res.equals("1")) {
+                                textLayout.setVisibility(View.GONE);
+                                createdAlert.setTitle(getString(R.string.done));
+                                createdAlert.setMessage(getString(R.string.call_back_soon));
+                                Button b = createdAlert.getButton(AlertDialog.BUTTON_POSITIVE);
+                                b.setText(context.getResources().getString(R.string.ok));
+                                b.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        ShoppingCart.emptyShoppingCart(context);
+                                        GetItemsFromPref();
+                                        UpdatePricesSet(ShoppingCart.GetTotalPrice(context), ShoppingCart.GetTotalDiscount(context), ShoppingCart.GetFinalPrice(context), view);
+                                        int shoppingcartItems = ShoppingCart.getItemCount(context);
+                                        ((MainActivity) requireActivity()).updateNotificationCount(shoppingcartItems);
+                                        createdAlert.hide();
+                                    }
+                                });
+
+                            } else {
+                                //error
+                                textLayout.setError(context.getResources().getString(R.string.try_again));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            textLayout.setError(context.getResources().getString(R.string.try_again));
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(context, context.getResources().getString(R.string.checkwifi), Toast.LENGTH_LONG).show();
+                        textLayout.setError(context.getResources().getString(R.string.try_again));
+                    }
+                });
+
+        strRequest1.setRetryPolicy(new DefaultRetryPolicy(
+                25000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        );
+        queue.add(strRequest1);
+    }
+
+    AlertDialog showMessageDialog(Context context, String title, String message, DialogInterface.OnClickListener DialogInterface, DialogInterface.OnClickListener cancelDialogInterface, View view, boolean isShow) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        alertDialog.setIcon(R.drawable.mabco);
+
+        alertDialog.setPositiveButton(context.getResources().getString(R.string.submit), DialogInterface);
+        alertDialog.setCancelable(false);
+
+        if (view != null) {
+            alertDialog.setView(view);
+        }
+
+        if (cancelDialogInterface != null)
+            alertDialog.setNegativeButton(context.getResources().getString(R.string.cancel), cancelDialogInterface);
+
+        final AlertDialog alert = alertDialog.create();
+
+
+        if (!((Activity) context).isFinishing() && isShow)//to fix exception  ; is your activity running?
+            alert.show();
+
+
+        //dismiss when press back button
+        alert.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(android.content.DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    alert.getButton(android.content.DialogInterface.BUTTON_NEGATIVE).callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+        return alert;
     }
 
     @Override

@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_nav_home_to_productsFragment"
             app:destination="@id/productsFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
 
@@ -52,9 +55,6 @@
             android:id="@+id/action_productDetailsFragment_to_nav_products"
             app:destination="@id/nav_category_products" />
         <action
-            android:id="@+id/action_productDetailsFragment_to_signInMain"
-            app:destination="@id/signInMain" />
-        <action
             android:id="@+id/action_productDetailsFragment_to_shoppingCartFragment"
             app:destination="@id/shoppingCartFragment" />
         <action
@@ -63,8 +63,8 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_showrooms"
-        android:name="com.example.mabco.MapsFragment"
-        tools:layout="@layout/fragment_maps"
+        android:name="com.example.mabco.ui.Showrooms.ShowroomsFragment"
+        tools:layout="@layout/fragment_showrooms"
         android:label="">
         <action
             android:id="@+id/action_mapsFragment_to_nav_home"
@@ -93,6 +93,9 @@
             android:id="@+id/action_shoppingCartFragment_to_nav_products"
             app:destination="@id/nav_category_products"
             />
+        <action
+            android:id="@+id/action_shoppingCartFragment_to_signInMain"
+            app:destination="@id/signInMain" />
     </fragment>
     <fragment
         android:id="@+id/productsFragment"
@@ -110,6 +113,15 @@
         <argument
             android:name="product"
             app:argType="com.example.mabco.Classes.Product" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.mabco.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_nav_home"
+            app:destination="@id/nav_home" />
     </fragment>
 
 </navigation>

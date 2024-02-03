@@ -3,13 +3,10 @@ package com.example.mabco.ui.Product;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.text.NoCopySpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -17,8 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,20 +25,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mabco.Adapters.ProductsAdapter;
-import com.example.mabco.Adapters.ProductsHomeAdapter;
 import com.example.mabco.Classes.Brand;
 import com.example.mabco.Classes.CategoryModel;
 import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.Product;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
-import com.example.mabco.ui.home.HomeFragmentDirections;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 
 public abstract class OfferProductDialog extends Dialog {

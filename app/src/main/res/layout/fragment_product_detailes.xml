@@ -70,18 +70,36 @@
                             android:adjustViewBounds="true"
                             android:src="@drawable/loading" />
 
-                        <com.denzcoskun.imageslider.ImageSlider
+<!--                        <com.denzcoskun.imageslider.ImageSlider-->
+<!--                            android:id="@+id/product_images"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:forceHasOverlappingRendering="true"-->
+<!--                            app:iss_auto_cycle="false"-->
+<!--                            app:iss_corner_radius="7"-->
+<!--                            app:iss_delay="1000"-->
+<!--                            app:iss_error_image="@color/transparent"-->
+<!--                            app:iss_period="5000"-->
+<!--                            app:iss_placeholder="@color/transparent"-->
+<!--                            app:iss_title_background="@color/transparent" />-->
+                        <com.smarteist.autoimageslider.SliderView
                             android:id="@+id/product_images"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            app:sliderAnimationDuration="600"
                             android:forceHasOverlappingRendering="true"
-                            app:iss_auto_cycle="false"
-                            app:iss_corner_radius="7"
-                            app:iss_delay="1000"
-                            app:iss_error_image="@color/transparent"
-                            app:iss_period="5000"
-                            app:iss_placeholder="@color/transparent"
-                            app:iss_title_background="@color/transparent" />
+                            app:sliderAutoCycleDirection="back_and_forth"
+                            app:sliderAutoCycleEnabled="false"
+                            app:sliderIndicatorAnimationDuration="600"
+                            app:sliderIndicatorGravity="center_horizontal|bottom"
+                            app:sliderIndicatorMargin="15dp"
+                            app:sliderIndicatorOrientation="horizontal"
+                            app:sliderIndicatorPadding="3dp"
+                            app:sliderIndicatorRadius="2dp"
+                            app:sliderIndicatorSelectedColor="#5A5A5A"
+                            app:sliderIndicatorUnselectedColor="#FFF"
+                            app:sliderScrollTimeInSec="1"
+                            app:sliderStartAutoCycle="false" />
                     </com.google.android.material.card.MaterialCardView>
 
                     <!--product name/colors part-->
@@ -264,8 +282,13 @@
             <LinearLayout
                 android:id="@+id/add_to_shopping_btn"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/shopping_cart_btn"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:orientation="horizontal">
 
                 <ImageButton
@@ -284,7 +307,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="10dp"
                     android:layout_weight="3"
                     android:background="@color/transparent"
                     android:fontFamily="@font/rafat"

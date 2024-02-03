@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mabco.Classes.CategoryModel;
 import com.example.mabco.Classes.Offer;
 import com.example.mabco.R;
 

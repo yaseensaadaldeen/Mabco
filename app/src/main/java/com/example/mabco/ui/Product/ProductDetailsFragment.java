@@ -29,7 +29,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -46,6 +48,7 @@ import com.denzcoskun.imageslider.interfaces.ItemChangeListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.mabco.Adapters.ProductColorAdapter;
 import com.example.mabco.Adapters.ProductDetailsAdapter;
+import com.example.mabco.Adapters.SliderAdapter;
 import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.Product;
 import com.example.mabco.Classes.ProductColor;
@@ -59,6 +62,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.smarteist.autoimageslider.SliderPager;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 import com.varunest.sparkbutton.SparkButton;
 
@@ -80,10 +85,11 @@ public class ProductDetailsFragment extends Fragment {
     public ArrayList<Offer> productOffers;
     public ProductColorAdapter productColorAdapter;
     public ImageView product_image;
-    public ImageSlider product_images;
+    public SliderView product_images;
     public TextView product_name, product_price, product_disc, product_main_name, txt_items_count;
     public Product product;
     public ArrayList<SlideModel> productSlide = new ArrayList<>();
+    public ArrayList<String> ImagesURL;
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private ProductDetailsAdapter productDetailsAdapter;
@@ -95,6 +101,7 @@ public class ProductDetailsFragment extends Fragment {
     int shoppingcartItems;
     SparkButton shopping_cart_btn;
     View view;
+    private SliderAdapter adapter;
     String Destenation = "";
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -332,22 +339,34 @@ public class ProductDetailsFragment extends Fragment {
                         product.setStk_code(productColor.getStk_code());
                         product.setProduct_image(productColor.getImage_Link());
                         product.setProductColor(productColor);
-                        ProductSliderSwipe(position);
+                        product_images.setCurrentPagePosition(position);
+                        //ProductSliderSwipe(position);
                     }
                 });
                 productSlide = new ArrayList<>();
+                ImagesURL=new ArrayList<>();
 
                 int count = 0;
                 for (ProductColor item : productColors) {
                     productSlide.add(count, new SlideModel(item.getImage_Link(), "", ScaleTypes.CENTER_INSIDE));
+                    ImagesURL.add(item.getImage_Link());
                     count++;
                 }
-                product_images.setImageList(productSlide);
-                product_images.setItemChangeListener(new ItemChangeListener() {
-                    @SuppressLint("RestrictedApi")
+                adapter = new SliderAdapter(context,ImagesURL);
+                product_images.setSliderAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+                //product_images.setImageList(productSlide);
+                product_images.setDrawingCacheEnabled(true);
+                product_images.getSliderPager().addOnPageChangeListener(new SliderPager.OnPageChangeListener(){
                     @Override
-                    public void onItemChanged(int i) {
-                        SlideModel current_item = productSlide.get(i);
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        SlideModel current_item = productSlide.get(position);
                         int selected_color_index = productColorAdapter.getSelectedimage(current_item.getImageUrl());
                         productColorAdapter.setSelectedItem(selected_color_index);
                         ColorsRecycleview.scrollToPosition(selected_color_index);
@@ -356,7 +375,14 @@ public class ProductDetailsFragment extends Fragment {
                         product.setProduct_image(productColorAdapter.selectedColor.getImage_Link());
                         product.setProductColor(productColorAdapter.selectedColor);
                     }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                        // This method will be called when the scroll state changes
+                    }
                 });
+
+
                 product_image.setVisibility(View.GONE);
             } else {
                 prod_det.setVisibility(View.INVISIBLE);
@@ -373,39 +399,22 @@ public class ProductDetailsFragment extends Fragment {
                 ColorsRecycleview.setAdapter(productColorAdapter);//.notifyDataSetChanged();
                 productColorAdapter.notifyDataSetChanged();
                 productSlide = new ArrayList<>();
+                ImagesURL=new ArrayList<>();
                 int count = 0;
                 for (ProductColor item : productColors) {
                     productSlide.add(count, new SlideModel(item.getImage_Link(), "", ScaleTypes.CENTER_INSIDE));
+                    ImagesURL.add(item.getImage_Link());
                     count++;
                 }
-                product_images.setImageList(productSlide);
+                adapter = new SliderAdapter(context,ImagesURL);
+                product_images.setSliderAdapter(adapter);
+                adapter.notifyDataSetChanged();
                 product_image.setVisibility(View.GONE);
             }
             productDetailsAdapter.setProduct(product);
             productDetailsAdapter.setProductSpecs(productSpecs);
             viewPager2.setAdapter(productDetailsAdapter);
             productDetailsAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //   because image slider class dose not have swipe method
-    public void ProductSliderSwipe(int position) {
-        try {
-            int count = 1;
-            productSlide = new ArrayList<>();
-            product_images = Detailesbinding.productImages;
-            product_images = new ImageSlider(context);
-            ProductColor thisprocolor = productColors.get(position);
-            productSlide.add(0, new SlideModel(thisprocolor.getImage_Link(), "", ScaleTypes.CENTER_INSIDE));
-            for (ProductColor item : productColors) {
-                if (!item.getColor_code().equals(thisprocolor.getColor_code())) {
-                    productSlide.add(count, new SlideModel(item.getImage_Link(), "", ScaleTypes.CENTER_INSIDE));
-                    count++;
-                }
-            }
-            Detailesbinding.productImages.setImageList(productSlide);
         } catch (Exception e) {
             e.printStackTrace();
         }
