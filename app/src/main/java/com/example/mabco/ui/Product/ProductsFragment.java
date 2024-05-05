@@ -181,7 +181,7 @@ public class ProductsFragment extends Fragment {
         try {
             super.onDestroyView();
             NavDestination currentDestination = navController.getCurrentDestination();
-            if (currentDestination != null && currentDestination.getId() == R.id.nav_home) {
+            if (currentDestination != null && ( currentDestination.getId() != R.id.productDetailsFragment)) {
                 show();
             }
         } catch (Exception e) {

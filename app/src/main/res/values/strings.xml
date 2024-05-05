@@ -179,10 +179,10 @@
     <string name="discount">الـحـسـم:</string>
     <string name="total_price">المجموع :</string>
     <string name="payment_details">تفاصيل الشراء :</string>
-    <string name="phone">الهاتف</string>
+    <string name="phone">الهاتف :</string>
     <string name="city">المدينة</string>
-    <string name="address">العنوان:</string>
-    <string name="duration">التوقيت:</string>
+    <string name="address">العنوان :</string>
+    <string name="duration">الدوام :</string>
     <string name="join">انضم إلى نادي مابكو</string>
     <string name="full_name">الأسم و الكنية</string>
     <string name="full_name_optional"> الأسم و الكنية</string>
@@ -493,5 +493,8 @@
     <string name="arabic_item">العربية</string>
     <string name="login_succeded">Welcom</string>
     <string name="submit_empty">يرجى إضافة عناصر لإتمام عملية الشراء</string>
-
+    <string name="msg_token_fmt">current token </string>
+    <string name="notification_disable"> تم إلغاء تفعيل الاشعارات بنجاح</string>
+    <string name="notification_enable"> تم  تفعيل الاشعارات بنجاح</string>
+    <string name="recomend_signin">لطفاً تسجيل الدخول للإستفادة من كافة مزايا التطبيق</string>
 </resources>

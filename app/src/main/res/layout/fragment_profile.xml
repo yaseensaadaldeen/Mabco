@@ -38,7 +38,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:drawableEnd="@drawable/baseline_mode_edit_24"
+                android:drawableEnd="@drawable/baseline_manage_accounts_24"
                 android:drawableTint="@color/white"
                 android:fontFamily="@font/rafat"
                 android:text="@string/edit_info"
@@ -122,7 +122,7 @@
                         android:textSize="18sp" />
 
                     <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/notification"
+                        android:id="@+id/notification_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -282,12 +282,66 @@
                         app:tint="@color/white" />
 
                 </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/Service_ord_stat_Area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/invoice_Area"
+                    android:background="@color/lightgray"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:cardCornerRadius="7dp"
+                    android:elevation="5dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/Service_ord_stat_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:outlineSpotShadowColor="@color/colorPrimary"
+                        android:paddingStart="10dp"
+                        android:src="@drawable/baseline_handyman_24"
+                        app:fabSize="mini"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_Service_ord_stat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/Service_ord_stat_icon"
+                        android:fontFamily="@font/rafat"
+                        android:text="@string/Service_Inquery"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDarkNoAlpha"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/transparent"
+                        android:layoutDirection="locale"
+                        android:src="@drawable/baseline_arrow_back_ios_new_24"
+                        app:tint="@color/white" />
+
+                </RelativeLayout>
                 <!--shopping carts-->
                 <RelativeLayout
                     android:id="@+id/shopping_Area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/invoice_Area"
+                    android:layout_below="@id/Service_ord_stat_Area"
                     android:background="@color/lightgray"
                     android:orientation="horizontal"
                     android:padding="5dp"

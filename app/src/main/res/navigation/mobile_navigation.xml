@@ -65,7 +65,7 @@
         android:id="@+id/navigation_showrooms"
         android:name="com.example.mabco.ui.Showrooms.ShowroomsFragment"
         tools:layout="@layout/fragment_showrooms"
-        android:label="">
+        android:label="@string/showrooms_title">
         <action
             android:id="@+id/action_mapsFragment_to_nav_home"
             app:destination="@id/nav_home" />
@@ -122,6 +122,9 @@
         <action
             android:id="@+id/action_profileFragment_to_nav_home"
             app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_profileFragment_to_signInMain"
+            app:destination="@id/signInMain" />
     </fragment>
 
 </navigation>

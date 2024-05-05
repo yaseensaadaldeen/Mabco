@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +28,7 @@ import com.example.mabco.Classes.Showroom;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,17 +58,26 @@ public class ShowroomsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_showrooms, container, false);
         context = getContext();
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
+        if (navBar != null && navBar.getVisibility() == View.INVISIBLE)
+            showNavigationBar();
         showroomsPreferance = context.getSharedPreferences("ShowroomData", Context.MODE_PRIVATE);
         PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
-         local = PersonalPreference.getString("Language", "ar");
+        local = PersonalPreference.getString("Language", "ar");
         showroomitems = view.findViewById(R.id.showrooms_recycle);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         showroomitems.setLayoutManager(layoutManager);
         showroomshimmerViewContainer = view.findViewById(R.id.showroomshimmerViewContainer);
-        showrooms=new ArrayList<>();
-
+        showrooms = new ArrayList<>();
         showroomAdapter = new ShowroomAdapter(context, showrooms);
         showroomitems.setAdapter(showroomAdapter);
+        showroomAdapter.setOnClickListener(new ShowroomAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Showroom showroom) {
+                ShowroomDetails showroomDetails = new ShowroomDetails(context, showroom);
+                showroomDetails.show(getActivity().getSupportFragmentManager(), "TAG");
+            }
+        });
         ShowroomsAPI(context, NetworkStatus.isOnline(context));
         return view;
     }
@@ -142,10 +153,13 @@ public class ShowroomsFragment extends Fragment {
                     JSONObject arrayObj = array.getJSONObject(i);
                     Showroom showroom = new Showroom(arrayObj.optString("Loc_code"),
                             arrayObj.optString("Loc_name"),
-                            "https://" + arrayObj.optString("image_link"),
+                            "https://" + arrayObj.optString("Image_Link"),
                             arrayObj.optString("Phone"),
                             arrayObj.optString("City_name"),
-                            arrayObj.optString("Address")
+                            arrayObj.optString("Address"),
+                            arrayObj.optString("Winter_from_date"),
+                            arrayObj.optString("Winter_to_date"),
+                            arrayObj.optString("week_end")
                     );
 
                     showrooms.add(showroom);
@@ -162,6 +176,12 @@ public class ShowroomsFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void showNavigationBar() {
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
+        navBar.setVisibility(View.VISIBLE);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
 }

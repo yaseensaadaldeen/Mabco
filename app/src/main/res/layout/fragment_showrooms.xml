@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:visibility="gone"
         tools:ignore="Suspicious0dp">
 
         <fragment
@@ -17,7 +18,7 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".MapsFragment" />
+            tools:context=".ui.Showrooms.MapsFragment" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -59,7 +60,9 @@
 
                     <include layout="@layout/shimmiring_showroom_card" />
 
+                    <include layout="@layout/shimmiring_showroom_card" />
 
+                    <include layout="@layout/shimmiring_showroom_card" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -72,7 +75,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="50dp"
             android:layout_below="@+id/showroomshimmerViewContainer"
             tools:listitem="@layout/showroom_card" />
     </RelativeLayout>

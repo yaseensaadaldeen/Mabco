@@ -9,16 +9,15 @@
     android:layout_margin="5dp"
     android:elevation="5dp"
     android:minWidth="180dp"
-    android:clickable="false"
     android:orientation="horizontal"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:focusable="true">
+
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/showroom_Card"
+        android:id="@+id/invoice_Card"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:clickable="false"
+        android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="13dp">
@@ -30,41 +29,41 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:id="@+id/showroom_header"
+                android:id="@+id/invoice_header"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/lighGray">
 
                 <TextView
-                    android:id="@+id/showroom_name"
+                    android:id="@+id/inv_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_gravity="start"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:fontFamily="@font/rafat"
-                    android:lines="2"
-                    android:maxHeight="30dp"
-                    android:padding="10dp"
-                    android:text="Khaled ebn alwa"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
-                    android:textStyle="bold"
                     android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
+                    android:fontFamily="@font/rafat"
+                    android:lines="2"
+                    android:maxHeight="30dp"
                     android:maxLines="2"
-                    android:singleLine="true"/>
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="#S2221023245"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
 
                 <TextView
-                    android:id="@+id/showroom_desc"
+                    android:id="@+id/invoice_ctrated_dt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/showroom_name"
+                    android:layout_below="@+id/inv_no"
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="35dp"
                     android:ellipsize="marquee"
@@ -72,68 +71,66 @@
                     android:focusableInTouchMode="true"
                     android:fontFamily="@font/rafat"
                     android:maxLines="2"
-                    android:text="next to Teshreen stadiom asdas"
+                    android:text=" july , 14 / 2024"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black"
+                    android:textColor="@color/gray"
                     android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_below="@id/showroom_name"
+                    android:layout_below="@id/invoice_name"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="-9dp"
-                    android:src="@drawable/showrooms" />
+                    android:src="@drawable/baseline_access_time_24"
+                    app:tint="@color/gray" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/showroom_details"
+                android:id="@+id/invoice_details"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/showroom_header"
+                android:layout_toEndOf="@id/invoice_header"
                 android:layout_weight="1"
                 android:background="@color/lighGray">
 
                 <TextView
-                    android:id="@+id/showroom_city"
+                    android:id="@+id/invoice_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="35dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/rafat"
-                    android:maxLength="18"
-                    android:text="Damascus"
+                    android:maxHeight="30dp"
+                    android:text="15,000,000 SYP"
+                    android:layout_marginTop="10dp"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
-
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_below="@+id/showroom_city"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_toStartOf="@+id/showroom_phone_no"
-                    android:src="@drawable/phone_vector" />
-
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/invoice_price"
+                    android:layout_marginTop="10dp"
+                    android:layout_toStartOf="@+id/invoice_showroom"
+                    app:tint="@color/gray"
+                    android:src="@drawable/showrooms" />
                 <TextView
-                    android:id="@+id/showroom_phone_no"
+                    android:id="@+id/invoice_showroom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/showroom_city"
+                    android:layout_below="@+id/invoice_price"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="011-9909"
-                    android:textColor="@color/black"
-
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:text="Baramkeh showroom"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/gray"
+                    android:textSize="18sp"/>
 
             </RelativeLayout>
         </LinearLayout>

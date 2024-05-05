@@ -286,5 +286,8 @@ We also have medals engraved with different names and pictures
     <string name="arabic_item">Arabic</string>
     <string name="login_succeded">"اهلا "</string>
     <string name="submit_empty">please add items to be submitted</string>
+    <string name="notification_disable"> Notification disabled successfully</string>
+    <string name="notification_enable">Notification enabled successfully</string>
+    <string name="recomend_signin">Login to get the complete app experience</string>
 
 </resources>

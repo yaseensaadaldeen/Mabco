@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/showroom_Card"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="7dp">
+
+            <ImageView
+                android:id="@+id/showroom_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/showrooms_title"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/showroom_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/showroom_Card"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/rafat"
+            android:text="Baramkeh Sowroom"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDarkNoAlpha"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/showroom_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/showroom_name"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/rafat"
+            android:text="Dasamscus"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/address_hdr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/showroom_city"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/rafat"
+            android:paddingStart="20dp"
+            android:text="@string/address"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/address_hdr"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/showrooms"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_hdr"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rafat"
+            android:text="next to Teshreen stadiom "
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/showrooms"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/phone_hdr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/rafat"
+            android:paddingStart="20dp"
+            android:text="@string/phone"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/phone_hdr"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/phone_vector"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phone_hdr"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rafat"
+            android:text="+ 9909"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/shift_hdr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phone"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/rafat"
+            android:paddingStart="20dp"
+            android:text="@string/duration"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/shift_hdr"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/baseline_access_time_24"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/shoft_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shift_hdr"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rafat"
+            android:text="from 9:00 AM"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/shoft_from"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/outline_lock_clock_24"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/shift_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shoft_from"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rafat"
+            android:text="To 5:00 PM"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/closing_days_hdr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shift_to"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/rafat"
+            android:paddingStart="20dp"
+            android:text="@string/week_end"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/closing_days_hdr"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/lock_vector"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/closing_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/closing_days_hdr"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rafat"
+            android:text="+ 9909"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+
+            android:layout_marginBottom="150dp"/>
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

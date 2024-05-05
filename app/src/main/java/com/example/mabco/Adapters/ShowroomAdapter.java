@@ -1,7 +1,11 @@
 package com.example.mabco.Adapters;
 
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +22,15 @@ import java.util.ArrayList;
 public class ShowroomAdapter extends RecyclerView.Adapter<ShowroomAdapter.ViewHolder> {
     private Context context;
     public ArrayList<Showroom> showrooms;
+    private ShowroomAdapter.OnClickListener onClickListener;
+    private int selectedPos = RecyclerView.NO_POSITION;
+    private int selectedItem;
+    public ShowroomAdapter.OnClickListener getOnClickListener() {
+        return onClickListener;
+    }
 
-    public ShowroomAdapter() {
+    public void setOnClickListener(ShowroomAdapter.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     public ShowroomAdapter(Context context, ArrayList<Showroom> showrooms) {
@@ -34,14 +45,24 @@ public class ShowroomAdapter extends RecyclerView.Adapter<ShowroomAdapter.ViewHo
         return new ShowroomAdapter.ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ShowroomAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ShowroomAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         try {
             Showroom showroom = showrooms.get(position);
             holder.showroom_name.setText( showroom.getLoc_name());
             holder.showroom_city.setText( showroom.getCity());
             holder.showroom_phon_no.setText( showroom.getPhone_no());
             holder.showroom_desc.setText( showroom.getLoc_desc());
+            holder.itemView .setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("ShowroomAdapter", "Item clicked at position: " + position);
+                    if (onClickListener != null) {
+                        onClickListener.onClick(position, showroom);
+                    }
+                }
+            });
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +81,16 @@ public class ShowroomAdapter extends RecyclerView.Adapter<ShowroomAdapter.ViewHo
             showroom_desc = itemView.findViewById(R.id.showroom_desc);
             showroom_city = itemView.findViewById(R.id.showroom_city);
             showroom_phon_no = itemView.findViewById(R.id.showroom_phone_no);
-
         }
+    }
+    public interface OnClickListener {
+        void onClick(int position, Showroom showroom);
+    }
+    private static Activity unwrap(Context context) {
+        while (!(context instanceof Activity) && context instanceof ContextWrapper) {
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+
+        return (Activity) context;
     }
 }
