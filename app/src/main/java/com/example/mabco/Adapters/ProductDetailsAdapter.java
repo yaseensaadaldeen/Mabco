@@ -70,10 +70,10 @@ public class ProductDetailsAdapter extends FragmentStateAdapter {
                 }
                 else
                 {
-                return new ProductOfferFragment( productoffer);
+                return new ProductOfferFragment( productoffer, product);
                 }
             case 2:
-                return new ProductOfferFragment( productoffer);
+                return new ProductOfferFragment( productoffer, product);
 
         }
 

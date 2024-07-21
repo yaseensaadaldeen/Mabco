@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="top"
+    android:background="@color/lighGray"
+    android:orientation="horizontal"
+    android:paddingBottom="60dp"
+    tools:context=".ui.Offers.OffersFragment">
+
+    <TextView
+        android:id="@+id/Offer_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/rafat"
+        android:text="@string/offers_header"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/sep_hdr"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/Offer_header"
+        android:background="#000" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/sep_hdr">
+
+        <!-- Your GridLayout containing RecyclerView -->
+        <GridLayout
+            android:id="@+id/Offers_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:rowCount="@integer/material_motion_duration_medium_2"
+            tools:ignore="UselessParent">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/offer_shimmer_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="7dp">
+
+                <!-- Your existing offer item layout -->
+                <LinearLayout
+                    android:id="@+id/shimmer_offers_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:rowCount="@integer/material_motion_duration_medium_2">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:spanCount="2">
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+                        <include layout="@layout/shimmering_offer_hdr_item" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Offers_slider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="15dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/offers_fragment_item" />
+        </GridLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

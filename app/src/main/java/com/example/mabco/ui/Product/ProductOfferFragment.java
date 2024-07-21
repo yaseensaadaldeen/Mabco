@@ -4,18 +4,20 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.example.mabco.Adapters.OfferRecyclerViewAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mabco.Adapters.OfferAdapter;
 import com.example.mabco.Classes.Offer;
+import com.example.mabco.Classes.Product;
 import com.example.mabco.R;
 
 import java.util.ArrayList;
@@ -24,13 +26,15 @@ public class ProductOfferFragment extends Fragment {
     private int mColumnCount = 2;
     private ArrayList<Offer> productOffer;
     Context context;
-    OfferRecyclerViewAdapter offerRecyclerViewAdapter;
+    OfferAdapter offerRecyclerViewAdapter;
+    Product product;
 
     public ProductOfferFragment() {
     }
 
-    public ProductOfferFragment(ArrayList<Offer> productOffer) {
+    public ProductOfferFragment(ArrayList<Offer> productOffer,Product product) {
         this.productOffer = productOffer;
+        this.product = product;
     }
 
     @Override
@@ -47,9 +51,9 @@ public class ProductOfferFragment extends Fragment {
                 context = view.getContext();
                 RecyclerView recyclerView = (RecyclerView) view;
                 recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
-                offerRecyclerViewAdapter = new OfferRecyclerViewAdapter(productOffer, context);
+                offerRecyclerViewAdapter = new OfferAdapter(context,productOffer );
                 recyclerView.setAdapter(offerRecyclerViewAdapter);
-                offerRecyclerViewAdapter.setOnClickListener(new OfferRecyclerViewAdapter.OnClickListener() {
+                offerRecyclerViewAdapter.setOnClickListener(new OfferAdapter.OnClickListener() {
                     @Override
                     public void onClick(int position, Offer offer) {
                         openDialog(offer);
@@ -65,8 +69,8 @@ public class ProductOfferFragment extends Fragment {
     }
 
     public void openDialog(Offer offer) {
-
-        OfferProductDialog listDialog = new OfferProductDialog(context, offer) {
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+        OfferProductDialog listDialog = new OfferProductDialog(context, offer,navController,"ProductDetailsFragment",product.getStk_code()) {
             @Override
             public void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);

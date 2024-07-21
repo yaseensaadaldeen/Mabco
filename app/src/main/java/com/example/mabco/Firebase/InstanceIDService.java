@@ -17,7 +17,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 
 public class InstanceIDService extends FirebaseMessagingService {
 
-    @SuppressLint("StaticFieldLeak")
+
     public static String returnMeFCMtoken(Context context) {
 
         final String[] token = {""};

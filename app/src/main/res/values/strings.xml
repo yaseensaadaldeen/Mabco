@@ -497,4 +497,5 @@
     <string name="notification_disable"> تم إلغاء تفعيل الاشعارات بنجاح</string>
     <string name="notification_enable"> تم  تفعيل الاشعارات بنجاح</string>
     <string name="recomend_signin">لطفاً تسجيل الدخول للإستفادة من كافة مزايا التطبيق</string>
+    <string name="save_inv">تحميل</string>
 </resources>

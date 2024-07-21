@@ -46,7 +46,7 @@ import java.util.Locale;
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
-    RelativeLayout Language_Area, Notification_area, log_area;
+    RelativeLayout Language_Area, Notification_area, log_area,invoice_Area;
     LinearLayout account_info;
     Context context;
     private boolean isInitialization = true;
@@ -72,6 +72,7 @@ public class ProfileFragment extends Fragment {
         Language_Area = binding.LanguageArea;
         Language_spinner = binding.LanguageSpinner;
         Notification_area = binding.notificationArea;
+        invoice_Area = binding.invoiceArea;
         notification_switch = binding.notificationSwitch;
         log_icon = binding.logIcon;
         log_area = binding.logArea;
@@ -104,7 +105,7 @@ public class ProfileFragment extends Fragment {
         } else {
             log_icon.setImageResource(R.drawable.baseline_login_24);
             txt_log.setText(getString(R.string.Login));
-            account_info.setVisibility(View.INVISIBLE);
+            account_info.setVisibility(View.GONE);
         }
         Language_Area.setOnClickListener(v -> {
             Language_spinner.performClick();
@@ -163,6 +164,8 @@ public class ProfileFragment extends Fragment {
                 // Do nothing here
             }
         });
+        invoice_Area.setOnClickListener(v->{
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_profileFragment_to_invoicesFragment);});
         View root = binding.getRoot();
         return root;
     }

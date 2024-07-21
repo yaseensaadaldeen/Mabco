@@ -1,14 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".ui.Invoices.InvoicesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/invoices"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/disc_pro_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/rafat"
+            android:text="@string/title_invoice_list"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/sep_hdr"
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:layout_below="@+id/disc_pro_header"
+            android:background="#000" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/InvoiceshimmerViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sep_hdr">
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/mobile_item_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="5dp"
+                android:configChanges="orientation|screenSize|keyboardHidden"
+                android:elevation="5dp"
+                android:minWidth="180dp"
+                android:orientation="horizontal"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmiring_showroom_card" />
+                    <include layout="@layout/shimmiring_showroom_card" />
+                    <include layout="@layout/shimmiring_showroom_card" />
+                    <include layout="@layout/shimmiring_showroom_card" />
+                    <include layout="@layout/shimmiring_showroom_card" />
+                    <include layout="@layout/shimmiring_showroom_card" />
+                    <include layout="@layout/shimmiring_showroom_card" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/invoice_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/InvoiceshimmerViewContainer"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="50dp"
+            tools:listitem="@layout/invoice_item" />
+
+    </RelativeLayout>
+
+</LinearLayout>

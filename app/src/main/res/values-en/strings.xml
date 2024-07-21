@@ -289,5 +289,6 @@ We also have medals engraved with different names and pictures
     <string name="notification_disable"> Notification disabled successfully</string>
     <string name="notification_enable">Notification enabled successfully</string>
     <string name="recomend_signin">Login to get the complete app experience</string>
+    <string name="save_inv">download</string>
 
 </resources>

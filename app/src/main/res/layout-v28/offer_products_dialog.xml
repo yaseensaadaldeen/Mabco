@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="590dp"
         android:layout_alignParentTop="true"
         android:elevation="16dp"
         android:outlineAmbientShadowColor="@color/colorPrimaryDark"
@@ -107,8 +107,8 @@
                 <!--Main Body of your custom dialog-->
 
             </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-</RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/llTop"
         android:layout_width="wrap_content"

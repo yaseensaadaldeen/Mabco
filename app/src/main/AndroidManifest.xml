@@ -8,7 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -42,13 +43,23 @@
 
             <!-- ... other activity configurations ... -->
         </activity>
+        <activity
+            android:name=".ui.Product.ProductDetailsFragment"
+            android:windowSoftInputMode="adjustResize" >
+
+            <!-- ... other activity configurations ... -->
+        </activity>
         <service
             android:name=".Firebase.MessagingService"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
+
+        <receiver android:name=".Firebase.NotificationReceiver"/>
+
+
         <service
             android:name=".Firebase.InstanceIDService"
             android:exported="true">

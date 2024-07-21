@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,12 +27,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mabco.Adapters.ProductsAdapter;
-import com.example.mabco.Classes.Brand;
 import com.example.mabco.Classes.CategoryModel;
 import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.Product;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
+import com.example.mabco.ui.Offers.OffersFragmentDirections;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,11 +53,23 @@ public abstract class OfferProductDialog extends Dialog {
     private View view;
     TextView offer_desc;
     ImageButton btnCancel;
+    String from, stk_code;
     private RecyclerView OfferProductsRecyler;
+    public ShimmerFrameLayout OffershimmerViewContainer;
 
-    public OfferProductDialog(@NonNull Context context, Offer offer) {
+    public OfferProductDialog(@NonNull Context context, Offer offer, NavController navController, String from) {
         super(context);
         this.offer = offer;
+        this.navController = navController;
+        this.from = from;
+    }
+
+    public OfferProductDialog(@NonNull Context context, Offer offer, NavController navController, String from, String stk_code) {
+        super(context);
+        this.offer = offer;
+        this.navController = navController;
+        this.from = from;
+        this.stk_code = stk_code;
     }
 
 
@@ -70,6 +85,8 @@ public abstract class OfferProductDialog extends Dialog {
         offer_no = offer.getOffer_no();
         offer_desc = view.findViewById(R.id.offer_desc);
         offer_desc.setText(offer.getOffer_desc());
+        OffershimmerViewContainer = view.findViewById(R.id.offer_shimmer_view_containers);
+        OffershimmerViewContainer.startShimmer();
         setContentView(view);
         setCanceledOnTouchOutside(true);
         setCancelable(true);
@@ -123,6 +140,7 @@ public abstract class OfferProductDialog extends Dialog {
                     JSONArray array = jsonResponse.optJSONArray("getOfferProductsResult");
                     if (array != null) {
                         LoadProducts(array);
+
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -154,15 +172,7 @@ public abstract class OfferProductDialog extends Dialog {
                     if (arrayObj.optString("offer_spec").contains("on all invoice")) {
                         coupon = arrayObj.optString("discount");
                     }
-                    Product product = new Product(arrayObj.optString("stk_code"),
-                            arrayObj.optString("device_title"),
-                            arrayObj.optString("device_title"),
-                            arrayObj.optString("shelf_price"),
-                            new CategoryModel(arrayObj.optString("cat_code")),
-                            arrayObj.optString("discount"),
-                            coupon,
-                            "offer",
-                            "https://" + arrayObj.optString("image_link"));
+                    Product product = new Product(arrayObj.optString("stk_code"), arrayObj.optString("device_title"), arrayObj.optString("stk_desc"), arrayObj.optString("shelf_price"), new CategoryModel(arrayObj.optString("cat_code")), arrayObj.optString("discount"), arrayObj.optString("coupon"), "offer", "https://mabcoonline.com/" + arrayObj.optString("image_link"));
 
                     offerproducts.add(product);
                 }
@@ -185,18 +195,29 @@ public abstract class OfferProductDialog extends Dialog {
             alertDialog.create().show();
 
         } else {
+            OffershimmerViewContainer.stopShimmer();
+            OffershimmerViewContainer.setVisibility(View.GONE);
             productsAdapter = new ProductsAdapter(context, offerproducts);
             OfferProductsRecyler.setAdapter(productsAdapter);//.notifyDataSetChanged();
             productsAdapter.setOnClickListener(new ProductsAdapter.OnClickListener() {
                 @Override
-                public void onClick(int position, Brand brand) {
-//                navController = Navigation.findNavController(view);
-//                Navigation.findNavController(view).navigate(R.id.action_nav_home_to_productDetailsFragment);
-//                navController.navigateUp();
-//                navController.navigate((NavDirections) HomeFragmentDirections.actionNavHomeToProductDetailsFragment(product));
+                public void onClick(int position, Product product) {//there where i want to navigate to the productdetalesfragment passing the product to it
+
+                    try {
+                        if (from.equals("offerFragment"))
+                            navController.navigate((NavDirections) OffersFragmentDirections.actionProductOfferFragmentToProductDetailsFragment(product));
+                        else {
+                            if (stk_code.equals(product.getStk_code())) {
+                                Toast.makeText(context, "المنتج ذانه !!", Toast.LENGTH_SHORT).show();
+                                dismiss();
+                            } else
+                                navController.navigate((NavDirections) ProductDetailsFragmentDirections.actionProductDetailsFragmentSelf(product));
+                        }
+                        dismiss();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-
-
             });
             productsAdapter.notifyDataSetChanged();
         }
@@ -219,3 +240,4 @@ public abstract class OfferProductDialog extends Dialog {
         return haveConnectedWifi || haveConnectedMobile;
     }
 }
+

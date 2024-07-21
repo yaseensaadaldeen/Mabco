@@ -51,8 +51,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
                     <!--product images part-->
+
+
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/pro_img"
                         android:layout_width="match_parent"
@@ -62,14 +65,6 @@
                         app:cardCornerRadius="8dp"
                         app:cardElevation="0dp"
                         app:cardPreventCornerOverlap="false">
-
-                        <ImageView
-                            android:id="@+id/product_image"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/loading" />
-
 <!--                        <com.denzcoskun.imageslider.ImageSlider-->
 <!--                            android:id="@+id/product_images"-->
 <!--                            android:layout_width="match_parent"-->
@@ -82,6 +77,45 @@
 <!--                            app:iss_period="5000"-->
 <!--                            app:iss_placeholder="@color/transparent"-->
 <!--                            app:iss_title_background="@color/transparent" />-->
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/ProductImageViewContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <!-- Your existing product item layout -->
+                            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/mobile_item_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:layout_margin="5dp"
+                                android:configChanges="orientation|screenSize|keyboardHidden"
+                                android:elevation="5dp"
+                                android:minWidth="180dp"
+                                android:orientation="horizontal"
+                                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:adjustViewBounds="true"
+                                        android:background="@color/shimmerColor" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+                        <ImageView
+                            android:id="@+id/product_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true" />
                         <com.smarteist.autoimageslider.SliderView
                             android:id="@+id/product_images"
                             android:layout_width="match_parent"

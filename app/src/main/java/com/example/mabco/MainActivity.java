@@ -1,8 +1,6 @@
 package com.example.mabco;
 
 import android.Manifest;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,13 +13,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.NotificationCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -34,16 +30,24 @@ import com.example.mabco.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    SharedPreferences ShoppingCartData, UserData,PersonalPreference;
+    private static final int RC_NOTIFICATION = 99;
     TextView notification_cnt;
     TextView userNameTextView;
-    private static int RC_NOTIFICATION=99;
+    private static final int REQUEST_WRITE_STORAGE = 112;
+    SharedPreferences ShoppingCartData, UserData, PersonalPreference;
 
 
     public void updateUserName(String newUserName) {
@@ -53,11 +57,8 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         try {
-
-
             ShoppingCartData = this.getSharedPreferences("ShoppingCartData", Context.MODE_PRIVATE);
             UserData = this.getSharedPreferences("UserData", Context.MODE_PRIVATE);
             PersonalPreference = this.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
@@ -73,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
             View headerView = navigationView.getHeaderView(0);
             userNameTextView = headerView.findViewById(R.id.sidebar_user_name);
             userNameTextView.setText(UserData.getString("user_name", ""));
-            // Passing each menu ID as a set of Ids because each
-            // menu should be considered as top level destinations.
-            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services , R.id.productsFragment).setOpenableLayout(drawer).build();
+            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services, R.id.productsFragment,R.id.offersFragment).setOpenableLayout(drawer).build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -83,27 +82,38 @@ public class MainActivity extends AppCompatActivity {
 
 
             BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
-//         Passing each menu ID as a set of Ids because each
-//         menu should be considered as top level destinations.
             AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.productsFragment, R.id.profileFragment, R.id.navigation_showrooms).build();
             NavController bottomnavController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-            //NavigationUI.setupActionBarWithNavController(this, bottomnavController, appBarConfiguration);
             NavigationUI.setupWithNavController(navView, bottomnavController);
-            if (PersonalPreference.getString("NotificationStatus","notset") == "notset") {
-                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, RC_NOTIFICATION);
-            }
-//            Notification notification = new Notification(R.mipmap.ic_launcher,
-//                   getString(R.string.app_name),
-//                    System.currentTimeMillis());
-//            notification.flags |= Notification.FLAG_NO_CLEAR
-//                    | Notification.FLAG_ONGOING_EVENT;
-//            NotificationManager notifier = (NotificationManager)
-//                    this.getSystemService(Context.NOTIFICATION_SERVICE);
-//            notifier.notify(1, notification);
+//            if (PersonalPreference.getString("NotificationStatus","notset") .equals( "notset")) {
+//                //requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, RC_NOTIFICATION);
+//            }
+            checkPermissions();
+            Bundle b = getIntent().getExtras();
+            if (b != null && getIntent().getExtras().get("Type") != null) {
 
+            }
         } catch (Exception ex) {
             Log.i("brandAdapter exception", ex.getMessage());
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    private void checkPermissions() {
+        Dexter.withContext(this).withPermissions(Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
+        }).check();
+    }
+
+    private void proceedWithFileOperations(boolean granted) {
+        SharedPreferences.Editor editor = PersonalPreference.edit();
+        editor.putString("WriteStorageStatus", granted ? "enable" : "disable");
+        editor.apply();
     }
 
     @Override
@@ -113,19 +123,27 @@ public class MainActivity extends AppCompatActivity {
 
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted by the user
-                showNotification(); // You can call your notification-related code here
+                // You can call your notification-related code here
                 handleNotificationPermission(true);
             } else {
                 // Permission denied by the user
                 handleNotificationPermission(false);
             }
-
         }
+        if (requestCode == REQUEST_WRITE_STORAGE) {
+            // Permission granted
+            proceedWithFileOperations(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
+        }
+        if (requestCode == RC_NOTIFICATION) {
+            // Permission granted
+            handleNotificationPermission(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
+        }
+
     }
 
     private void handleNotificationPermission(boolean granted) {
         SharedPreferences.Editor editor = PersonalPreference.edit();
-        editor.putString("NotificationStatus", granted?"enable":"disable");
+        editor.putString("NotificationStatus", granted ? "enable" : "disable");
         editor.apply();
 
         if (granted) {
@@ -135,16 +153,6 @@ public class MainActivity extends AppCompatActivity {
             // User denied permission, unsubscribe from the topic
             FirebaseMessaging.getInstance().unsubscribeFromTopic(UrlEndPoint.notification_topic);
         }
-    }
-
-    private void showNotification() {
-        // Your notification code here
-        Notification notification = new Notification(R.mipmap.ic_launcher,
-                getString(R.string.app_name),
-                System.currentTimeMillis());
-        notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
-        NotificationManager notifier = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        notifier.notify(1, notification);
     }
 
     @Override

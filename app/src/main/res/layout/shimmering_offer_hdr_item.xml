@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:minWidth="80dp"
+    android:id="@+id/mobile_item_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:elevation="5dp"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    <androidx.cardview.widget.CardView
+        android:id="@+id/offer_image_card"
+        android:layout_width="155dp"
+        android:layout_height="240dp"
+        android:background="@color/white"
+        app:cardCornerRadius="7dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/offer_image"
+            android:scaleType="fitXY"
+            android:background="@color/shimmerColor"
+            />
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/offer_desc_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:cardCornerRadius="7dp">
+        <TextView
+            android:id="@+id/category_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/rafat"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:background="@color/shimmerColor"
+            android:textSize="15sp"
+            android:lines="1"/>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

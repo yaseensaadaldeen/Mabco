@@ -31,6 +31,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
+
 public class LoginFragment extends Fragment {
     View view;
     Context context;
@@ -60,12 +62,16 @@ public class LoginFragment extends Fragment {
         requestQueue = Volley.newRequestQueue(this.getContext());
         login_button = view.findViewById(R.id.login_button);
         login_button.setOnClickListener(v -> {
-            Login(NetworkStatus.isOnline(context));
+            try {
+                Login(NetworkStatus.isOnline(context));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
         return view;
     }
 
-    public void Login(boolean online) {
+    public void Login(boolean online) throws Exception {
         String Cashed_User_name = UserData.getString("user_name", ""), Cashed_Password = UserData.getString("password", "");
         ErrorHandling();
         if (!PageValid) {
@@ -79,13 +85,14 @@ public class LoginFragment extends Fragment {
                 requestQueue = Volley.newRequestQueue(context);
                 com.example.mabco.HttpsTrustManager.allowAllSSL();
                 String url = UrlEndPoint.General + "Service1.svc/MabcoApp_Login/";
-                url = url + login_user_name.getText() + "," + login_password.getText() ;
+                String encoded_password = URLEncoder.encode(String.valueOf(login_password.getText()), "UTF-8");
+                url = url + login_user_name.getText() + ","+ encoded_password ;
                 StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            JSONArray array = jsonResponse.optJSONArray("MabcoApp_LoginResult");
+                            //JSONObject jsonResponse = new JSONObject(response);
+                            JSONArray array = new JSONArray(response);
                             if (array != null) {
                                 for (int i = 0; i < array.length(); i++) {
                                     JSONObject arrayObj = array.getJSONObject(i);

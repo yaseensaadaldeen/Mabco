@@ -23,5 +23,10 @@
             android:id="@+id/nav_services"
             android:icon="@drawable/services"
             android:title="@string/services_title"/>
+
+        <item
+            android:id="@+id/offersFragment"
+            android:icon="@drawable/baseline_local_offer_24"
+            android:title="@string/offers_header"/>
     </group>
 </menu>

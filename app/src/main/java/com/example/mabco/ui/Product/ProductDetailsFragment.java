@@ -29,9 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -41,10 +39,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.interfaces.ItemChangeListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.mabco.Adapters.ProductColorAdapter;
 import com.example.mabco.Adapters.ProductDetailsAdapter;
@@ -58,6 +53,7 @@ import com.example.mabco.MainActivity;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
 import com.example.mabco.databinding.FragmentProductDetailesBinding;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -102,6 +98,7 @@ public class ProductDetailsFragment extends Fragment {
     SparkButton shopping_cart_btn;
     View view;
     private SliderAdapter adapter;
+    ShimmerFrameLayout ProductImageViewContainer;
     String Destenation = "";
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -167,10 +164,12 @@ public class ProductDetailsFragment extends Fragment {
             product_image = Detailesbinding.productImage;
             product_name.setText(product.getProduct_title());
             product_price.setText(product.getShelf_price() + " SP");
-            Glide.with(context).load(R.drawable.loading).fitCenter().into(product_image);
-            product_image.setHorizontalFadingEdgeEnabled(true);
-            product_image.setVerticalFadingEdgeEnabled(true);
-            product_image.setFadingEdgeLength(40);
+            //Glide.with(context).load(R.drawable.loading).fitCenter().into(product_image);
+            ProductImageViewContainer  =Detailesbinding.ProductImageViewContainer;
+            ProductImageViewContainer.startShimmer();
+//            product_image.setHorizontalFadingEdgeEnabled(true);
+//            product_image.setVerticalFadingEdgeEnabled(true);
+//            product_image.setFadingEdgeLength(40);
             if (!product.getDiscount().equals("0")) {
                 product_disc.setVisibility(View.VISIBLE);
                 if (product.getCoupon().equals("0")) {
@@ -284,7 +283,7 @@ public class ProductDetailsFragment extends Fragment {
         productOffers = new ArrayList<>();
         for (int j = 0; j < offersArray.length(); j++) {
             JSONObject offersOBJ = offersArray.getJSONObject(j);
-               productOffers.add(new Offer(offersOBJ.optString("offer_no"),offersOBJ.optString("offer_description"),offersOBJ.optString("offer_title"),offersOBJ.optString("offer_image"))) ;
+               productOffers.add(new Offer(offersOBJ.optString("offer_no"),offersOBJ.optString("offer_description"),offersOBJ.optString("offer_title"),"mabcoonline.com/"+offersOBJ.optString("offer_image"))) ;
         }
         if (productOffers.size() > 0 )
         {
@@ -324,6 +323,8 @@ public class ProductDetailsFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+            ProductImageViewContainer.setVisibility(View.GONE);
+            ProductImageViewContainer.stopShimmer();
             if (product.getCategoryModel().getCat_code().equals("00")) {
                 productColorAdapter = new ProductColorAdapter(context, productColors);
                 product.setProductColor(productColors.get(0));

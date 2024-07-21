@@ -47,13 +47,17 @@
                     android:id="@+id/product_image"
                     android:layout_width="130dp"
                     android:layout_height="140dp"
-                    android:background="@color/white" />
+                    android:background="@color/shimmerColor" />
             </androidx.cardview.widget.CardView>
 
             <RelativeLayout
                 android:id="@+id/product_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+
+                android:background="@color/shimmerColor"
                 android:layout_toEndOf="@+id/image_card">
 
                 <TextView
@@ -65,9 +69,9 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:fontFamily="@font/rafat"
+                    android:background="@color/shimmerColor"
                     android:lines="1"
                     android:maxHeight="30dp"
-                    android:text="name"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
                     android:textSize="20dp"
@@ -84,7 +88,7 @@
                     android:layout_marginEnd="5dp"
                     android:fontFamily="@font/rafat"
                     android:maxLength="18"
-                    android:text="desc"
+
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -107,7 +111,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:fontFamily="@font/rafat"
-                    android:text="000SP"
+                    android:background="@color/shimmerColor"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -118,7 +122,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:fontFamily="@font/rafat"
-                    android:text="000SP"
+                    android:layout_marginStart="5dp"
+
+                    android:background="@color/shimmerColor"
+
                     android:textAlignment="center"
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/black"

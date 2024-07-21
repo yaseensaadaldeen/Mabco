@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_nav_home_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_offersFragment"
+            app:destination="@id/offersFragment" />
     </fragment>
 
 
@@ -60,6 +63,10 @@
         <action
             android:id="@+id/action_productDetailsFragment_to_productsFragment"
             app:destination="@id/productsFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_self"
+            app:destination="@id/productDetailsFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/navigation_showrooms"
@@ -73,14 +80,25 @@
     <fragment
         android:id="@+id/signInMain"
         android:name="com.example.mabco.ui.Signin.SignInMain"
-        tools:layout="@layout/fragment_sign_in_main" >
+        tools:layout="@layout/fragment_sign_in_main">
         <action
             android:id="@+id/action_signInMain_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
         <action
             android:id="@+id/action_signInMain_to_nav_home"
             app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_signInMain_to_invoicesFragment"
+            app:destination="@id/invoicesFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/offerProductDialog"
+        android:name="com.example.mabco.ui.Product.OfferProductDialog"
+        tools:layout="@layout/offer_products_dialog">
+        <action
+            android:id="@+id/action_offerProductDialog_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </dialog>
     <fragment
         android:id="@+id/shoppingCartFragment"
         android:name="com.example.mabco.ui.ShoppingCart.ShoppingCartFragment"
@@ -118,13 +136,50 @@
         android:id="@+id/profileFragment"
         android:name="com.example.mabco.ui.profile.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_nav_home"
             app:destination="@id/nav_home" />
         <action
             android:id="@+id/action_profileFragment_to_signInMain"
             app:destination="@id/signInMain" />
+        <action
+            android:id="@+id/action_profileFragment_to_invoicesFragment"
+            app:destination="@id/invoicesFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/invoicesFragment"
+        android:name="com.example.mabco.ui.Invoices.InvoicesFragment"
+        android:label="Invoices"
+        tools:layout="@layout/fragment_invoices">
+        <action
+            android:id="@+id/action_invoicesFragment_to_signInMain"
+            app:destination="@id/signInMain" />
+        <action
+            android:id="@+id/action_invoicesFragment_to_invoiceDetailsFragment"
+            app:destination="@id/invoiceDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/invoiceDetailsFragment"
+        android:name="com.example.mabco.ui.Invoices.InvoiceDetailsFragment"
+        android:label="fragment_invoice_details"
+        tools:layout="@layout/invoice_details_dialog">
+        <action
+            android:id="@+id/action_invoiceDetailsFragment_to_invoicesFragment"
+            app:destination="@id/invoicesFragment" />
+        <argument
+            android:name="inv_no"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/offersFragment"
+        android:name="com.example.mabco.ui.Offers.OffersFragment"
+        android:label="@string/offers_header"
+        tools:layout="@layout/fragment_offers">
+        <action
+            android:id="@+id/action_productOfferFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+
 
 </navigation>

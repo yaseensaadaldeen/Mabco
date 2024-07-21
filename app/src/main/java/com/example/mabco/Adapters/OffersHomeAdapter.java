@@ -12,24 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mabco.Classes.Offer;
 import com.example.mabco.R;
 
-public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder> {
+public class OffersHomeAdapter extends RecyclerView.Adapter<OffersHomeAdapter.ViewHolder> {
     private Context context;
     public Offer[] offers;
 
-    public OffersAdapter(Context context, Offer[] offers) {
+    public OffersHomeAdapter(Context context, Offer[] offers) {
         this.context = context;
         this.offers = offers;
     }
 
     @NonNull
     @Override
-    public OffersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.offer_item,parent,false);
+    public OffersHomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.offer_home_item,parent,false);
         return new  ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OffersAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull OffersHomeAdapter.ViewHolder holder, int position) {
         holder.offer_image.setImageResource(offers[position].getOffer_image());
     }
 
