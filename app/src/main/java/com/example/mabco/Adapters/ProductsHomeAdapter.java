@@ -9,16 +9,19 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mabco.Classes.Product;
+import com.example.mabco.MainActivity;
 import com.example.mabco.R;
 
 import java.util.ArrayList;
@@ -26,10 +29,13 @@ import java.util.ArrayList;
 public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapter.ViewHolder>  {
     private Context context;
     public ArrayList<Product> products;
+    public MainActivity mainActivity;
 
-    public ProductsHomeAdapter(Context context, ArrayList<Product> products) {
+    public ProductsHomeAdapter(Context context, ArrayList<Product> products, MainActivity mainActivity) {
         this.context = context;
         this.products = products;
+        this.mainActivity=mainActivity;
+
     }
 
     @NonNull
@@ -58,6 +64,7 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
             activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
             Product product = products.get(position);
             if (!product.getStk_code().isEmpty()) {
+                holder.product=product;
                 Glide.with(context).load(product.getProduct_image()).fitCenter().into(holder.product_image);
                 holder.product_name.setText(product.getProduct_title());
                 holder.product_desc.setText(product.getStk_desc());
@@ -100,6 +107,7 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
                         }
                     }
                 });
+
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -111,9 +119,13 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
         return products.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView product_name, product_desc,product_price,product_disc,product_tag;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener, View.OnLongClickListener {
+        TextView product_name, product_desc, product_price, product_disc, product_tag;
         ImageView product_image;
+        CardView compare_Card;
+        boolean isLongPressed = false;
+        Product product;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             product_image = itemView.findViewById(R.id.product_image);
@@ -122,16 +134,60 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
             product_price = itemView.findViewById(R.id.product_price);
             product_disc = itemView.findViewById(R.id.product_disc);
             product_tag = itemView.findViewById(R.id.product_tag);
+            compare_Card = itemView.findViewById(R.id.compare_Card);
+            itemView.setOnLongClickListener(this);
+            itemView.setOnTouchListener(this);
+        }
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (isLongPressed) {
+                        scaleView(view, 1.0f, 1.1f); // Scale up
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    if (isLongPressed) {
+                        scaleView(view, 1.1f, 1.0f); // Scale back down
+                        CompareAction(compare_Card,product);
+                        isLongPressed = false;
+                    }
+                    break;
+            }
+            return false;
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            isLongPressed = true;
+            scaleView(view, 1.0f, 1.1f); // Scale up
+            return true;
         }
     }
+
+
+    private void scaleView(View view, float startScale, float endScale) {
+        view.animate().scaleX(endScale).scaleY(endScale).setDuration(300).start();
+    }
+
     public interface OnClickListener {
         void onClick(int position, Product product);
     }
+
     private static Activity unwrap(Context context) {
         while (!(context instanceof Activity) && context instanceof ContextWrapper) {
             context = ((ContextWrapper) context).getBaseContext();
         }
-
         return (Activity) context;
+    }
+
+    private void CompareAction(View view,Product product) {
+        boolean notify =! ( view.getVisibility() == View.VISIBLE);
+        if (view.getVisibility() == View.VISIBLE) view.setVisibility(View.GONE);
+        else view.setVisibility(View.VISIBLE);
+        if (mainActivity instanceof MainActivity)
+            mainActivity.AddToolbarNotification("0" , R.id.nav_compare, notify);
     }
 }

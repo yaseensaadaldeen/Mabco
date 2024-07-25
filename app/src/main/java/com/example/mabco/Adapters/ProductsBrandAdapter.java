@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mabco.Classes.Brand;
+import com.example.mabco.MainActivity;
 import com.example.mabco.R;
 import com.squareup.picasso.Picasso;
 
@@ -21,6 +22,7 @@ public class ProductsBrandAdapter extends RecyclerView.Adapter<ProductsBrandAdap
     private Context context;
     private ArrayList<Brand> brands;
     public ProductsHomeAdapter brandproductsHomeAdapter;
+    public MainActivity mainActivity;
 
     public ProductsBrandAdapter(Context context, ArrayList<Brand> brands) {
         this.context = context;
@@ -39,7 +41,7 @@ public class ProductsBrandAdapter extends RecyclerView.Adapter<ProductsBrandAdap
         try {
         Brand brand = brands.get(position);
         Picasso.get().load(brand.getBrand_image()).into(holder.brandImageView);
-        brandproductsHomeAdapter = new ProductsHomeAdapter(context, brands.get(position).getProducts());
+       // brandproductsHomeAdapter = new ProductsHomeAdapter(context, brands.get(position).getProducts(),((MainActivity) getActivity()));
         holder.productRecycle.setAdapter(brandproductsHomeAdapter);//.notifyDataSetChanged();
         holder.productRecycle.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 

@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_nav_home_to_servicesFragment"
             app:destination="@id/nav_services" />
+        <action
+            android:id="@+id/action_nav_home_to_compareFragment"
+            app:destination="@id/nav_compare" />
     </fragment>
 
 
@@ -232,5 +235,10 @@
     <fragment
         android:id="@+id/warrantyPolicyFragment"
         android:name="com.example.mabco.ui.Policies.WarrantyPolicyFragment" />
+    <fragment
+        android:id="@+id/nav_compare"
+        android:name="com.example.mabco.ui.Compare.CompareFragment"
+        android:label="fragment_compare"
+        tools:layout="@layout/fragment_compare" />
 
 </navigation>

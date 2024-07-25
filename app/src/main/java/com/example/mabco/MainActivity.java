@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +17,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_NOTIFICATION = 99;
     TextView notification_cnt;
     TextView userNameTextView;
+    NavigationView navigationView;
     private static final int REQUEST_WRITE_STORAGE = 112;
     SharedPreferences ShoppingCartData, UserData, PersonalPreference;
 
@@ -71,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
             InstanceIDService.returnMeFCMtoken(this);
 
             DrawerLayout drawer = binding.drawerLayout;
-            NavigationView navigationView = binding.navView;
+            navigationView = binding.navView;
             View headerView = navigationView.getHeaderView(0);
             userNameTextView = headerView.findViewById(R.id.sidebar_user_name);
             userNameTextView.setText(UserData.getString("user_name", ""));
-            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services, R.id.productsFragment, R.id.webview).setOpenableLayout(drawer).build();
+            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services, R.id.productsFragment, R.id.webview , R.id.nav_compare).setOpenableLayout(drawer).build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -87,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
             NavController bottomnavController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             NavigationUI.setupWithNavController(navView, bottomnavController);
             checkPermissions();
+
+
+
         } catch (Exception ex) {
             Log.i("brandAdapter exception", ex.getMessage());
         }
@@ -223,4 +230,39 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
+    BadgeDrawerArrowDrawable badgeDrawerArrowDrawable;
+    ActionBarDrawerToggle mDrawerToggle;
+
+    private void setupDrawerLayout() {
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, binding.appBarMain.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+    }
+
+    private void setBadgeNavigationIcon() {
+        if (getSupportActionBar() != null) {
+            Context themedContext = getSupportActionBar().getThemedContext();
+            if (themedContext != null) {
+                if (badgeDrawerArrowDrawable == null) {
+                    badgeDrawerArrowDrawable = new BadgeDrawerArrowDrawable(themedContext);
+                }
+                mDrawerToggle.setDrawerArrowDrawable(badgeDrawerArrowDrawable);
+                badgeDrawerArrowDrawable.setBackgroundColor(ContextCompat.getColor(this, R.color.holo_red_light));
+            }
+        }
+    }
+    public void AddToolbarNotification(String count ,int nav_item ,boolean notify){
+        setupDrawerLayout();
+        setBadgeNavigationIcon();
+        badgeDrawerArrowDrawable.setEnabled(notify);
+        badgeDrawerArrowDrawable.setText(null);
+
+        RelativeLayout customLayout = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.notification_badge, null);
+        TextView badge = (customLayout.findViewById(R.id.counter));
+        badge.setText(count.equals("0") ? "" :count);
+        badge.setVisibility(notify? View.VISIBLE: View.GONE );
+        navigationView.getMenu().findItem(nav_item).setActionView(customLayout);
+
+    }
 }

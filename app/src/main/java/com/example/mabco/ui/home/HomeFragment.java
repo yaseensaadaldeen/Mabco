@@ -42,6 +42,7 @@ import com.example.mabco.Adapters.SliderAdapter;
 import com.example.mabco.Classes.CategoryModel;
 import com.example.mabco.Classes.Offer;
 import com.example.mabco.Classes.Product;
+import com.example.mabco.MainActivity;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
 import com.example.mabco.ui.Product.OfferProductDialog;
@@ -126,7 +127,7 @@ public class HomeFragment extends Fragment {
             if (offerproducts == null) {
                 ProductsWithDiscountAPI(context, haveNetworkConnection());
             } else {
-                offerproductsHomeAdapter = new ProductsHomeAdapter(context, offerproducts);
+                offerproductsHomeAdapter = new ProductsHomeAdapter(context, offerproducts,((MainActivity) getActivity()));
                 offerproductsRecycler.setAdapter(offerproductsHomeAdapter);//.notifyDataSetChanged();
                 offershimmerViewContainer.stopShimmer();
                 offershimmerViewContainer.setVisibility(View.GONE);
@@ -146,7 +147,7 @@ public class HomeFragment extends Fragment {
             if (newproducts == null) {
                 NewProductsAPI(context, haveNetworkConnection());
             } else {
-                newproductsHomeAdapter = new ProductsHomeAdapter(context, newproducts);
+                newproductsHomeAdapter = new ProductsHomeAdapter(context, newproducts,((MainActivity) getActivity()));
                 newproductsRecycler.setAdapter(newproductsHomeAdapter);//.notifyDataSetChanged();
                 newproductsHomeAdapter.setOnClickListener(new ProductsHomeAdapter.OnClickListener() {
                     @Override
@@ -438,7 +439,7 @@ public class HomeFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        newproductsHomeAdapter = new ProductsHomeAdapter(context, newproducts);
+        newproductsHomeAdapter = new ProductsHomeAdapter(context, newproducts,((MainActivity) getActivity()));
         newproductsRecycler.setAdapter(newproductsHomeAdapter);//.notifyDataSetChanged();
         newproductsHomeAdapter.setOnClickListener(new ProductsHomeAdapter.OnClickListener() {
             @Override
@@ -481,7 +482,7 @@ public class HomeFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        offerproductsHomeAdapter = new ProductsHomeAdapter(context, offerproducts);
+        offerproductsHomeAdapter = new ProductsHomeAdapter(context, offerproducts,((MainActivity) getActivity()));
         offershimmerViewContainer.stopShimmer();
         offershimmerViewContainer.setVisibility(View.GONE);
         offerproductsRecycler.setAdapter(offerproductsHomeAdapter);//.notifyDataSetChanged();

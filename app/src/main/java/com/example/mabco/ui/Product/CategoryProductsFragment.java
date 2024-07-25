@@ -31,6 +31,7 @@ import com.example.mabco.Classes.Brand;
 import com.example.mabco.Classes.CategoryModel;
 import com.example.mabco.Classes.NetworkStatus;
 import com.example.mabco.Classes.Product;
+import com.example.mabco.MainActivity;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -204,7 +205,7 @@ public class CategoryProductsFragment extends Fragment {
             }
         }
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(cat_name + brand_name);
-        productsAdapter = new ProductsHomeAdapter(context, products);
+        productsAdapter = new ProductsHomeAdapter(context, products,((MainActivity) getActivity()));
         if (productsAdapter.getItemCount() == 0) {
             // If the adapter has no items, show the TextView
             emptyTextView.setVisibility(View.VISIBLE);

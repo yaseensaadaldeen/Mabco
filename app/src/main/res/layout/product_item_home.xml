@@ -20,7 +20,6 @@
         android:id="@+id/product"
         android:layout_width="180dp"
         android:layout_height="200dp"
-
         android:background="@color/white"
         app:cardCornerRadius="7dp">
 
@@ -45,8 +44,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:background="@color/white"
-                    />
+                    android:background="@color/white" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/compare_Card"
+                    android:layout_width="23dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="start|bottom"
+                    android:layout_margin="4dp"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="0dp"
+                    android:visibility="gone"
+                    app:cardElevation="0dp">
+
+
+                    <ImageView
+                        android:id="@+id/compare"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="left|bottom"
+                        android:src="@drawable/baseline_compare_arrows_24" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:layout_gravity="top|right"
+                        android:background="@drawable/notify_background"
+                        android:gravity="center"
+                        android:textSize="6sp" />
+                </androidx.cardview.widget.CardView>
+
                 <TextView
                     android:id="@+id/product_tag"
                     android:layout_width="wrap_content"

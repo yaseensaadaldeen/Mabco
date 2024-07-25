@@ -34,5 +34,9 @@
         android:id="@+id/webview"
         android:icon="@drawable/outline_group_add_24"
         android:title="@string/career"/>
+    <item
+        android:id="@+id/nav_compare"
+        android:icon="@drawable/baseline_compare_arrows_24"
+        android:title="@string/compare"/>
 
 </menu>
