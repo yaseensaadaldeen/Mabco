@@ -27,7 +27,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.mabco.Firebase.InstanceIDService;
 import com.example.mabco.databinding.ActivityMainBinding;
+import com.example.mabco.ui.Policies.PrivacyPolicyDialogStartFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.karumi.dexter.Dexter;
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     TextView userNameTextView;
     private static final int REQUEST_WRITE_STORAGE = 112;
     SharedPreferences ShoppingCartData, UserData, PersonalPreference;
-
 
     public void updateUserName(String newUserName) {
         userNameTextView.setText(newUserName);
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             View headerView = navigationView.getHeaderView(0);
             userNameTextView = headerView.findViewById(R.id.sidebar_user_name);
             userNameTextView.setText(UserData.getString("user_name", ""));
-            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services, R.id.productsFragment,R.id.offersFragment).setOpenableLayout(drawer).build();
+            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services, R.id.productsFragment, R.id.webview).setOpenableLayout(drawer).build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -85,14 +86,7 @@ public class MainActivity extends AppCompatActivity {
             AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.productsFragment, R.id.profileFragment, R.id.navigation_showrooms).build();
             NavController bottomnavController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             NavigationUI.setupWithNavController(navView, bottomnavController);
-//            if (PersonalPreference.getString("NotificationStatus","notset") .equals( "notset")) {
-//                //requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, RC_NOTIFICATION);
-//            }
             checkPermissions();
-            Bundle b = getIntent().getExtras();
-            if (b != null && getIntent().getExtras().get("Type") != null) {
-
-            }
         } catch (Exception ex) {
             Log.i("brandAdapter exception", ex.getMessage());
         }
@@ -175,6 +169,17 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(destinationIdToNavigate);
                 }
             });
+            final String PREFS_NAME = "MyPrefsFile";
+
+            SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+            if (settings.getBoolean("my_first_time", true)) {
+                Log.d("Comments", "First time");
+                BottomSheetDialogFragment bottomSheetDialogFragment = new PrivacyPolicyDialogStartFragment();
+                bottomSheetDialogFragment.setCancelable(false);
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
+                settings.edit().putBoolean("my_first_time", false).commit();
+            }
             shoppingcarticon.setOnClickListener(v -> {
                 int destinationIdToNavigate = R.id.shoppingCartFragment;
                 // Check if the current destination is the same as the destination to navigate

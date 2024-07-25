@@ -128,9 +128,7 @@
 تعرض المنتج للسوائل او الرطوبة او اي نوع من الصدمات الميكانيكة او الكهربائية.\n
         \n
 حدوث عيوب ناتجه عن اسباب خارج عن السيطرة كالبرق او جهد كهربائي غير طبيعي أو امور قدرية.\n
-        \n
-        \n
-        \n\n\n
+
     </string>
 
     <string name="update_now">تحديث الأن</string>
@@ -188,7 +186,7 @@
     <string name="full_name_optional"> الأسم و الكنية</string>
     <string name="letters">احرف فقط</string>
     <string name="numbers">ارقام فقط</string>
-    <string name="my_device_warranty">تحقق من كفالة جهازك</string>
+    <string name="my_device_warranty">تحقق من كفالة جهازك لدى مابكو</string>
     <string name="barcode_warranty">تحقق عن طريق الباركود</string>
     <string name="another_dervice_warranty">تحقق من كفالة جهاز آخر</string>
     <string name="imei">أدخل رمز الـ IMEI</string>
@@ -452,6 +450,7 @@
     <string name="PasswordSpecialCharCheck">يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل</string>
     <string name="EmailValidate">لطفا إدخال بريد الكتروني صحيح</string>
     <string name="NotValid">لطفا التأكد من البينات المدخلة</string>
+    <string name="SignoutConfirm">هل أنت متأكد من تسجيل الخروج</string>
     <string name="SignUpSuccess">تم تسجيل المعلومات و الاشتراك بنجاح</string>
     <string name="error_code">رمز التفعيل خاطئ</string>
     <string name="sign_up_successful">تم انشاء المستخدم بنجاح</string>
@@ -498,4 +497,5 @@
     <string name="notification_enable"> تم  تفعيل الاشعارات بنجاح</string>
     <string name="recomend_signin">لطفاً تسجيل الدخول للإستفادة من كافة مزايا التطبيق</string>
     <string name="save_inv">تحميل</string>
+    <string name="readpolicy">اقر أني قرأت ووافقت على سياسة الخصوصية</string>
 </resources>

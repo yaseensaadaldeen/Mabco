@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_nav_home_to_offersFragment"
             app:destination="@id/offersFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_servicesFragment"
+            app:destination="@id/nav_services" />
     </fragment>
 
 
@@ -146,6 +149,15 @@
         <action
             android:id="@+id/action_profileFragment_to_invoicesFragment"
             app:destination="@id/invoicesFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_warrantyPolicyFragment"
+            app:destination="@id/warrantyPolicyFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_webview"
+            app:destination="@id/webview" />
     </fragment>
     <fragment
         android:id="@+id/invoicesFragment"
@@ -180,6 +192,45 @@
             android:id="@+id/action_productOfferFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/nav_services"
+        android:name="com.example.mabco.ui.Services.ServicesFragment"
+        android:label="@string/services">
+        <action
+            android:id="@+id/action_nav_services_to_webview"
+            app:destination="@id/webview" />
+        <action
+            android:id="@+id/action_nav_services_to_IMEISERIAL"
+            app:destination="@id/IMEISERIAL" />
+        <action
+            android:id="@+id/action_nav_services_to_personalServicesFragment"
+            app:destination="@id/personalServicesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/webview"
+        android:name="com.example.mabco.Webview"
+        tools:layout="@layout/fragment_webview">
+        <argument
+            android:name="url"
+            android:defaultValue="https://hr1.mabcoonline.com"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/IMEISERIAL"
+        android:name="com.example.mabco.ui.Services.IMEISERIAL"
+        tools:layout="@layout/fragment_imeiserial">
+        <action
+            android:id="@+id/action_IMEISERIAL_to_nav_services"
+            app:destination="@id/nav_services" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalServicesFragment"
+        android:name="com.example.mabco.ui.Services.PersonalServicesFragment" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.example.mabco.ui.Policies.PrivacyPolicyFragment" />
+    <fragment
+        android:id="@+id/warrantyPolicyFragment"
+        android:name="com.example.mabco.ui.Policies.WarrantyPolicyFragment" />
 
 </navigation>

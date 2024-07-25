@@ -11,12 +11,14 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@color/white"
         app:cardCornerRadius="7dp">
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -32,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-android:layout_marginStart="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/spec_image"
                 android:fontFamily="@font/rafat"
                 android:gravity="top"
@@ -47,9 +49,8 @@ android:layout_marginStart="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/spec_hdr"
-android:layout_marginStart="12dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
-
                 android:layout_toEndOf="@+id/spec_image"
                 android:fontFamily="@font/rafat"
                 android:text="description"

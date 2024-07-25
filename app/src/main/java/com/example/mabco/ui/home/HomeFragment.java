@@ -272,7 +272,7 @@ public class HomeFragment extends Fragment {
 
     public void openDialog(Offer offer) {
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-        OfferProductDialog listDialog = new OfferProductDialog(context, offer, navController, "offerFragment") {
+        OfferProductDialog listDialog = new OfferProductDialog(context, offer, navController, "Home") {
             @Override
             public void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
@@ -281,7 +281,7 @@ public class HomeFragment extends Fragment {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(listDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = 1400;
+        lp.height = 1700;
         listDialog.show();
         listDialog.getWindow().setAttributes(lp);
         listDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

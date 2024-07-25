@@ -6,109 +6,105 @@
     android:layout_height="wrap_content"
     tools:context=".ui.Product.OfferProductDialog">
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:elevation="16dp"
-        android:outlineAmbientShadowColor="@color/colorPrimaryDark"
-        android:layout_marginTop="20dp"
-        android:outlineSpotShadowColor="@color/colorPrimaryDark"
-        tools:targetApi="p">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="#F4F4F4"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="15dp"
+        app:cardUseCompatPadding="true">
 
-        <androidx.cardview.widget.CardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:elevation="16dp"
-            app:cardCornerRadius="13dp"
-            app:cardUseCompatPadding="true">
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+
+            android:background="#F4F4F4"
+            android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+            android:outlineSpotShadowColor="@color/colorPrimaryDark"
+            tools:targetApi="p">
 
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/offer_desc"
                 android:layout_width="match_parent"
-                android:layout_height="590dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:background="#F4F4F4">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/rafat"
+                android:text="Discount on ...."
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/offer_desc"
-                    android:layout_width="match_parent"
+            <View
+                android:id="@+id/sep_hdr"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@+id/offer_desc"
+                android:background="#000" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/offer_shimmer_view_containers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/sep_hdr">
+
+                <!-- Your existing product item layout -->
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/mobile_item_layout"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="30dp"
-                    android:fontFamily="@font/rafat"
-                    android:text="Discount on ...."
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                    android:layout_centerInParent="true"
+                    android:layout_margin="5dp"
+                    android:configChanges="orientation|screenSize|keyboardHidden"
+                    android:elevation="5dp"
+                    android:minWidth="180dp"
+                    android:orientation="vertical"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <View
-                    android:id="@+id/sep_hdr"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_below="@+id/offer_desc"
-                    android:background="#000" />
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/offer_shimmer_view_containers"
-                    android:layout_width="match_parent"
-                    android:layout_below="@+id/sep_hdr"
-
-                    android:layout_height="wrap_content">
-
-                    <!-- Your existing product item layout -->
                     <LinearLayout
-                        android:minWidth="180dp"
-                        android:id="@+id/mobile_item_layout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_margin="5dp"
-                        android:elevation="5dp"
-                        android:orientation="vertical"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:configChanges="orientation|screenSize|keyboardHidden">
+                        android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                        <include layout="@layout/shimmering_offer_product_item" />
 
-                            <include layout="@layout/shimmering_offer_product_item" />
+                        <include layout="@layout/shimmering_offer_product_item" />
 
-                            <include layout="@layout/shimmering_offer_product_item" />
+                        <include layout="@layout/shimmering_offer_product_item" />
 
-                            <include layout="@layout/shimmering_offer_product_item" />
-                            <include layout="@layout/shimmering_offer_product_item" />
-                            <include layout="@layout/shimmering_offer_product_item" />
+                        <include layout="@layout/shimmering_offer_product_item" />
 
+                        <include layout="@layout/shimmering_offer_product_item" />
 
-                        </LinearLayout>
 
                     </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/offer_products"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/offer_shimmer_view_containers"
-                    android:layout_gravity="bottom"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginBottom="-10dp"
-                    android:orientation="vertical"
 
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/product_item" />
-                <!--Main Body of your custom dialog-->
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
-            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/offer_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/offer_shimmer_view_containers"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="7dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/product_item" />
+
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
-</RelativeLayout>
+
     <LinearLayout
         android:id="@+id/llTop"
         android:layout_width="wrap_content"

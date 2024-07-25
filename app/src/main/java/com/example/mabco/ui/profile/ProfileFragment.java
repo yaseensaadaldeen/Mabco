@@ -2,8 +2,10 @@ package com.example.mabco.ui.profile;
 
 import static androidx.core.app.ActivityCompat.recreate;
 
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -29,6 +31,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.example.mabco.MainActivity;
@@ -46,7 +50,7 @@ import java.util.Locale;
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
-    RelativeLayout Language_Area, Notification_area, log_area,invoice_Area;
+    RelativeLayout Language_Area, Notification_area, log_area, invoice_Area, policy_Area, warranty_Area, use_terms_Area, about_area,Service_ord_stat_Area;
     LinearLayout account_info;
     Context context;
     private boolean isInitialization = true;
@@ -56,6 +60,7 @@ public class ProfileFragment extends Fragment {
     private Boolean spinnerTouched = false;
     FloatingActionButton log_icon;
     TextView txt_log;
+    String local;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -78,12 +83,19 @@ public class ProfileFragment extends Fragment {
         log_area = binding.logArea;
         txt_log = binding.txtLog;
         account_info = binding.accountInfo;
+        policy_Area = binding.policyArea;
+        warranty_Area = binding.warrantyArea;
+        use_terms_Area = binding.useTermsArea;
+        about_area = binding.aboutArea;
+        Service_ord_stat_Area = binding.ServiceOrdStatArea;
         List<String> list = new ArrayList<>();
         list.add(getString(R.string.english_item));
         list.add(getString(R.string.arabic_item));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.spinner_item, list);
         PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
         UserPreferance = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        local = PersonalPreference.getString("Language", "ar");
+
         boolean NotificationStatus = PersonalPreference.getString("NotificationStatus", "enable").equals("enable") ? true : false;
         notification_switch.setChecked(NotificationStatus);
         Language_spinner.setAdapter(adapter);
@@ -111,15 +123,36 @@ public class ProfileFragment extends Fragment {
             Language_spinner.performClick();
             spinnerTouched = true;
         });
+        policy_Area.setOnClickListener(v -> {
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_profileFragment_to_privacyPolicyFragment);
+        });
+        warranty_Area.setOnClickListener(v -> {
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_profileFragment_to_warrantyPolicyFragment);
+        });
         Notification_area.setOnClickListener(v -> {
             notification_switch.performClick();
         });
+        Service_ord_stat_Area.setOnClickListener(v->{
+            String url = local.equals("ar") ? "https://mabcoonline.com/ar/ServiceCheck.aspx" : "https://mabcoonline.com/ServiceCheck.aspx";
+            NavController navController = Navigation.findNavController(binding.getRoot());
+            navController.navigate((NavDirections) ProfileFragmentDirections.actionProfileFragmentToWebview().setUrl(url));
+        });
         log_area.setOnClickListener(v -> {
+
             if (UserPreferance.getBoolean("Verified", false)) {
-                UserPreferance.edit().clear().commit();
-                log_icon.setImageResource(R.drawable.baseline_logout_24);
-                txt_log.setText(getString(R.string.logout));
-                Toast.makeText(context, R.string.recomend_signin, Toast.LENGTH_LONG);
+                new AlertDialog.Builder(context)
+                        .setTitle(R.string.logout)
+                        .setMessage(R.string.SignoutConfirm)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                UserPreferance.edit().clear().commit();
+                                log_icon.setImageResource(R.drawable.baseline_logout_24);
+                                txt_log.setText(getString(R.string.logout));
+                                Toast.makeText(context, R.string.recomend_signin, Toast.LENGTH_LONG);
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+
             } else {
                 log_icon.setImageResource(R.drawable.baseline_login_24);
                 txt_log.setText(getString(R.string.Login));
@@ -130,7 +163,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 NotificationsPermission(isChecked);
-
             }
         });
         Language_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

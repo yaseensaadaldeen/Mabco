@@ -33,6 +33,7 @@ import com.example.mabco.Classes.Product;
 import com.example.mabco.R;
 import com.example.mabco.UrlEndPoint;
 import com.example.mabco.ui.Offers.OffersFragmentDirections;
+import com.example.mabco.ui.home.HomeFragmentDirections;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
@@ -206,9 +207,11 @@ public abstract class OfferProductDialog extends Dialog {
                     try {
                         if (from.equals("offerFragment"))
                             navController.navigate((NavDirections) OffersFragmentDirections.actionProductOfferFragmentToProductDetailsFragment(product));
+                        else if (from.equals("Home"))
+                            navController.navigate((NavDirections) HomeFragmentDirections.actionNavHomeToProductDetailsFragment(product));
                         else {
                             if (stk_code.equals(product.getStk_code())) {
-                                Toast.makeText(context, "المنتج ذانه !!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "المنتج ذاته !!", Toast.LENGTH_SHORT).show();
                                 dismiss();
                             } else
                                 navController.navigate((NavDirections) ProductDetailsFragmentDirections.actionProductDetailsFragmentSelf(product));

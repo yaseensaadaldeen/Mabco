@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="70dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ui.Services.ServicesFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:id="@+id/row1"
+            android:layout_width="0dp"
+            android:layout_height="190dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/InstallmentCard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="7dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+
+                        android:id="@+id/InstallmentText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/InstallmentImage"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+
+                        android:ellipsize="end"
+                        android:fontFamily="@font/rafat"
+                        android:gravity="bottom|center"
+                        android:paddingBottom="5dp"
+                        android:singleLine="true"
+                        android:text="@string/installment"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/InstallmentImage"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/WarrantyCard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="7dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/WarrantyText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/WarrantyImage"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/rafat"
+                        android:gravity="bottom|center"
+                        android:padding="1dip"
+                        android:paddingBottom="5dp"
+                        android:singleLine="false"
+                        android:text="@string/verfy_warranty"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/WarrantyImage"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerHorizontal="true"
+
+                        />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/row2"
+            android:layout_width="0dp"
+            android:layout_height="190dp"
+            android:orientation="horizontal"
+
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/row1">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/printservicesCard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="7dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/printservicesText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/printservicesImage"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+
+                        android:fontFamily="@font/rafat"
+                        android:gravity="bottom|center"
+                        android:paddingBottom="5dp"
+                        android:text="@string/Other_Services"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/printservicesImage"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerHorizontal="true" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/PersonalServiceCard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+
+                app:cardCornerRadius="7dp"
+                app:cardElevation="7dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/PersonalServiceText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/PersonalServiceImage"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+
+                        android:fontFamily="@font/rafat"
+                        android:gravity="bottom|center"
+                        android:paddingBottom="5dp"
+                        android:text="@string/personal_service"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/PersonalServiceImage"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerHorizontal="true"
+
+                        />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/row3"
+            android:layout_width="0dp"
+            android:layout_height="190dp"
+            android:orientation="horizontal"
+
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/row2">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/EpaymentCard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="7dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/EpaymentText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/EpaymentImage"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+
+                        android:fontFamily="@font/rafat"
+                        android:gravity="bottom|center"
+                        android:paddingBottom="5dp"
+                        android:text="@string/epayment"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/EpaymentImage"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerHorizontal="true" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/ApplicationCard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="7dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/ApplicationText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ApplicationImage"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+
+                        android:fontFamily="@font/rafat"
+                        android:gravity="bottom|center"
+                        android:paddingBottom="5dp"
+                        android:text="@string/applications"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/ApplicationImage"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerHorizontal="true" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/row4"
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:orientation="horizontal"
+           android:layout_marginBottom="20dp"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/row3">
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -37,15 +37,10 @@ public class MessagingService extends FirebaseMessagingService {
         Intent openIntent = new Intent(this, MainActivity.class);
         PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(false) // Notification cannot be swiped away
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID).setSmallIcon(R.mipmap.ic_launcher).setContentTitle(title).setContentText(message).setPriority(NotificationCompat.PRIORITY_HIGH).setAutoCancel(false) // Notification cannot be swiped away
                 .setOngoing(true) // Make it ongoing
                 .addAction(R.drawable.remove_vector, "Cancel", cancelIntent) // Add cancel button
-.addAction(R.drawable.error_outline_24, "Open", openPendingIntent); // Add cancel button
+                .addAction(R.drawable.error_outline_24, "Open", openPendingIntent); // Add cancel button
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             return;

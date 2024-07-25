@@ -290,5 +290,7 @@ We also have medals engraved with different names and pictures
     <string name="notification_enable">Notification enabled successfully</string>
     <string name="recomend_signin">Login to get the complete app experience</string>
     <string name="save_inv">download</string>
+    <string name="readpolicy">I have read this privacy policy and agreed</string>
+    <string name="SignoutConfirm">are you sure you want to sign out ?</string>
 
 </resources>

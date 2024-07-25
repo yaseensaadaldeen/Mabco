@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/imeiserial"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lighGray"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    tools:context=".ui.Services.IMEISERIAL">
+
+    <RelativeLayout
+        android:id="@+id/drop1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/hdr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/rafat"
+            android:text="@string/warranty"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/sep_hdr"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@+id/hdr"
+            android:background="#000" />
+
+        <TextView
+            android:id="@+id/hdr_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sep_hdr"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/rafat"
+            android:text="@string/my_device_warranty"
+            android:textColor="@color/colorPrimaryDarkNoAlpha"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/drop1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/capture_imei"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="150dp"
+                android:layout_marginEnd="80dp"
+                android:backgroundTint="@color/white"
+                android:drawableEnd="@drawable/outline_camera_enhance_24"
+                android:drawableTint="@color/colorPrimaryDarkNoAlpha"
+                android:fontFamily="@font/rafat"
+                android:shadowColor="@color/colorPrimaryDarkNoAlpha"
+                android:shadowRadius="30"
+                android:text="@string/barcode_warranty"
+                android:textColor="@color/colorPrimaryDarkNoAlpha"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="13dp" />
+
+
+            <EditText
+                android:id="@+id/myimei"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/capture_imei"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:autofillHints=""
+
+                android:background="@drawable/textedit_shape"
+                android:drawableStart="@drawable/round_qr_code_scanner_24"
+                android:fontFamily="@font/rafat"
+                android:hint="@string/imei"
+                android:inputType="textPersonName"
+                android:maxLength="50"
+                android:padding="10dp"
+                android:textAlignment="viewStart" />
+
+            <Button
+                android:id="@+id/checkmyanotherdevice"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/myimei"
+                android:layout_gravity="center"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="100dp"
+                android:backgroundTint="@color/colorPrimaryDarkNoAlpha"
+                android:fontFamily="@font/rafat"
+                android:text="@string/verfy_warranty"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="13dp" />
+
+
+            <TextView
+                android:id="@+id/resulttv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkmyanotherdevice"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="50dp"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/nobghometxt"
+                android:textSize="25sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
+

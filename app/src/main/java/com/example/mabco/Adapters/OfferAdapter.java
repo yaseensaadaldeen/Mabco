@@ -21,7 +21,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
     private final Context context;
     public ArrayList<Offer> offers;
     private OfferAdapter.OnClickListener onClickListener;
-    String from;
+    String from = "";
 
     public void setOnClickListener(OfferAdapter.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
