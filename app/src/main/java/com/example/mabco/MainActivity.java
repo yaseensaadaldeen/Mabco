@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    //app slide notification
     public void AddToolbarNotification(String count ,int nav_item ,boolean notify){
         setupDrawerLayout();
         setBadgeNavigationIcon();
