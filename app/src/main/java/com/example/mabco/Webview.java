@@ -3,7 +3,6 @@ package com.example.mabco;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -29,7 +28,6 @@ public class Webview extends Fragment {
     String url;
     private Context context;
     private String from;
-    SharedPreferences sharedPreferences;
     ProgressBar progressBar;
     private static final int STORAGE_PERMISSION_REQUEST_CODE = 123;
     private ValueCallback<Uri> mUploadMessage;
@@ -77,16 +75,7 @@ public class Webview extends Fragment {
         else
             url = "https://hr1.mabcoonline.com";
         Bundle b = getActivity().getIntent().getExtras();
-        try {
-            if (b != null && getArguments() != null) {
-                from = getArguments().getString("from");
-                // sharedPreferences = context.getSharedPreferences(Config.SHARED_PREF, 0);
-                if (from != null) sharedPreferences.edit().putString("from", from).apply();
-                else sharedPreferences.edit().putString("from", null).apply();
-            }
-        } catch (NullPointerException e) {
-            sharedPreferences.edit().putString("from", null).apply();
-        }
+
         w5 = (WebView) view.findViewById(R.id.w);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             w5.setNestedScrollingEnabled(true);

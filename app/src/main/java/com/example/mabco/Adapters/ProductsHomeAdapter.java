@@ -34,14 +34,18 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
     public ProductsHomeAdapter(Context context, ArrayList<Product> products, MainActivity mainActivity) {
         this.context = context;
         this.products = products;
-        this.mainActivity=mainActivity;
-
+        this.mainActivity = mainActivity;
+        int productCount = Product.countComparedProducts(context);
+        boolean notify = productCount > 0;
+        if (mainActivity instanceof MainActivity)
+            mainActivity.AddToolbarNotification(productCount, R.id.nav_compare, notify);
     }
 
     @NonNull
     @Override
     public ProductsHomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.product_item_home,parent,false);
+
         return new ViewHolder(view);
     }
     private ProductsHomeAdapter.OnClickListener onClickListener;
@@ -107,6 +111,10 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
                         }
                     }
                 });
+                if (Product.isProductInComparison(context, product))
+                    holder.compare_Card.setVisibility(View.VISIBLE);
+                else holder.compare_Card.setVisibility(View.GONE);
+
 
             }
         } catch (Exception e) {
@@ -184,10 +192,17 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
     }
 
     private void CompareAction(View view,Product product) {
-        boolean notify =! ( view.getVisibility() == View.VISIBLE);
-        if (view.getVisibility() == View.VISIBLE) view.setVisibility(View.GONE);
-        else view.setVisibility(View.VISIBLE);
+        if (view.getVisibility() == View.VISIBLE) {
+            if (Product.RemoveProductFromComparison(context, product))
+                view.setVisibility(View.GONE);
+        } else {
+            if (Product.AddProductToComparison(context, product)) view.setVisibility(View.VISIBLE);
+        }
+        int productCount = Product.countComparedProducts(context);
+        boolean notify = productCount > 0;
         if (mainActivity instanceof MainActivity)
-            mainActivity.AddToolbarNotification("0" , R.id.nav_compare, notify);
+            mainActivity.AddToolbarNotification(productCount, R.id.nav_compare, notify);
     }
+
+
 }

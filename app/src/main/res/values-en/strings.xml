@@ -292,5 +292,10 @@ We also have medals engraved with different names and pictures
     <string name="save_inv">download</string>
     <string name="readpolicy">I have read this privacy policy and agreed</string>
     <string name="SignoutConfirm">are you sure you want to sign out ?</string>
+    <string name="add_product">Press here to add product to compare</string>
+    <string name="compare_product_choose">Choose product to compare</string>
+    <string name="add">Add</string>
+    <string name="choose_cat">Choose Category</string>
+    <string name="Choose_product">Choose product</string>
 
 </resources>

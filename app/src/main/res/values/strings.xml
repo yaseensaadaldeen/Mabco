@@ -498,4 +498,9 @@
     <string name="recomend_signin">لطفاً تسجيل الدخول للإستفادة من كافة مزايا التطبيق</string>
     <string name="save_inv">تحميل</string>
     <string name="readpolicy">اقر أني قرأت ووافقت على سياسة الخصوصية</string>
+    <string name="add_product">اضغط لإضافة منتج للمقارنة</string>
+    <string name="compare_product_choose">اختر منتج للمقارنة</string>
+    <string name="add">إضافة</string>
+    <string name="choose_cat">اختر الصنف</string>
+    <string name="Choose_product">اختر المنتج</string>
 </resources>

@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     TextView userNameTextView;
     NavigationView navigationView;
     private static final int REQUEST_WRITE_STORAGE = 112;
-    SharedPreferences ShoppingCartData, UserData, PersonalPreference;
+    SharedPreferences ShoppingCartData, UserData, PersonalPreference , compareSharedPreferences;
 
     public void updateUserName(String newUserName) {
         userNameTextView.setText(newUserName);
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             ShoppingCartData = this.getSharedPreferences("ShoppingCartData", Context.MODE_PRIVATE);
             UserData = this.getSharedPreferences("UserData", Context.MODE_PRIVATE);
             PersonalPreference = this.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
+            compareSharedPreferences = this.getSharedPreferences("ProductsCompare",Context.MODE_PRIVATE);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             binding = ActivityMainBinding.inflate(getLayoutInflater());
             setContentView(binding.getRoot());
@@ -253,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     //app slide notification
-    public void AddToolbarNotification(String count ,int nav_item ,boolean notify){
+    public void AddToolbarNotification(int count , int nav_item , boolean notify){
         setupDrawerLayout();
         setBadgeNavigationIcon();
         badgeDrawerArrowDrawable.setEnabled(notify);
@@ -261,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
 
         RelativeLayout customLayout = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.notification_badge, null);
         TextView badge = (customLayout.findViewById(R.id.counter));
-        badge.setText(count.equals("0") ? "" :count);
+        badge.setText(count > 0? String.valueOf(count) :"");
         badge.setVisibility(notify? View.VISIBLE: View.GONE );
         navigationView.getMenu().findItem(nav_item).setActionView(customLayout);
 
