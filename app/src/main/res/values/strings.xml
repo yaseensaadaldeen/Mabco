@@ -503,4 +503,6 @@
     <string name="add">إضافة</string>
     <string name="choose_cat">اختر الصنف</string>
     <string name="Choose_product">اختر المنتج</string>
+    <string name="please_select_product">لطفا اختيار منتج</string>
+    <string name="choose">اختر</string>
 </resources>

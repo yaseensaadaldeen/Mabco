@@ -34,7 +34,8 @@
         -->
 
     </style>
-    <style name="sectionHeader"   parent="android:Widget.Holo.Light.TextView">
+
+    <style name="sectionHeader" parent="android:Widget.Holo.Light.TextView">
         <item name="android:drawableBottom">@drawable/section_header</item>
         <item name="android:drawablePadding">4dp</item>
         <item name="android:layout_marginTop">8dp</item>
@@ -162,6 +163,7 @@
         <item name="android:scrollbarFadeDuration">2000</item>
         <item name="android:scrollbarDefaultDelayBeforeFade">1000</item>
     </style>
+
     <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:fontFamily">@font/rafat</item>
     </style>
@@ -218,6 +220,7 @@
         <item name="android:fontFamily">@font/rafat</item>
         <!--<item name="android:textStyle">bold</item>-->
     </style>
+
     <style name="category_navigation_items" parent="@style/TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/nobghometxt</item>
         <item name="android:textSize">13sp</item>
@@ -261,8 +264,9 @@
         <item name="android:background">@color/black_overlay</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
+
     <style name="DialogAnimation">
-    <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-    <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 </resources>

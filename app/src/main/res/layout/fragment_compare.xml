@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/lighGray"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/lighGray"
     android:orientation="horizontal"
     tools:context=".ui.Compare.CompareFragment">
 
@@ -39,114 +39,140 @@
             android:background="#000" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/hdr_layout">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hdr_layout">
 
             <LinearLayout
-                android:id="@+id/product1_layout"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="1">
+                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp">
+                <LinearLayout
+                    android:id="@+id/product1_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1">
 
                     <RelativeLayout
-                        android:id="@+id/product1_add_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="100dp"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/product1_add_btn"
+                        <RelativeLayout
+                            android:id="@+id/product1_add_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="100dp"  >
+
+                            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                android:id="@+id/product1_add_btn"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:backgroundTint="@android:color/white"
+                                android:src="@drawable/add_vector"
+                                app:fabCustomSize="130dp"
+                                app:fabSize="auto"
+                                app:maxImageSize="70dp"
+                                app:tint="@color/colorPrimaryDarkNoAlpha" />
+
+                            <TextView
+                                android:id="@+id/product1_add_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/product1_add_btn"
+                                android:layout_marginTop="7dp"
+                                android:fontFamily="@font/rafat"
+                                android:lines="2"
+                                android:maxHeight="30dp"
+                                android:text="@string/add_product"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/product1_data_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
+                            android:background="@color/white"
+                            android:visibility="visible">
 
-                            android:backgroundTint="@android:color/white"
-                            android:outlineSpotShadowColor="@color/lighGray"
-                            android:src="@drawable/add_vector"
-                            app:fabCustomSize="130dp"
-                            app:fabSize="auto"
-                            app:maxImageSize="70dp"
-                            app:tint="@color/colorPrimaryDarkNoAlpha" />
+                            <include
+                                android:id="@+id/product1_data_include"
+                                layout="@layout/product_compare_data" />
+                        </RelativeLayout>
 
-
-                        <TextView
-                            android:id="@+id/product1_add_txt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/product1_add_btn"
-                            android:layout_marginTop="7dp"
-                            android:fontFamily="@font/rafat"
-                            android:lines="2"
-                            android:maxHeight="30dp"
-                            android:text="@string/add_product"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
                     </RelativeLayout>
-                </RelativeLayout>
-            </LinearLayout>
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/product2_layout"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp">
+                <LinearLayout
+                    android:id="@+id/product2_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1">
 
                     <RelativeLayout
-                        android:id="@+id/product2_add_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="100dp"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/product2_add_btn"
+                        <RelativeLayout
+                            android:id="@+id/product2_add_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="100dp">
+
+                            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                android:id="@+id/product2_add_btn"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:backgroundTint="@android:color/white"
+                                android:contentDescription="product1add"
+                                android:src="@drawable/add_vector"
+                                app:fabCustomSize="130dp"
+                                app:fabSize="auto"
+                                app:maxImageSize="70dp"
+                                app:tint="@color/colorPrimaryDarkNoAlpha" />
+
+                            <TextView
+                                android:id="@+id/product2_add_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/product2_add_btn"
+                                android:layout_marginTop="7dp"
+                                android:fontFamily="@font/rafat"
+                                android:lines="2"
+                                android:maxHeight="30dp"
+                                android:text="@string/add_product"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/product2_data_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:backgroundTint="@android:color/white"
-                            android:outlineSpotShadowColor="@color/lighGray"
-                            android:src="@drawable/add_vector"
-                            app:fabCustomSize="130dp"
-                            app:fabSize="auto"
-                            app:maxImageSize="70dp"
-                            app:tint="@color/colorPrimaryDarkNoAlpha" />
+                            android:background="@color/white"
+                            android:visibility="visible">
 
-                        <TextView
-                            android:id="@+id/product2_add_txt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/product2_add_btn"
-                            android:layout_marginTop="7dp"
-                            android:fontFamily="@font/rafat"
-                            android:lines="2"
-                            android:maxHeight="30dp"
-                            android:text="@string/add_product"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                            <include
+                                android:id="@+id/product2_data_include"
+                                layout="@layout/product_compare_data" />
+                        </RelativeLayout>
                     </RelativeLayout>
-                </RelativeLayout>
 
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

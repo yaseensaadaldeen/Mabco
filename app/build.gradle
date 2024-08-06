@@ -8,16 +8,21 @@ plugins {
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    namespace 'com.example.mabco'
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\MABCO\\Desktop\\Devoloping\\Mabco application\\MabcoApp.jks')
+            storePassword 'mabco123'
+        }
+    }
+    namespace 'com.mabcoApp.mabco'
     compileSdk 34
     defaultConfig {
-        applicationId "com.example.mabco"
+        applicationId "com.mabcoApp.application.mabco"
         minSdk 24
         targetSdk 34
         compileSdk 34
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -40,7 +45,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.github.varunest:sparkbutton:1.0.6'
-
+    implementation 'com.google.android.play:app-update:2.1.0'
+    implementation 'com.google.android.play:app-update-ktx:2.1.0'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.3.2'
@@ -84,4 +90,8 @@ dependencies {
     implementation 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     implementation 'com.google.zxing:core:3.2.1'
+    implementation 'com.google.android.play:review:2.0.1'
+    implementation 'com.google.android.play:core-common:2.0.4'
+    implementation 'com.github.shts:StoriesProgressView:3.0.0'
+    implementation 'com.github.mmin18:realtimeblurview:1.2.1'
 }

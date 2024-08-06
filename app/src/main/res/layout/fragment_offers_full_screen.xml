@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".ui.Offers.OffersFullScreenFragment">
+    <!-- Ensure this ID matches your Java code -->
+    <jp.shts.android.storiesprogressview.StoriesProgressView
+        android:id="@+id/stories_progress_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:layout_marginTop="30dp"
+        android:layoutDirection="ltr" />
+
+    <ImageView
+        android:id="@+id/story_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:scaleType="centerCrop" />
+
+    <ImageButton
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/drawer_close"
+        android:src="@drawable/baseline_arrow_back_ios_24"
+        app:tint="@color/white" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:gravity="center">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/offer_desc_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-50dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/shopping_cart_btn_ltr"
+            android:backgroundTint="@color/transparent"
+            app:cardCornerRadius="50dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.github.mmin18.widget.RealtimeBlurView
+                    android:id="@+id/blure_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_alignStart="@+id/my_textview"
+                    android:layout_alignTop="@+id/my_textview"
+                    android:layout_alignEnd="@+id/offer_desc_card"
+                    android:layout_alignBottom="@+id/offer_desc_card"
+                    tools:ignore="NotSibling,UnknownId" />
+
+                <TextView
+                    android:id="@+id/offer_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="40dp"
+                    android:backgroundTint="@color/transparent"
+                    android:gravity="center|start"
+                    android:lines="2"
+                    android:padding="10dp"
+                    android:fontFamily="@font/rafat"
+                    android:text="Text in front of blur view"
+                    android:textColor="@color/colorPrimaryDarkNoAlpha"
+                    android:textSize="18dp" />
+
+                <ImageButton
+                    android:id="@+id/offerdet"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/transparent"
+                    android:src="@drawable/baseline_arrow_forward_ios_24"
+                    app:tint="@color/colorPrimaryDarkNoAlpha" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</RelativeLayout>

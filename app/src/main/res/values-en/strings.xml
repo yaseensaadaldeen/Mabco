@@ -297,5 +297,7 @@ We also have medals engraved with different names and pictures
     <string name="add">Add</string>
     <string name="choose_cat">Choose Category</string>
     <string name="Choose_product">Choose product</string>
+    <string name="please_select_product">Please select product</string>
+    <string name="choose">Choose</string>
 
 </resources>

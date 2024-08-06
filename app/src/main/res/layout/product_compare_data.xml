@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/product1_data_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/product1_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="-5dp"
+        android:backgroundTint="@color/lighGray"
+        android:outlineSpotShadowColor="@color/lighGray"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:fabCustomSize="30dp"
+        app:fabSize="auto"
+        app:maxImageSize="20dp"
+        app:tint="@color/black"
+        android:contentDescription="@string/cancel" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/product1_buy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="-5dp"
+        android:backgroundTint="@color/lighGray"
+        android:outlineSpotShadowColor="@color/lighGray"
+        android:src="@drawable/shopping_cart"
+        app:fabCustomSize="30dp"
+        app:fabSize="auto"
+        app:maxImageSize="20dp"
+        app:tint="@color/black"
+        android:contentDescription="@string/cancel" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/pro1_img"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@id/product1_delete"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="-10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1.5"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/Product1ImageViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Your existing product item layout -->
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/mobile1_item_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_margin="5dp"
+                android:configChanges="orientation|screenSize|keyboardHidden"
+                android:elevation="5dp"
+                android:minWidth="180dp"
+                android:orientation="horizontal"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:background="@color/shimmerColor" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <ImageView
+            android:id="@+id/product1_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true" />
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/product1_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pro1_img"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/rafat"
+        android:lines="2"
+        android:text="name"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/product1_disc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product1_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/rafat"
+        android:lines="1"
+        android:maxHeight="30dp"
+        android:text="0000SP"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/product1_price"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/product1_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/rafat"
+        android:lines="1"
+        android:maxHeight="30dp"
+        android:text="0000SP"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/SpecShimmerViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/product1_price">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/mobile_item_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:elevation="5dp"
+            android:minWidth="180dp"
+            android:orientation="horizontal"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmiring_spec_item" />
+
+                <include layout="@layout/shimmiring_spec_item" />
+
+                <include layout="@layout/shimmiring_spec_item" />
+
+                <include layout="@layout/shimmiring_spec_item" />
+
+                <include layout="@layout/shimmiring_spec_item" />
+
+                <include layout="@layout/shimmiring_spec_item" />
+
+                <include layout="@layout/shimmiring_spec_item" />
+
+                <include layout="@layout/shimmiring_spec_item" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/product1_spec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SpecShimmerViewContainer"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/spec_item" />
+</RelativeLayout>

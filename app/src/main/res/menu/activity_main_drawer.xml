@@ -38,5 +38,9 @@
         android:id="@+id/nav_compare"
         android:icon="@drawable/baseline_compare_arrows_24"
         android:title="@string/compare"/>
+    <item
+        android:id="@+id/nav_Rate"
+        android:icon="@drawable/round_star_rate_24"
+        android:title="@string/rate_this_app"/>
 
 </menu>
