@@ -5,15 +5,15 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,7 +32,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -40,7 +42,8 @@ import java.util.List;
  */
 public class FAQFragment extends Fragment {
     View view;
-    SharedPreferences preferences;
+    SharedPreferences preferences,PersonalPreference;
+    String local;
     public Context context;
     private RecyclerView recyclerView;
     private List<FAQ> mList;
@@ -67,6 +70,8 @@ public class FAQFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_faq, container, false);
         context = view.getContext();
         assert context != null;
+        PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
+        local = PersonalPreference.getString("Language", "ar");
         preferences = context.getSharedPreferences("HomeData", Context.MODE_PRIVATE);
         recyclerView = view.findViewById(R.id.main_recyclervie);
         recyclerView.setHasFixedSize(true);
@@ -83,7 +88,7 @@ public class FAQFragment extends Fragment {
             cat_code = product.getCategoryModel().getCat_code();
 
             com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
-            String url = UrlEndPoint.General + "Service1.svc/getFAQs/AR," + brand_code + "," + cat_code + "";
+            String url = UrlEndPoint.General + "Service1.svc/getFAQs/"+local+"," + brand_code + "," + cat_code + "";
             StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -102,8 +107,19 @@ public class FAQFragment extends Fragment {
                 }
             }, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
+                    FAQAPI(context,false);
                 }
             }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

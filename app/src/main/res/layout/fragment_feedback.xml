@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <!-- Feedback Title -->
+    <TextView
+        android:id="@+id/feedbackTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/rafat"
+        android:text="@string/feed_back"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <!-- Feedback Input Field -->
+    <EditText
+        android:id="@+id/feedbackInput"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:background="@drawable/feedback_input_background"
+        android:fontFamily="@font/rafat"
+        android:gravity="top"
+        android:layout_marginTop="20dp"
+        android:hint="@string/feedback_description"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feedbackTitle" />
+
+    <!-- Send Feedback Button -->
+
+    <Button
+        android:id="@+id/sendFeedbackButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:fontFamily="@font/rafat"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feedbackInput" />
+</androidx.constraintlayout.widget.ConstraintLayout>

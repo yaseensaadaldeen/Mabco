@@ -21,19 +21,24 @@ import com.bumptech.glide.Glide;
 import com.mabcoApp.mabco.Classes.Product;
 import com.mabcoApp.mabco.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder>{
     private Context context;
     public ArrayList<Product> products;
 
-    public ProductsAdapter(Context context, ArrayList<Product> products) {
+    public ProductsAdapter(Context context, ArrayList<Product> products,String lang) {
         this.context = context;
         this.products = products;
+        this.lang = lang;
     }
     private ProductsAdapter.OnClickListener onClickListener;
     private int selectedPos = RecyclerView.NO_POSITION;
     private int selectedItem;
+    static String lang;
+
     public ProductsAdapter.OnClickListener getOnClickListener() {
         return onClickListener;
     }
@@ -60,7 +65,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             Glide.with(context).load(product.getProduct_image()).fitCenter().into(holder.product_image);
             holder.product_name.setText(product.getProduct_title());
             holder.product_desc.setText(product.getStk_desc());
-            holder.product_price.setText((product.getShelf_price().contains(",") ? product.getShelf_price() : Long.parseLong(product.getShelf_price())) + " SP");
+            holder.product_price.setText(formatPrice(product.getShelf_price()));
             holder.product_tag.setText(product.getTag());
             if (product.getTag().equals("new")) {
                 holder.product_tag.setTextColor(Color.GRAY);
@@ -78,15 +83,15 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 holder.product_disc.setVisibility(View.VISIBLE);
 
                 if (product.getCoupon().equals("0")) {
-                    holder.product_disc.setText(String.valueOf((Long.parseLong(product.getShelf_price()))) + " SP");
-                    String final_price = String.valueOf((Long.parseLong(product.getShelf_price()) - (Long.parseLong(product.getDiscount()))));
-                    holder.product_price.setText(final_price + " SP");
+                    holder.product_disc.setText(formatPrice(product.getShelf_price()));
+                    String final_price =  formatPrice(String.valueOf((Long.parseLong(product.getShelf_price().replace(",","")) - (Long.parseLong(product.getDiscount())))));
+                    holder.product_price.setText(final_price );
                     holder.product_disc.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     holder.product_disc.setTextColor(Color.RED);
                 } else {
                     holder.product_disc.setPaintFlags(holder.product_price.getPaintFlags());
                     holder.product_disc.setTextColor(Color.parseColor("#af0491cf"));
-                    holder.product_disc.setText(" قسيمة شرائية " + Long.parseLong(product.getDiscount()) + " ل.س ");
+                    holder.product_disc.setText(lang.equals("ar") ? "  قسيمة شرائية"+formatPrice( product.getDiscount()) : "With Coupon " +formatPrice( product.getDiscount()));
 
                 }
             }
@@ -101,7 +106,23 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             });
         }
     }
+    public static String formatPrice(String priceString ) {
+        try {
+            // Parse the string to a long
 
+            long priceValue = Long.parseLong(priceString.replace(",","").replace(".00",""));
+
+            // Get a NumberFormat instance for formatting with US locale (uses commas)
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
+            // Format the long value
+            return numberFormat.format(priceValue) + (lang.equals("ar") ? " ل.س " : " SP");
+        } catch (NumberFormatException e) {
+            // Handle the exception if parsing fails
+            e.printStackTrace();
+            return "Invalid Price";
+        }
+    }
 
     public interface OnClickListener {
         void onClick(int position, Product product);

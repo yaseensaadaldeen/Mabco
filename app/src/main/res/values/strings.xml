@@ -505,4 +505,6 @@
     <string name="Choose_product">اختر المنتج</string>
     <string name="please_select_product">لطفا اختيار منتج</string>
     <string name="choose">اختر</string>
+    <string name="notification_req">هذا التطبيق يتطلب إذنًا لإرسال الإشعارات. يمكنك تفعيله من إعدادات التطبيق</string>
+    <string name="go_to_setting">الذهاب للإعدادات</string>
 </resources>

@@ -2,6 +2,7 @@ package com.mabcoApp.mabco.ui.Profile;
 
 import static androidx.core.app.ActivityCompat.recreate;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -11,7 +12,10 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,8 +30,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
@@ -38,6 +45,12 @@ import androidx.navigation.Navigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.mabcoApp.mabco.Classes.InAppUpdate;
 import com.mabcoApp.mabco.MainActivity;
 import com.mabcoApp.mabco.R;
@@ -96,7 +109,11 @@ public class ProfileFragment extends Fragment {
         PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
         UserPreferance = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
         local = PersonalPreference.getString("Language", "ar");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkPermissions(false);
+        }
         boolean NotificationStatus = PersonalPreference.getString("NotificationStatus", "enable").equals("enable") ? true : false;
+
         notification_switch.setChecked(NotificationStatus);
         Language_spinner.setAdapter(adapter);
         Locale currentLocale = getResources().getConfiguration().locale;
@@ -143,8 +160,9 @@ public class ProfileFragment extends Fragment {
                 new AlertDialog.Builder(context).setTitle(R.string.logout).setMessage(R.string.SignoutConfirm).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         UserPreferance.edit().clear().commit();
-                        log_icon.setImageResource(R.drawable.baseline_logout_24);
-                        txt_log.setText(getString(R.string.logout));
+                        log_icon.setImageResource(R.drawable.baseline_login_24);
+                        txt_log.setText(getString(R.string.Login));
+                        account_info.setVisibility(View.GONE);
                         Toast.makeText(context, R.string.recomend_signin, Toast.LENGTH_LONG);
                     }
                 }).setNegativeButton(android.R.string.no, null).show();
@@ -228,9 +246,20 @@ public class ProfileFragment extends Fragment {
 
     private void NotificationsPermission(Boolean checked) {
         NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        if (checked)
+        if (checked) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                checkPermissions(true);
+            }
             FirebaseMessaging.getInstance().subscribeToTopic(UrlEndPoint.notification_topic);
-        else FirebaseMessaging.getInstance().unsubscribeFromTopic(UrlEndPoint.notification_topic);
+            SharedPreferences.Editor editor = PersonalPreference.edit();
+            editor.putString("isSubscribedToNotification", checked ? "enable" : "disable");
+            editor.apply();
+        } else {
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(UrlEndPoint.notification_topic);
+            SharedPreferences.Editor editor = PersonalPreference.edit();
+            editor.putString("isSubscribedToNotification", checked ? "enable" : "disable");
+            editor.apply();
+        }
         SharedPreferences.Editor editor = PersonalPreference.edit();
         editor.putString("NotificationStatus", checked ? "enable" : "disable");
         editor.apply();
@@ -253,6 +282,82 @@ public class ProfileFragment extends Fragment {
         recreate(getActivity());
         restartApp();
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    private void checkPermissions(boolean fromSwitch) {
+
+        Dexter.withActivity(getActivity()).withPermission(Manifest.permission.POST_NOTIFICATIONS).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                String isSubscribed = PersonalPreference.getString("isSubscribedToNotification", "disable");
+                if (isSubscribed.equals("enable")) {
+                    SharedPreferences.Editor editor = PersonalPreference.edit();
+                    editor.putString("NotificationStatus", "enable");
+                    editor.apply();
+                }
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                SharedPreferences.Editor editor = PersonalPreference.edit();
+                editor.putString("NotificationStatus", "disable");
+                notification_switch.setChecked(false);
+                editor.apply();
+                if (fromSwitch) showSettingsDialog();
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                permissionToken.continuePermissionRequest();
+            }
+
+        }).check();
+    }
+
+    private void showSettingsDialog() {
+        // we are displaying an alert dialog for permissions
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        // below line is the title for our alert dialog.
+        builder.setTitle("بحاجة صلاحية");
+        // below line is our message for our dialog
+        builder.setMessage(getString(R.string.notification_req));
+        builder.setPositiveButton(getString(R.string.go_to_setting), (dialog, which) -> {
+            // this method is called on click on positive button and on clicking shit button
+            // we are redirecting our user from our app to the settings page of our app.
+            dialog.cancel();
+            // below is the intent from which we are redirecting our user.
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+            intent.setData(uri);
+            startActivityForResult(intent, 101);
+            settingsLauncher.launch(intent);
+
+        });
+        builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+            // this method is called when user click on negative button.
+            dialog.cancel();
+        });
+        // below line is used to display our dialog
+        builder.show();
+    }
+
+    private ActivityResultLauncher<Intent> settingsLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+        // User has returned from the settings screen
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkPermissions(true);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                checkPermissions(false);
+            }
+        }
+
+        // Trigger the switch action if necessary
+        notification_switch.performClick();
+
+    });
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

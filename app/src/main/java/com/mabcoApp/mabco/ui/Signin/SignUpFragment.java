@@ -1,5 +1,6 @@
 package com.mabcoApp.mabco.ui.Signin;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,6 +45,8 @@ import com.mabcoApp.mabco.databinding.FragmentSignUpBinding;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class SignUpFragment extends Fragment {
@@ -49,7 +54,7 @@ public class SignUpFragment extends Fragment {
     private FragmentSignUpBinding SignUpbinding;
     public RequestQueue requestQueue;
     View view;
-    SharedPreferences preferences;
+    SharedPreferences UserData,Token;
     EditText EdTxt_user_name, EdTxt_password, EdTxt_confirm_password, EdTxt_phone_no, EdTxt_verification_Code;
     TextView txt_user_name_error, txt_password_error, txt_confirm_password_error, txt_phone_no_error, message;
     Button btn_Signup, btn_next, btn_back;
@@ -75,7 +80,8 @@ public class SignUpFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
         context = getContext();
-        preferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        UserData = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
         requestQueue = Volley.newRequestQueue(this.getContext());
 
         signup_phone_verification = view.findViewById(R.id.signup_phone_verification);
@@ -106,7 +112,9 @@ public class SignUpFragment extends Fragment {
         });
 
         addTextChangedListenerToEditTexts();
+        insertAPPLog("Signup Page");
         return view;
+
     }
 
     public void SignUpValidateApi(Boolean online) {
@@ -133,32 +141,36 @@ public class SignUpFragment extends Fragment {
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject arrayObj = array.getJSONObject(i);
                                 String result = arrayObj.getString("result");
-                                if (result.equals("Success")) {
-                                    String verificationCode = arrayObj.getString("verificationCode");
-                                    String verificationCodeExpireDate = arrayObj.getString("verificationCodeExpireDate");
-                                    String validMinutes = arrayObj.getString("validMinutes");
-                                    //verification procces
-                                    PhoneNoVerification(verificationCode, verificationCodeExpireDate, validMinutes);
+                                switch (result) {
+                                    case "Success":
+                                        String verificationCode = arrayObj.getString("verificationCode");
+                                        String verificationCodeExpireDate = arrayObj.getString("verificationCodeExpireDate");
+                                        String validMinutes = arrayObj.getString("validMinutes");
+                                        //verification procces
+                                        PhoneNoVerification(verificationCode, verificationCodeExpireDate, validMinutes);
 
-                                } else if (result.equals("Data_Error")) {
-                                    // Transaction failed, handle the error messages
-                                    String phoneError = arrayObj.optString("phone_error");
-                                    String userNameError = arrayObj.optString("user_name_error");
-                                    String error_msg = arrayObj.optString("error_msg");
-                                    if (!phoneError.isEmpty())
-                                        ErrorMode(EdTxt_phone_no, txt_phone_no_error, true, phoneError);
-                                    if (!userNameError.isEmpty())
-                                        ErrorMode(EdTxt_user_name, txt_user_name_error, true, userNameError);
-                                    if (!error_msg.isEmpty()) {
-                                        message.setText(error_msg);
+                                        break;
+                                    case "Data_Error":
+                                        // Transaction failed, handle the error messages
+                                        String phoneError = arrayObj.optString("phone_error");
+                                        String userNameError = arrayObj.optString("user_name_error");
+                                        String error_msg = arrayObj.optString("error_msg");
+                                        if (!phoneError.isEmpty())
+                                            ErrorMode(EdTxt_phone_no, txt_phone_no_error, true, phoneError);
+                                        if (!userNameError.isEmpty())
+                                            ErrorMode(EdTxt_user_name, txt_user_name_error, true, userNameError);
+                                        if (!error_msg.isEmpty()) {
+                                            message.setText(error_msg);
+                                            message.setTextColor(Color.RED);
+                                            message.setVisibility(View.VISIBLE);
+                                        }
+                                        break;
+                                    case "Verification_Error":
+                                        String ErrorMessage = arrayObj.optString("message");
+                                        message.setText(ErrorMessage);
                                         message.setTextColor(Color.RED);
                                         message.setVisibility(View.VISIBLE);
-                                    }
-                                } else if (result.equals("Verification_Error")) {
-                                    String ErrorMessage = arrayObj.optString("message");
-                                    message.setText(ErrorMessage);
-                                    message.setTextColor(Color.RED);
-                                    message.setVisibility(View.VISIBLE);
+                                        break;
                                 }
                             }
                         }
@@ -175,6 +187,16 @@ public class SignUpFragment extends Fragment {
                     dialog.show();
                 }
             }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -195,7 +217,7 @@ public class SignUpFragment extends Fragment {
             requestQueue = Volley.newRequestQueue(context);
             com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
             String url = UrlEndPoint.General + "Service1.svc/MabcoApp_Signup_insert/";
-            url = url + EdTxt_user_name.getText() + "," + EdTxt_phone_no.getText() + "," + EdTxt_password.getText() + "," + verificationCodeExpireDate + "," + verificationCode + ",ar";
+            url = url + EdTxt_user_name.getText() + "," + EdTxt_phone_no.getText() + "," + EdTxt_password.getText() + "," + verificationCodeExpireDate + "," + verificationCode + ",ar"+","+Token.getString("Token", "");
             StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -230,6 +252,16 @@ public class SignUpFragment extends Fragment {
                     dialog.show();
                 }
             }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -279,13 +311,13 @@ public class SignUpFragment extends Fragment {
                     signUpManager.signUp();
                     SignUpSubmitApi(NetworkStatus.isOnline(context), verificationCodeExpireDate, verificationCode);
                     Toast.makeText(context, "Sign-up successful!", Toast.LENGTH_SHORT).show();
-                    SharedPreferences.Editor editor = preferences.edit();
+                    SharedPreferences.Editor editor = UserData.edit();
                     editor.putString("UserName", String.valueOf(EdTxt_user_name.getText()));
                     editor.putString("PhoneNO", String.valueOf(EdTxt_phone_no.getText()));
                     editor.putString("Password", String.valueOf(EdTxt_password.getText()));
                     editor.putBoolean("Verified", true);
                     editor.apply();
-                    ((MainActivity) getActivity()).updateUserName(String.valueOf(EdTxt_user_name.getText()));
+                    ((MainActivity) requireActivity()).updateUserName(String.valueOf(EdTxt_user_name.getText()));
                 } else {
                     // User cannot sign up at the moment
                     long remainingTime = signUpManager.getRemainingTime();
@@ -306,7 +338,7 @@ public class SignUpFragment extends Fragment {
             public void onTick(long millisUntilFinished) {
                 long millis = millisUntilFinished;
                 // Convert milliseconds into hour, minute, and seconds
-                String hms = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millis),
+                @SuppressLint("DefaultLocale") String hms = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millis),
                         TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
                 txt_Timer.setText(hms); // Set text
             }
@@ -318,11 +350,7 @@ public class SignUpFragment extends Fragment {
             }
         }.start();
     }
-    private String formatTime(long millis) {
-        int seconds = (int) (millis / 1000) % 60;
-        int minutes = (int) ((millis / (1000 * 60)) % 60);
-        return String.format("%02d:%02d", minutes, seconds);
-    }
+
     private void ErrorHandling() {
         String user_name = String.valueOf(EdTxt_user_name.getText()), password = String.valueOf(EdTxt_password.getText()), confirm = String.valueOf(EdTxt_confirm_password.getText()), phone_no = String.valueOf(EdTxt_phone_no.getText());
         if (user_name.isEmpty()) {
@@ -577,5 +605,49 @@ public class SignUpFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         SignUpbinding = null;
+    }
+    private void insertAPPLog(String destination) {
+        SharedPreferences Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
+        String UserID = Token.getString("UserID", "");
+
+        // Define the URL for your API endpoint
+        String url = UrlEndPoint.General + "service1.svc/insertAPPLog/"+UserID+","+destination;
+
+        // Create a JSONObject to send in the request body
+
+        // Create a Volley request
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
+        StringRequest jsonObjectRequest = new StringRequest(
+                Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Handle the successful response
+                        Log.d("Volley", "Notification acknowledgment sent: " + response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                        Log.e("Volley", "Error sending acknowledgment: " + error.getMessage());
+                    }
+                }
+        ){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-Content-Type-Options", "nosniff");
+                params.put("X-XSS-Protection", "0");
+                params.put("X-Frame-Options", "DENY");
+                //..add other headers
+                return params;
+            }
+        };
+
+        // Add the request to the request queue
+        requestQueue.add(jsonObjectRequest);
     }
 }

@@ -303,11 +303,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/rafat"
                 android:lines="1"
                 android:maxHeight="30dp"
-                android:text="0000SP"
+                android:text="0000000000SP"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="25sp"
@@ -348,7 +348,7 @@
                     android:text="@string/add_to_shopping_cart"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>

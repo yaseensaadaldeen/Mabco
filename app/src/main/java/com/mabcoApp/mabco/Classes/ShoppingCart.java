@@ -279,7 +279,7 @@ public class ShoppingCart implements Parcelable {
             Long TotalDiscount = new Long(0);
 
             for (Product product : products) {
-                TotalDiscount = TotalDiscount + (Long.parseLong(product.getDiscount()));
+                TotalDiscount = TotalDiscount + (Long.parseLong(product.getCoupon().contains("on all invoice")? String.valueOf(0) : product.getDiscount().replace(".00","")));
             }
             return TotalDiscount +" SP";
         } catch (NumberFormatException e) {
@@ -293,7 +293,7 @@ public class ShoppingCart implements Parcelable {
 
             for (Product product : products) {
                 Long shelt_price = Long.valueOf(product.getShelf_price().replace(",",""));
-                final_price = final_price + (shelt_price - (Long.parseLong(product.getDiscount())));
+                final_price = final_price + (shelt_price - (Long.parseLong(product.getDiscount().replace(".00",""))));
             }
             return final_price +" SP";
         } catch (NumberFormatException e) {

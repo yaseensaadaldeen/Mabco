@@ -35,6 +35,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -76,6 +77,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InvoiceDetailsDialog extends Dialog {
     public String invoice_no;
@@ -572,7 +575,18 @@ public class InvoiceDetailsDialog extends Dialog {
             public void onErrorResponse(VolleyError error) {
                 //   Handle Error
             }
-        });
+        }){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-Content-Type-Options", "nosniff");
+                params.put("X-XSS-Protection", "0");
+                params.put("X-Frame-Options", "DENY");
+                //..add other headers
+                return params;
+            }
+        };
 
         requestQueue.add(strRequest);
 

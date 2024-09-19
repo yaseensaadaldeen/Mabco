@@ -2,6 +2,7 @@ package com.mabcoApp.mabco.ui.Product;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -22,13 +23,13 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.mabcoApp.mabco.Adapters.CategoryProductsAdapter;
 import com.mabcoApp.mabco.Classes.ShoppingCart;
 import com.mabcoApp.mabco.R;
 import com.mabcoApp.mabco.databinding.FragmentProductsBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 import com.varunest.sparkbutton.SparkButton;
 
 public class ProductsFragment extends Fragment {
@@ -56,7 +57,7 @@ public class ProductsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint({"NotifyDataSetChanged", "SuspiciousIndentation"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,6 +100,10 @@ public class ProductsFragment extends Fragment {
             category_tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
+                    SharedPreferences viewpager2 = context.getSharedPreferences("viewpager2", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = viewpager2.edit();
+                    editor.putInt("position", tab.getPosition());
+                    editor.apply();
                     category_products_pager.setCurrentItem(tab.getPosition());
                     selectedTab = tab.getPosition();
                 }
@@ -116,6 +121,10 @@ public class ProductsFragment extends Fragment {
             category_products_pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 @Override
                 public void onPageSelected(int position) {
+                    SharedPreferences viewpager2 = context.getSharedPreferences("viewpager2", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = viewpager2.edit();
+                    editor.putInt("position", position);
+                    editor.apply();
                     category_tab_layout.selectTab(category_tab_layout.getTabAt(position));
                 }
             });
@@ -134,9 +143,8 @@ public class ProductsFragment extends Fragment {
                 @Override
                 public void afterTextChanged(Editable s) {
                     categoryProductsAdapter.setSearchtext(String.valueOf(Edtxt_search.getText()));
-                    category_products_pager.setAdapter(categoryProductsAdapter);
-                    category_products_pager.setCurrentItem(selectedTab);
                     categoryProductsAdapter.notifyDataSetChanged();
+                    category_products_pager.setCurrentItem(selectedTab);
                 }
             });
             hide();

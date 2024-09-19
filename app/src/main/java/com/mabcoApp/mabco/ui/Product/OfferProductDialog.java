@@ -18,6 +18,7 @@ import androidx.navigation.NavDirections;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,22 +26,24 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mabcoApp.mabco.Adapters.ProductsAdapter;
 import com.mabcoApp.mabco.Classes.CategoryModel;
 import com.mabcoApp.mabco.Classes.Offer;
 import com.mabcoApp.mabco.Classes.Product;
 import com.mabcoApp.mabco.R;
 import com.mabcoApp.mabco.UrlEndPoint;
-import com.mabcoApp.mabco.ui.Offers.OffersFragmentDirections;
 import com.mabcoApp.mabco.ui.Home.HomeFragmentDirections;
-import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mabcoApp.mabco.ui.Offers.OffersFragmentDirections;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class OfferProductDialog extends Dialog {
     private ArrayList<Product> offerproducts;
@@ -48,7 +51,8 @@ public abstract class OfferProductDialog extends Dialog {
     private Context context;
     public RequestQueue requestQueue;
     NavController navController;
-    SharedPreferences preferences;
+    SharedPreferences preferences, PersonalPreference;
+    String local;
     private Offer offer;
     public String offer_no;
     private View view;
@@ -83,6 +87,9 @@ public abstract class OfferProductDialog extends Dialog {
         btnCancel.setOnClickListener(v -> cancel());
         context = view.getContext();
         preferences = context.getSharedPreferences("HomeData", Context.MODE_PRIVATE);
+        PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
+        local = PersonalPreference.getString("Language", "ar");
+
         offer_no = offer.getOffer_no();
         offer_desc = view.findViewById(R.id.offer_desc);
         offer_desc.setText(offer.getOffer_desc());
@@ -91,20 +98,21 @@ public abstract class OfferProductDialog extends Dialog {
         setContentView(view);
         setCanceledOnTouchOutside(true);
         setCancelable(true);
-        setUpRecyclerView(view);
-    }
-
-    private void setUpRecyclerView(View view) {
         OfferProductsRecyler = view.findViewById(R.id.offer_products);
         OfferProductsRecyler.setLayoutManager(new LinearLayoutManager(getContext()));
-        OfferProductsAPI(context, haveNetworkConnection());
+        if (savedInstanceState == null) OfferProductsAPI(context, haveNetworkConnection());
+        else OfferProductsAPI(context, false);
     }
+
+
 
     public void OfferProductsAPI(Context context, boolean online) {
         if (online) {
             requestQueue = Volley.newRequestQueue(context);
             com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
-            String url = UrlEndPoint.General + "Service1.svc/getstocksbyoffer/" + offer_no;
+            SharedPreferences Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
+            String UserID = Token.getString("UserID", "");
+            String url = UrlEndPoint.General + "Service1.svc/getstocksbyoffer/" + offer_no + ",app," + UserID;
             StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -123,8 +131,19 @@ public abstract class OfferProductDialog extends Dialog {
                 }
             }, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
+                    OfferProductsAPI(context, false);
                 }
             }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -198,7 +217,7 @@ public abstract class OfferProductDialog extends Dialog {
         } else {
             OffershimmerViewContainer.stopShimmer();
             OffershimmerViewContainer.setVisibility(View.GONE);
-            productsAdapter = new ProductsAdapter(context, offerproducts);
+            productsAdapter = new ProductsAdapter(context, offerproducts, local);
             OfferProductsRecyler.setAdapter(productsAdapter);//.notifyDataSetChanged();
             productsAdapter.setOnClickListener(new ProductsAdapter.OnClickListener() {
                 @Override

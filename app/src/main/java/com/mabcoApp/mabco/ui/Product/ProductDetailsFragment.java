@@ -32,6 +32,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -47,6 +48,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 import com.mabcoApp.mabco.Adapters.ProductColorAdapter;
 import com.mabcoApp.mabco.Adapters.ProductDetailsAdapter;
 import com.mabcoApp.mabco.Adapters.SliderAdapter;
@@ -68,7 +70,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class ProductDetailsFragment extends Fragment {
@@ -90,18 +96,19 @@ public class ProductDetailsFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private ProductDetailsAdapter productDetailsAdapter;
-    private FloatingActionButton backbtn ;
+    private FloatingActionButton backbtn;
     private RelativeLayout prod_det;
     private LinearLayout add_to_shopping_btn;
     private MaterialCardView pro_img;
-    SharedPreferences preferences, ShoppingCartData;
+    SharedPreferences preferences, ShoppingCartData, PersonalPreference,Token;
+    String local;
     int shoppingcartItems;
     SparkButton shopping_cart_btn;
     View view;
     private SliderAdapter adapter;
     ShimmerFrameLayout ProductImageViewContainer;
     String Destenation = "";
-    FragmentProductSpecsBinding  Specsbinding;
+    FragmentProductSpecsBinding Specsbinding;
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Nullable
@@ -109,16 +116,34 @@ public class ProductDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         try {
             Detailesbinding = FragmentProductDetailesBinding.inflate(inflater, container, false);
-              Specsbinding = FragmentProductSpecsBinding.inflate(inflater, container, false);
+            Specsbinding = FragmentProductSpecsBinding.inflate(inflater, container, false);
             view = inflater.inflate(R.layout.fragment_product_detailes, container, false);
             context = getContext();
             assert context != null;
             preferences = context.getSharedPreferences("HomeData", Context.MODE_PRIVATE);
             ShoppingCartData = context.getSharedPreferences("ShoppingCartData", Context.MODE_PRIVATE);
+            PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
+            Token =context.getSharedPreferences("Token", Context.MODE_PRIVATE);
+
             hide();
             shoppingcartItems = ShoppingCartData.getInt("items_count", 0);
-            ProductDetailsFragmentArgs args = ProductDetailsFragmentArgs.fromBundle(getArguments());
+            if (getArguments() != null) {
+                String productJson=getArguments().getString("Product");
+                Gson gson = new Gson();
+                  product = gson.fromJson(productJson, Product.class);
+                // Use the product object to display product details
+                if (product == null){
+                    ProductDetailsFragmentArgs args = ProductDetailsFragmentArgs.fromBundle(getArguments());
+                    product = args.getProduct();
+                }
+
+            }
+            else {
+                ProductDetailsFragmentArgs args = ProductDetailsFragmentArgs.fromBundle(getArguments());
+                product = args.getProduct();
+            }
             txt_items_count = Detailesbinding.txtItemsCount;
+            local = PersonalPreference.getString("Language", "ar");
             if (shoppingcartItems == 0) {
                 txt_items_count.setVisibility(View.GONE);
             } else {
@@ -127,7 +152,7 @@ public class ProductDetailsFragment extends Fragment {
             }
             shopping_cart_btn = Detailesbinding.shoppingCartBtn;
 
-            product = args.getProduct();
+          //  product = args.getProduct();
             prod_det = Detailesbinding.prodDet;
             backbtn = Detailesbinding.backBtn;
             backbtn.setOnClickListener(v -> getActivity().onBackPressed());
@@ -149,6 +174,8 @@ public class ProductDetailsFragment extends Fragment {
             tabLayout = Detailesbinding.tabLayout;
             viewPager2 = Detailesbinding.pager;
             viewPager2.setAdapter(productDetailsAdapter);
+            add_to_shopping_btn.setEnabled(false);
+
             add_to_shopping_btn.setOnClickListener(v -> addItemToCart());
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.details)), 0);
             if (product.getCategoryModel().getCat_code().equals("09"))
@@ -165,7 +192,7 @@ public class ProductDetailsFragment extends Fragment {
             product_disc = Detailesbinding.productDisc;
             product_image = Detailesbinding.productImage;
             product_name.setText(product.getProduct_title());
-            product_price.setText(product.getShelf_price() + " SP");
+            product_price.setText(formatPrice(product.getShelf_price(),local));
             //Glide.with(context).load(R.drawable.loading).fitCenter().into(product_image);
             ProductImageViewContainer  =Detailesbinding.ProductImageViewContainer;
             ProductImageViewContainer.startShimmer();
@@ -175,15 +202,15 @@ public class ProductDetailsFragment extends Fragment {
             if (!product.getDiscount().equals("0")) {
                 product_disc.setVisibility(View.VISIBLE);
                 if (product.getCoupon().equals("0")) {
-                    product_disc.setText(String.valueOf((Long.parseLong(product.getShelf_price()))) + " SP");
+                    product_disc.setText(formatPrice(product.getShelf_price(), local));
                     String final_price = String.valueOf((Long.parseLong(product.getShelf_price()) - (Long.parseLong(product.getDiscount()))));
-                    product_price.setText(final_price + " SP");
+                    product_price.setText(formatPrice(final_price, local));
                     product_disc.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     product_disc.setTextColor(Color.RED);
                 } else {
                     product_disc.setPaintFlags(product_price.getPaintFlags());
                     product_disc.setTextColor(Color.parseColor("#af0491cf"));
-                    product_disc.setText(" قسيمة شرائية بقيمة" + Long.parseLong(product.getDiscount()) + " ل.س ");
+                    product_disc.setText(local.equals("ar")?  "  قسيمة شرائية بقيمة " +  formatPrice(product.getDiscount(),local):"With Coupon " +  formatPrice(product.getDiscount(),local));
                 }
             }
             ShimmerFrameLayout shimmerFrameLayout = Specsbinding.shimmiringSpec;
@@ -191,7 +218,10 @@ public class ProductDetailsFragment extends Fragment {
             shimmerFrameLayout.startShimmer();
             shimmiringSpecs.startShimmer();
             boolean online = haveNetworkConnection();
+            if (savedInstanceState==null)
             ProductDetailsAPI(context, online);
+            else
+                ProductDetailsAPI(context, false);
             productDetailsAdapter.setProduct(product);
 
 
@@ -219,15 +249,36 @@ public class ProductDetailsFragment extends Fragment {
                 }
             });
         } catch (Exception e) {
+            Toast.makeText(getContext(), "Error: Product not found!", Toast.LENGTH_SHORT).show();
+            // Navigate back
+            requireActivity().onBackPressed();
             e.printStackTrace();
         }
         return Detailesbinding.getRoot();
     }
 
+    public static String formatPrice(String priceString, String Lang) {
+        try {
+            // Parse the string to a long
+            long priceValue = Long.parseLong(priceString.replace(",","").replace(".00",""));
+
+            // Get a NumberFormat instance for formatting with US locale (uses commas)
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
+            // Format the long value
+            return numberFormat.format(priceValue) + (Lang.equals("ar") ? " ل.س " : " SP");
+        } catch (NumberFormatException e) {
+            // Handle the exception if parsing fails
+            e.printStackTrace();
+            return "Invalid Price";
+        }
+    }
+
     public void ProductDetailsAPI(Context context, boolean online) {
         requestQueue = Volley.newRequestQueue(context);
         com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
-        String url = UrlEndPoint.General + "Service1.svc/getStockDetails/" + product.getStk_code() + ",AR";
+        String UserID = Token.getString("UserID" , "0");
+        String url = UrlEndPoint.General + "Service1.svc/getStockDetails/" + product.getStk_code() + ","+local+",0,"+UserID;
         if (online) {
             StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -242,6 +293,7 @@ public class ProductDetailsFragment extends Fragment {
                         JSONArray offersArray = jsonResponse.optJSONArray("getStockOffers");
                         LoadOffers(offersArray);
                         LoadProductDetails(DetailsArray);
+                        add_to_shopping_btn.setEnabled(true);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -250,8 +302,19 @@ public class ProductDetailsFragment extends Fragment {
 
             }, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
+                    ProductDetailsAPI(context,false);
                 }
             }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

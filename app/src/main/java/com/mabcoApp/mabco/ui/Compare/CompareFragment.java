@@ -26,6 +26,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -57,7 +58,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class CompareFragment extends Fragment {
@@ -289,6 +292,7 @@ public class CompareFragment extends Fragment {
         if (isOnline) {
             requestQueue = Volley.newRequestQueue(context);
             com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
+
             String url = UrlEndPoint.General + "Service1.svc/getStocksByCat/" + cat_code;
             StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -317,8 +321,19 @@ public class CompareFragment extends Fragment {
                 }
             }, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
+                    BrandProductsAPI(context,false,cat_code);
                 }
-            }) {
+            }){
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -388,7 +403,9 @@ public class CompareFragment extends Fragment {
     public void ProductDetailsAPI(Context context, boolean online, Product product, RecyclerView product_spec_rec, ShimmerFrameLayout productSpecShimmerViewContainer) {
         requestQueue = Volley.newRequestQueue(context);
         com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
-        String url = UrlEndPoint.General + "Service1.svc/getStockDetails/" + product.getStk_code() + ",AR,1";
+        SharedPreferences Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
+        String UserID = Token.getString("UserID", "");
+        String url = UrlEndPoint.General + "Service1.svc/getStockDetails/" + product.getStk_code() + ",AR,1,"+UserID ;
         if (online) {
             StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -407,8 +424,19 @@ public class CompareFragment extends Fragment {
                 }
             }, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
+                    ProductDetailsAPI(context , false,product,product_spec_rec,productSpecShimmerViewContainer);
                 }
             }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

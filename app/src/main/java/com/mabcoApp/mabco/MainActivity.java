@@ -1,6 +1,7 @@
 package com.mabcoApp.mabco;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,8 +9,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,21 +37,26 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.mabcoApp.mabco.Classes.InAppReview;
+import com.mabcoApp.mabco.Classes.Offer;
+import com.mabcoApp.mabco.Classes.Product;
 import com.mabcoApp.mabco.Firebase.InstanceIDService;
 import com.mabcoApp.mabco.databinding.ActivityMainBinding;
 import com.mabcoApp.mabco.ui.Policies.PrivacyPolicyDialogStartFragment;
@@ -56,18 +65,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private static final int RC_NOTIFICATION = 99;
     TextView notification_cnt;
-    String vir;
-    String version;
-    String link;
+    String vir, link, version;
     TextView userNameTextView;
     RequestQueue requestQueue;
     NavigationView navigationView;
@@ -93,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             binding = ActivityMainBinding.inflate(getLayoutInflater());
             setContentView(binding.getRoot());
-
-            setSupportActionBar(binding.appBarMain.toolbar);
+            setupDrawerLayout();
+            setSupportActionBar(Objects.requireNonNull(binding.appBarMain).toolbar);
             InstanceIDService.returnMeFCMtoken(this);
 
             drawer = binding.drawerLayout;
@@ -143,25 +153,70 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
                 version = "";
             }
-
             int verCode = pInfo.versionCode;
-            checkUpdate(verCode);
+            String Notif_id = "0";
+            if (getIntent() != null && getIntent().getExtras() != null && "notification".equals(getIntent().getExtras().getString("from"))) {
+                String type = getIntent().getExtras().getString("Type");
+                Notif_id = getIntent().getExtras().getString("Notif_id");
+                HandleNotificationNav(type);
+            }
+            SharedPreferences Token =this.getSharedPreferences("Token", Context.MODE_PRIVATE);
+            if (savedInstanceState == null) AppDataAnalytics(Notif_id,Token.getString("Token" , ""));
 
         } catch (Exception ex) {
             Log.i("brandAdapter exception", ex.getMessage());
         }
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     private void checkPermissions() {
         Dexter.withContext(this).withPermissions(Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {
+                if (report.isAnyPermissionPermanentlyDenied()) {
+                    if (report.getDeniedPermissionResponses().get(0).getPermissionName().equals("android.permission.POST_NOTIFICATIONS")) {
+                        SharedPreferences.Editor editor = PersonalPreference.edit();
+                        editor.putString("NotificationStatus", "disable");
+                        editor.apply();
+                        showSettingsDialog();
+                    }
+                }
             }
 
             @Override
-            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                token.continuePermissionRequest();
+            }
         }).check();
+    }
+
+    private void showSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // below line is the title for our alert dialog.
+        builder.setTitle("بحاجة صلاحية");
+
+        // below line is our message for our dialog
+        builder.setMessage(getString(R.string.notification_req));
+        builder.setPositiveButton(getString(R.string.go_to_setting), (dialog, which) -> {
+            // this method is called on click on positive button and on clicking shit button
+            // we are redirecting our user from our app to the settings page of our app.
+            dialog.cancel();
+            // below is the intent from which we are redirecting our user.
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", this.getPackageName(), null);
+            intent.setData(uri);
+            startActivityForResult(intent, 101);
+            //settingsLauncher.launch(intent);
+
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            // this method is called when user click on negative button.
+            dialog.cancel();
+        });
+        // below line is used to display our dialog
+        builder.show();
     }
 
     private void proceedWithFileOperations(boolean granted) {
@@ -176,11 +231,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == RC_NOTIFICATION) {
 
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted by the user
-                // You can call your notification-related code here
                 handleNotificationPermission(true);
             } else {
-                // Permission denied by the user
                 handleNotificationPermission(false);
             }
         }
@@ -273,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.shoppingCartFragment);
                 return true;
             default:
-                return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -289,9 +341,11 @@ public class MainActivity extends AppCompatActivity {
     private void setupDrawerLayout() {
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, binding.appBarMain.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
         drawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
+
 
     private void setBadgeNavigationIcon() {
         if (getSupportActionBar() != null) {
@@ -308,7 +362,7 @@ public class MainActivity extends AppCompatActivity {
 
     //app slide notification
     public void AddToolbarNotification(int count, int nav_item, boolean notify) {
-        setupDrawerLayout();
+
         setBadgeNavigationIcon();
         badgeDrawerArrowDrawable.setEnabled(notify);
         badgeDrawerArrowDrawable.setText(null);
@@ -349,73 +403,208 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
 
-    private void checkUpdate(int verCode) {
+    public void AppDataAnalytics(String Notif_id,String token) throws UnsupportedEncodingException {
+        PackageInfo pInfo = null;
+        int verCode=0;
+        SharedPreferences Token = this.getSharedPreferences("Token", Context.MODE_PRIVATE);
+        if (! token.equals("")){
+            SharedPreferences.Editor editor = Token.edit();
+            editor.putString("Token",token );
+            editor.apply();
+        }
+
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            version = pInfo.versionName;
+             verCode = pInfo.versionCode;
+        } catch (Exception e) {
+            e.printStackTrace();
+            version = "";
+        }
+
+        // Get the device's IP address
+        WifiManager wm = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+
+        // Retrieve the FCM token
+        MainActivity mainActivity = this;
+        new InstanceIDService(mainActivity).returnMeFCMtoken(this);
+
+        // Allow SSL connections (if needed)
         HttpsTrustManager.allowAllSSL();
-        String url2 = UrlEndPoint.General + "service1.svc/checkforupdateswithlink/";
-        StringRequest strRequest1 = new StringRequest(Request.Method.GET, url2 + verCode + "," + "1", new Response.Listener<String>() {
-            public void onResponse(String response) {
-                try {
 
-                    JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray stat = jsonResponse.getJSONArray("checkforupdateswithlinkResult");
+        // Get the stored user token  from SharedPreferences
 
-                    //if(!jsonResponse.isNull("ord_no"))
-                    //  for(int i = 0; i < stat.length(); i++)
-                    {
-                        link = stat.getJSONObject(0).getString("mobile_slno");
+        String userToken = Token.getString("Token", "");
+        if (!userToken.equals("")) {
+            // URL-encode the token
+            String EncodedToken = URLEncoder.encode(userToken, "UTF-8");
 
-                        vir = stat.getJSONObject(0).getString("ord_no");
+            // Define the API endpoint URL
+            String url = UrlEndPoint.General + "service1.svc/User_Check_in/" + verCode + ",1," + EncodedToken + "," + ip + ",A," + Notif_id;
+
+            // Make a GET request using Volley
+            StringRequest strRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        // Parse the JSON response
+                        JSONObject jsonResponse = new JSONObject(response);
+                        JSONArray userCheckIn = jsonResponse.getJSONArray("User_Check_in");
+                        JSONObject result = userCheckIn.getJSONObject(0);
+
+                        // Extract required data
+                        String link = result.getString("description");
+                        String vir = result.getString("mabcoappver");
+                        String UserID = result.getString("UserID");
+                        SharedPreferences.Editor editor = Token.edit();
+                        editor.putString("UserID", UserID);
+                        editor.apply();
+                        // If an update is required, show an alert dialog
+                        if (!vir.equals("true")) {
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                            alertDialog.setTitle(R.string.update_app);
+                            alertDialog.setMessage(R.string.update_desc);
+                            alertDialog.setPositiveButton(R.string.update_now, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Open the update link in a browser
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                                    startActivity(browserIntent);
+                                }
+                            });
+                            alertDialog.setNegativeButton(R.string.not_now, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // User clicked "Not now"
+                                }
+                            });
+                            alertDialog.show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-                    if (!vir.equals("true")) {
-
-
-                        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(MainActivity.this);
-
-                        // Setting Dialog Title
-                        alertDialog.setTitle(R.string.update_app);
-
-                        // Setting Dialog Message
-                        alertDialog.setMessage(R.string.update_desc);
-
-                        // Setting Icon to Dialog
-                        //alertDialog.setIcon(R.drawable.);
-
-                        // Setting Positive "Yes" Button
-                        alertDialog.setPositiveButton(R.string.update_now, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                                startActivity(browserIntent);
-                            }
-                        });
-
-                        // Setting Negative "NO" Button
-                        alertDialog.setNegativeButton(R.string.not_now, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Write your code here to invoke NO event
-
-                            }
-                        });
-                        alertDialog.show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // Handle error
+                    error.printStackTrace();
+                }
+            }){
 
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
+            };
+
+            // Add the request to the request queue
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(strRequest);
+        }
+    }
+
+    public void HandleNotificationNav(String type) {
+        if (type != null) {
+            if ("product".equals(type)) {
+                String productJson = getIntent().getStringExtra("Product");
+                Gson gson = new Gson();
+                Product product = gson.fromJson(productJson, Product.class);
+                if (product != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Product", productJson);
+                    NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                    navController.navigate(R.id.productDetailsFragment, bundle);
+                }
+            } else if ("offer".equals(type)) {
+                Offer offer = getIntent().getParcelableExtra("Offer");
+                if (offer != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("Offer", offer);
+                    NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                    navController.navigate(R.id.offersFragment, bundle);
+                }
+            } else if ("mobiles".equals(type)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("cat_name", "mobiles");
+                bundle.putString("cat_code", "00");
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_category_products, bundle);
+            } else if ("mobile_acc".equals(type)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("cat_name", "Accessories");
+                bundle.putString("cat_code", "01");
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_category_products, bundle);
+            } else if ("spare".equals(type)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("cat_name", "spare");
+                bundle.putString("cat_code", "02");
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_category_products, bundle);
+            } else if ("power_station".equals(type)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("cat_name", "Power Station");
+                bundle.putString("cat_code", "09");
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_category_products, bundle);
+            } else if ("gaming".equals(type)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("cat_name", "gaming");
+                bundle.putString("cat_code", "07");
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_category_products, bundle);
+            } else if ("compare".equals(type)) {
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_compare);
+            } else if ("jobs".equals(type)) {
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.webview);
+            } else if ("payment".equals(type)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "payment");
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_services, bundle);
+            } else if ("app".equals(type)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "app");
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_services, bundle);
+            } else if ("invoices".equals(type)) {
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.invoicesFragment);
+            } else if ("Filter".equals(type)) {
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.productsFragment);
+            } else if ("verfy_warranty".equals(type)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "verfy_warranty");
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_services, bundle);
+            } else if ("personal_service".equals(type)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "personal_service");
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_services, bundle);
+            } else if ("installment".equals(type)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("type", "installment");
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_services, bundle);
             }
-        });
-        requestQueue.add(strRequest1);
+        }
     }
 }

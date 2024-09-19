@@ -65,7 +65,7 @@ public class ShoppingCartItemsAdapter extends RecyclerView.Adapter<ShoppingCartI
 
                 if (product.getCoupon().equals("0")) {
                     holder.product_disc.setText(String.valueOf((Long.parseLong(product.getShelf_price()))) + " SP");
-                    String final_price = String.valueOf((Long.parseLong(product.getShelf_price()) - (Long.parseLong(product.getDiscount()))));
+                    String final_price = String.valueOf((Long.parseLong(product.getShelf_price()) - (Long.parseLong(product.getDiscount().replace(".00","")))));
                     holder.product_price.setText(final_price + " SP");
                     holder.product_disc.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     holder.product_disc.setTextColor(Color.RED);

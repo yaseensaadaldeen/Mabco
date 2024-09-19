@@ -14,8 +14,6 @@
             android:icon="@drawable/products"
             android:title="@string/title_activity_products"/>
 
-
-
         <item
             android:id="@+id/nav_services"
             android:icon="@drawable/services"
@@ -31,7 +29,7 @@
         android:icon="@drawable/share"
         android:title="@string/share"/>
     <item
-        android:id="@+id/webview"
+        android:id="@+id/hrFragment"
         android:icon="@drawable/outline_group_add_24"
         android:title="@string/career"/>
     <item
@@ -42,5 +40,17 @@
         android:id="@+id/nav_Rate"
         android:icon="@drawable/round_star_rate_24"
         android:title="@string/rate_this_app"/>
+    <item
+        android:id="@+id/savingListFragment"
+        android:icon="@drawable/outline_discount_24"
+        android:title="@string/blue_list"/>
+    <item
+        android:id="@+id/notificationFragment"
+        android:icon="@drawable/outline_notifications_24"
+        android:title="@string/notification"/>
+    <item
+        android:id="@+id/feedbackFragment"
+        android:icon="@drawable/outline_feedback_24"
+        android:title="@string/feed_back"/>
 
 </menu>

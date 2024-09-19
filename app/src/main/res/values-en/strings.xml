@@ -299,5 +299,7 @@ We also have medals engraved with different names and pictures
     <string name="Choose_product">Choose product</string>
     <string name="please_select_product">Please select product</string>
     <string name="choose">Choose</string>
+    <string name="notification_req">This app requires permission to send notifications. You can enable it in app settings.</string>
+    <string name="go_to_setting">Go to settings</string>
 
 </resources>

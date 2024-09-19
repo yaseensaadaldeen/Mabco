@@ -25,6 +25,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -46,6 +47,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InvoicesFragment extends Fragment {
     RecyclerView InvoiceRecyclerView;
@@ -113,6 +116,7 @@ public class InvoicesFragment extends Fragment {
 
             phone_no = UserPreferance.getString("PhoneNO", "");
             getInvoicesOnline(phone_no, context, NetworkStatus.isOnline(context));
+            insertAPPLog("Invoices Page");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -176,9 +180,21 @@ public class InvoicesFragment extends Fragment {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            getInvoicesOnline(phone,context,false);
                             Log.e("InvoicesFragment", "Error fetching invoices: " + error.getMessage());
                         }
-                    });
+                    }){
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
+            };
 
             requestQueue.add(strRequest);
         } else {
@@ -291,20 +307,75 @@ public class InvoicesFragment extends Fragment {
                         }
 
                     } catch (JSONException e) {
+
                         e.printStackTrace();
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    getInvoiceDetails(context,false,invoice_no);
                 }
-            });
+            }){
 
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
+            };
             requestQueue.add(strRequest);
         } else {
             Toast.makeText(context, context.getString(R.string.checkwifi), Toast.LENGTH_LONG).show();
         }
     }
+    private void insertAPPLog(String destination) {
+        SharedPreferences Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
+        String UserID = Token.getString("UserID", "");
 
+        // Define the URL for your API endpoint
+        String url = UrlEndPoint.General + "service1.svc/insertAPPLog/"+UserID+","+destination;
+
+        // Create a JSONObject to send in the request body
+
+        // Create a Volley request
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
+        StringRequest jsonObjectRequest = new StringRequest(
+                Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Handle the successful response
+                        Log.d("Volley", "Notification acknowledgment sent: " + response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                        Log.e("Volley", "Error sending acknowledgment: " + error.getMessage());
+                    }
+                }
+        ){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-Content-Type-Options", "nosniff");
+                params.put("X-XSS-Protection", "0");
+                params.put("X-Frame-Options", "DENY");
+                //..add other headers
+                return params;
+            }
+        };
+
+        // Add the request to the request queue
+        requestQueue.add(jsonObjectRequest);
+    }
 
 }

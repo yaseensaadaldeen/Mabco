@@ -32,16 +32,17 @@ public class CategoryProductsAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
+
             case 0:
-                return new CategoryProductsFragment("00",searchtext );
+                return new CategoryProductsFragment("00",searchtext,position );
             case 1:
-                return new CategoryProductsFragment("09",searchtext );
+                return new CategoryProductsFragment("09",searchtext,position );
             case 2:
-                return new CategoryProductsFragment("01",searchtext );
+                return new CategoryProductsFragment("01",searchtext,position );
             case 3:
-                return new CategoryProductsFragment("02",searchtext );
+                return new CategoryProductsFragment("02",searchtext,position );
             case 4:
-                return new CategoryProductsFragment("07",searchtext );
+                return new CategoryProductsFragment("07",searchtext,position );
         }
 
         return null;
@@ -51,4 +52,5 @@ public class CategoryProductsAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return 5;
     }
+
 }

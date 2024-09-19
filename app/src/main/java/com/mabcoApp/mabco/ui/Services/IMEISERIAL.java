@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,6 +35,9 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class IMEISERIAL extends Fragment {
     Context context;
@@ -125,7 +129,18 @@ public class IMEISERIAL extends Fragment {
                             public void onErrorResponse(VolleyError error) {
                                 //   Handle Error
                             }
-                        });
+                        }){
+
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<>();
+                                params.put("X-Content-Type-Options", "nosniff");
+                                params.put("X-XSS-Protection", "0");
+                                params.put("X-Frame-Options", "DENY");
+                                //..add other headers
+                                return params;
+                            }
+                        };
                         queue.add(strRequest);
 
                     } else {

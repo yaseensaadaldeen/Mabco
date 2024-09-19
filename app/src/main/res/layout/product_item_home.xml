@@ -46,6 +46,8 @@
                     android:layout_gravity="center"
                     android:background="@color/white" />
 
+
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/compare_Card"
                     android:layout_width="23dp"

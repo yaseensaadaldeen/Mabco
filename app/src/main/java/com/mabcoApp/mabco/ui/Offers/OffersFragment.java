@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,20 +28,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mabcoApp.mabco.Adapters.OfferAdapter;
 import com.mabcoApp.mabco.Classes.NetworkStatus;
 import com.mabcoApp.mabco.Classes.Offer;
 import com.mabcoApp.mabco.R;
 import com.mabcoApp.mabco.UrlEndPoint;
 import com.mabcoApp.mabco.ui.Product.OfferProductDialog;
-import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OffersFragment extends Fragment {
     private RequestQueue requestQueue;
@@ -70,9 +74,20 @@ public class OffersFragment extends Fragment {
         offerRecyclerView = view.findViewById(R.id.Offers_slider);
         int orientation = getResources().getConfiguration().orientation;
         int spanCount;
+        if (getArguments() != null) {
+            Offer offer = getArguments().getParcelable("Offer");
+
+            // Use the product object to display product details
+            if (offer == null) {
+                Toast.makeText(getContext(), "Error: Product not found!", Toast.LENGTH_SHORT).show();
+                // Navigate back
+                requireActivity().onBackPressed();
+            } else {
+                openDialog(offer);
+            }
+        }
         BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
-        if (navBar != null && navBar.getVisibility() == View.INVISIBLE)
-            showNavigationBar();
+        if (navBar != null && navBar.getVisibility() == View.INVISIBLE) showNavigationBar();
         PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
         lang = PersonalPreference.getString("Language", "ar");
         offerRecyclerView.setAdapter(offerAdapter);
@@ -87,8 +102,9 @@ public class OffersFragment extends Fragment {
         }
         gridLayoutManager.setSpanCount(spanCount);
         offerRecyclerView.setLayoutManager(gridLayoutManager);
+        if (savedInstanceState == null) OffersAPI(context, NetworkStatus.isOnline(context));
+        else OffersAPI(context, false);
 
-        OffersAPI(context, NetworkStatus.isOnline(context));
         return view;
     }
     public void showNavigationBar() {
@@ -117,7 +133,9 @@ public class OffersFragment extends Fragment {
     public void OffersAPI(Context context, boolean online) {
         requestQueue = Volley.newRequestQueue(context);
         com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
-        String url = UrlEndPoint.General + "Service1.svc/getoffers/" + lang;
+        SharedPreferences Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
+        String UserID = Token.getString("UserID", "");
+        String url = UrlEndPoint.General + "Service1.svc/getoffers/" + lang + "," + UserID;
         if (online) {
             StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -135,8 +153,19 @@ public class OffersFragment extends Fragment {
                 }
             }, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
+                    OffersAPI(context, false);
                 }
             }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

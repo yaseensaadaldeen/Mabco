@@ -3,11 +3,13 @@ package com.mabcoApp.mabco;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,17 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Webview extends Fragment {
 
@@ -32,6 +45,14 @@ public class Webview extends Fragment {
     private static final int STORAGE_PERMISSION_REQUEST_CODE = 123;
     private ValueCallback<Uri> mUploadMessage;
     public ValueCallback<Uri[]> uploadMessage;
+
+    public Webview(String url) {
+        this.url=url;
+    }
+
+    public Webview() {
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,8 +93,12 @@ public class Webview extends Fragment {
             WebviewArgs args = WebviewArgs.fromBundle(bundle);
             url = args.getUrl();
         }
-        else
-            url = "https://hr1.mabcoonline.com";
+
+        if (url.contains("hr1"))
+            insertAPPLog("HR Page");
+        if (url.contains("SavingsLists"))
+            insertAPPLog("Savings Lists Page");
+
         Bundle b = getActivity().getIntent().getExtras();
 
         w5 = (WebView) view.findViewById(R.id.w);
@@ -177,4 +202,49 @@ public class Webview extends Fragment {
             mUploadMessage = null;
         } else Toast.makeText(context, "Failed to Upload Image", Toast.LENGTH_LONG).show();
     }
+    private void insertAPPLog(String destination) {
+        SharedPreferences Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
+        String UserID = Token.getString("UserID", "");
+
+        // Define the URL for your API endpoint
+        String url = UrlEndPoint.General + "service1.svc/insertAPPLog/"+UserID+","+destination;
+
+        // Create a JSONObject to send in the request body
+
+        // Create a Volley request
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
+        StringRequest jsonObjectRequest = new StringRequest(
+                Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Handle the successful response
+                        Log.d("Volley", "Notification acknowledgment sent: " + response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                        Log.e("Volley", "Error sending acknowledgment: " + error.getMessage());
+                    }
+                }
+        ){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-Content-Type-Options", "nosniff");
+                params.put("X-XSS-Protection", "0");
+                params.put("X-Frame-Options", "DENY");
+                //..add other headers
+                return params;
+            }
+        };
+
+        // Add the request to the request queue
+        requestQueue.add(jsonObjectRequest);
+    }
+
 }

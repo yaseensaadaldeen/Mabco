@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,11 +34,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginFragment extends Fragment {
     View view;
     Context context;
-    SharedPreferences UserData;
+    SharedPreferences UserData,Token;
     EditText login_user_name, login_password;
     TextView login_password_error, login_user_name_error, Login_message;
     public RequestQueue requestQueue;
@@ -59,6 +63,7 @@ public class LoginFragment extends Fragment {
         login_user_name_error = view.findViewById(R.id.login_user_name_error);
         Login_message = view.findViewById(R.id.Login_message);
         UserData = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
         requestQueue = Volley.newRequestQueue(this.getContext());
         login_button = view.findViewById(R.id.login_button);
         login_button.setOnClickListener(v -> {
@@ -68,6 +73,7 @@ public class LoginFragment extends Fragment {
                 throw new RuntimeException(e);
             }
         });
+        insertAPPLog("Login Page");
         return view;
     }
 
@@ -83,10 +89,12 @@ public class LoginFragment extends Fragment {
         if (Cashed_User_name.isEmpty() || Cashed_Password.isEmpty()) {
             if (online) {
                 requestQueue = Volley.newRequestQueue(context);
+
                 com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
                 String url = UrlEndPoint.General + "Service1.svc/MabcoApp_Login/";
                 String encoded_password = URLEncoder.encode(String.valueOf(login_password.getText()), "UTF-8");
-                url = url + login_user_name.getText() + ","+ encoded_password ;
+                String EncodedToken = URLEncoder.encode(Token.getString("Token", ""), "UTF-8");
+                url = url + login_user_name.getText() + ","+ encoded_password + ","+EncodedToken;
                 StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -130,7 +138,18 @@ public class LoginFragment extends Fragment {
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
-                }) ;
+                }) {
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("X-Content-Type-Options", "nosniff");
+                        params.put("X-XSS-Protection", "0");
+                        params.put("X-Frame-Options", "DENY");
+                        //..add other headers
+                        return params;
+                    }
+                };
                 try {
                     jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     requestQueue.add(jsonObjectRequest);
@@ -186,5 +205,49 @@ public class LoginFragment extends Fragment {
             ErrorMode(login_password, login_password_error, false, "");
             error_passwordRV = false;
         }
+    }
+    private void insertAPPLog(String destination) {
+        SharedPreferences Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
+        String UserID = Token.getString("UserID", "");
+
+        // Define the URL for your API endpoint
+        String url = UrlEndPoint.General + "service1.svc/insertAPPLog/"+UserID+","+destination;
+
+        // Create a JSONObject to send in the request body
+
+        // Create a Volley request
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
+        StringRequest jsonObjectRequest = new StringRequest(
+                Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Handle the successful response
+                        Log.d("Volley", "Notification acknowledgment sent: " + response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                        Log.e("Volley", "Error sending acknowledgment: " + error.getMessage());
+                    }
+                }
+        ){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-Content-Type-Options", "nosniff");
+                params.put("X-XSS-Protection", "0");
+                params.put("X-Frame-Options", "DENY");
+                //..add other headers
+                return params;
+            }
+        };
+
+        // Add the request to the request queue
+        requestQueue.add(jsonObjectRequest);
     }
 }

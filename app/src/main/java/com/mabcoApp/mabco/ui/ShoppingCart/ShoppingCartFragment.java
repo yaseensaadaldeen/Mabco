@@ -31,6 +31,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -54,7 +55,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ShoppingCartFragment extends Fragment {
     View view;
@@ -194,8 +197,19 @@ public class ShoppingCartFragment extends Fragment {
                 },
                         new Response.ErrorListener() {
                             public void onErrorResponse(VolleyError error) {
+                                UpdateProductsPrices(false);
                             }
-                        }) {
+                        }){
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("X-Content-Type-Options", "nosniff");
+                        params.put("X-XSS-Protection", "0");
+                        params.put("X-Frame-Options", "DENY");
+                        //..add other headers
+                        return params;
+                    }
                 };
                 try {
                     jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -352,7 +366,18 @@ public class ShoppingCartFragment extends Fragment {
                         Toast.makeText(context, context.getResources().getString(R.string.checkwifi), Toast.LENGTH_LONG).show();
                         textLayout.setError(context.getResources().getString(R.string.try_again));
                     }
-                });
+                }){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-Content-Type-Options", "nosniff");
+                params.put("X-XSS-Protection", "0");
+                params.put("X-Frame-Options", "DENY");
+                //..add other headers
+                return params;
+            }
+        };
 
         strRequest1.setRetryPolicy(new DefaultRetryPolicy(
                 25000,

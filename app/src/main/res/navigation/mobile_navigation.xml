@@ -238,10 +238,41 @@
     <fragment
         android:id="@+id/nav_compare"
         android:name="com.mabcoApp.mabco.ui.Compare.CompareFragment"
-        tools:layout="@layout/fragment_compare" >
+        tools:layout="@layout/fragment_compare">
         <action
             android:id="@+id/action_nav_compare_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.mabcoApp.mabco.ui.Notification.NotificationFragment">
+        <action
+            android:id="@+id/action_notificationFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/hrFragment"
+        android:name="com.mabcoApp.mabco.ui.HrFragment"
+        tools:layout="@layout/fragment_hr" >
+        <action
+            android:id="@+id/action_hrFragment_to_webview"
+            app:destination="@id/webview" />
+    </fragment>
+    <fragment
+        android:id="@+id/savingListFragment"
+        android:name="com.mabcoApp.mabco.ui.SavingListFragment"
+        tools:layout="@layout/fragment_saving_list" >
+        <action
+            android:id="@+id/action_savingListFragment_to_webview"
+            app:destination="@id/webview" />
+    </fragment>
+    <fragment
+        android:id="@+id/feedbackFragment"
+        android:name="com.mabcoApp.mabco.ui.FeedbackFragment"
+        android:label="FeedbackFragment" >
+        <action
+            android:id="@+id/action_feedbackFragment_to_signInMain"
+            app:destination="@id/signInMain" />
     </fragment>
 
 </navigation>

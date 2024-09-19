@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,7 +28,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.gson.Gson;
 import com.mabcoApp.mabco.Classes.Notification;
 import com.mabcoApp.mabco.Classes.NotificationAdapter;
 import com.mabcoApp.mabco.HttpsTrustManager;
@@ -39,11 +40,10 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NotificationFragment extends Fragment {
-    public static final String getAllMobilePrices = UrlEndPoint.General + "service1.svc/GetStockByBrandCodeAndCatCode/";
-    private Gson gson = new Gson();
-    private RequestQueue queue;
     RequestQueue requestQueue;
     ArrayList<Notification> notifications;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -53,7 +53,7 @@ public class NotificationFragment extends Fragment {
     private GridView l1;
     private NotificationAdapter offeAdapter;
     private ProgressBar pbart;
-    private int CART_REQUEST_CODE = 2345;
+    RequestQueue queue;
     String from;
     public NotificationFragment() {
         // Required empty public constructor
@@ -67,12 +67,13 @@ public class NotificationFragment extends Fragment {
         return homeFragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
+        context = getContext();
         queue = Volley.newRequestQueue(context);
+        requestQueue = Volley.newRequestQueue(context);
         Bundle b = getActivity().getIntent().getExtras();
         try {
             if (b != null && getArguments() != null) {
@@ -102,6 +103,7 @@ public class NotificationFragment extends Fragment {
             l1.setNestedScrollingEnabled(true);
         }
         getRacesData();
+        insertAPPLog("Notification Page");
     }
 
     public void getRacesData() {
@@ -133,30 +135,42 @@ public class NotificationFragment extends Fragment {
                 }
             }
         });
-        HttpsTrustManager.allowAllSSL();
-        StringRequest strRequest = new StringRequest(Request.Method.GET, UrlEndPoint.General + "service1.svc/getNotifications", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    pbart.setVisibility(View.GONE);
-                    JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray cars = jsonResponse.optJSONArray("getNotificationsResult");
-
-                    inflateInView(cars);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                pbart.setVisibility(View.GONE);
-                Toast.makeText(context, getResources().getString(R.string.server_error), Toast.LENGTH_SHORT).show();
-            }
-        });
-
         try {
+            HttpsTrustManager.allowAllSSL();
+            StringRequest strRequest = new StringRequest(Request.Method.GET, UrlEndPoint.General + "service1.svc/getNotifications", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        pbart.setVisibility(View.GONE);
+                        JSONObject jsonResponse = new JSONObject(response);
+                        JSONArray getNotificationsResult = jsonResponse.optJSONArray("getNotificationsResult");
+
+                        inflateInView(getNotificationsResult);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    pbart.setVisibility(View.GONE);
+                    Toast.makeText(context, getResources().getString(R.string.server_error), Toast.LENGTH_SHORT).show();
+                }
+            }){
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
+            };
+
+
             strRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(strRequest);
         } catch (Exception e) {
@@ -170,7 +184,6 @@ public class NotificationFragment extends Fragment {
         pbart.setVisibility(View.GONE);
         try {
             if (array == null) {
-//            Toast.makeText(context,"error in connection , please try again later" ,Toast.LENGTH_LONG).show();
                 Snackbar.make(l1, "connection error ", Snackbar.LENGTH_INDEFINITE).setAction("refresh", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -216,5 +229,47 @@ public class NotificationFragment extends Fragment {
         super.onAttach(context);
         this.context = context;
     }
+
+    private void insertAPPLog(String destination) {
+        SharedPreferences Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
+        String UserID = Token.getString("UserID", "");
+
+        // Define the URL for your API endpoint
+        String url = UrlEndPoint.General + "service1.svc/insertAPPLog/" + UserID + "," + destination;
+
+        // Create a JSONObject to send in the request body
+
+        // Create a Volley request
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // Handle the successful response
+                Log.d("Volley", "Notification acknowledgment sent: " + response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle error
+                Log.e("Volley", "Error sending acknowledgment: " + error.getMessage());
+            }
+        }){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-Content-Type-Options", "nosniff");
+                params.put("X-XSS-Protection", "0");
+                params.put("X-Frame-Options", "DENY");
+                //..add other headers
+                return params;
+            }
+        };
+
+        // Add the request to the request queue
+        requestQueue.add(jsonObjectRequest);
+    }
+
 }
 

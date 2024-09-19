@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,13 +36,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShowroomsFragment extends Fragment {
     Context context;
     View view;
     RecyclerView showroomitems;
     ShowroomAdapter showroomAdapter;
-    SharedPreferences showroomsPreferance;
+    SharedPreferences showroomsPreferance, Token;
     public RequestQueue requestQueue;
     ShimmerFrameLayout showroomshimmerViewContainer;
     String local = "en";
@@ -63,6 +66,7 @@ public class ShowroomsFragment extends Fragment {
             showNavigationBar();
         showroomsPreferance = context.getSharedPreferences("ShowroomData", Context.MODE_PRIVATE);
         PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
+        Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
         local = PersonalPreference.getString("Language", "ar");
         showroomitems = view.findViewById(R.id.showrooms_recycle);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
@@ -78,7 +82,8 @@ public class ShowroomsFragment extends Fragment {
                 showroomDetails.show(getActivity().getSupportFragmentManager(), "TAG");
             }
         });
-        ShowroomsAPI(context, NetworkStatus.isOnline(context));
+        if (savedInstanceState == null) ShowroomsAPI(context, NetworkStatus.isOnline(context));
+        else ShowroomsAPI(context, false);
         return view;
     }
 
@@ -87,7 +92,8 @@ public class ShowroomsFragment extends Fragment {
         if (online) {
             requestQueue = Volley.newRequestQueue(context);
             com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
-            String url = UrlEndPoint.General + "Service1.svc/getshowroomssites/"+local;
+            String UserID = Token.getString("UserID", "0");
+            String url = UrlEndPoint.General + "Service1.svc/getshowroomssites/" + local + "," + UserID;
             StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -110,8 +116,19 @@ public class ShowroomsFragment extends Fragment {
             },
                     new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
+                            ShowroomsAPI(context, false);
                         }
                     }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-Content-Type-Options", "nosniff");
+                    params.put("X-XSS-Protection", "0");
+                    params.put("X-Frame-Options", "DENY");
+                    //..add other headers
+                    return params;
+                }
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(

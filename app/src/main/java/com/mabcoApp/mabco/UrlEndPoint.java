@@ -13,5 +13,5 @@ public class UrlEndPoint {
 //    public static String General = "http://www.mabco.sy:8088/";
     public static String General = "https://application.mabcoonline.com:8088/";
 //    public static String General = General;//"http://app.mabcoonline.com/" ;
-    public static  String notification_topic = "ALL";
+    public static  String notification_topic = "test-android";
 }
