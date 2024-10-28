@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     TextView userNameTextView;
     RequestQueue requestQueue;
     NavigationView navigationView;
+
     private InAppReview inAppReview = new InAppReview();
     private DrawerLayout drawer;
     private static final int REQUEST_WRITE_STORAGE = 112;
@@ -112,12 +113,14 @@ public class MainActivity extends AppCompatActivity {
             View headerView = navigationView.getHeaderView(0);
             userNameTextView = headerView.findViewById(R.id.sidebar_user_name);
             userNameTextView.setText(UserData.getString("user_name", ""));
-            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services, R.id.productsFragment, R.id.webview, R.id.nav_compare).setOpenableLayout(drawer).build();
+            mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_share, R.id.nav_services, R.id.productsFragment, R.id.hrFragment,R.id.savingListFragment,R.id.feedbackFragment, R.id.nav_compare,R.id.offersFragment,R.id.nav_Rate).setOpenableLayout(drawer).build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(navigationView, navController);
-
+            int productCount = Product.countComparedProducts(this);
+            boolean notify = productCount > 0;
+                AddToolbarNotification(productCount, R.id.nav_compare, notify);
             // Set item selected listener
             navigationView.setNavigationItemSelectedListener(item -> {
                 int id = item.getItemId();
@@ -141,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
-            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.productsFragment, R.id.profileFragment, R.id.navigation_showrooms).build();
+            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.productsFragment, R.id.profileFragment,R.id.searchFragment, R.id.navigation_showrooms).build();
             NavController bottomnavController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             NavigationUI.setupWithNavController(navView, bottomnavController);
             checkPermissions();
@@ -358,6 +361,9 @@ public class MainActivity extends AppCompatActivity {
                 badgeDrawerArrowDrawable.setBackgroundColor(ContextCompat.getColor(this, R.color.holo_red_light));
             }
         }
+    }
+    public ActivityMainBinding getBinding() {
+        return binding;
     }
 
     //app slide notification

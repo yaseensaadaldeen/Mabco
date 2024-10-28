@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class LoginFragment extends Fragment {
     Button login_button;
     boolean error_user_nameRV, error_passwordRV;
     boolean PageValid = false;
+    ProgressBar progress_bar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class LoginFragment extends Fragment {
         Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
         requestQueue = Volley.newRequestQueue(this.getContext());
         login_button = view.findViewById(R.id.login_button);
+        progress_bar = view.findViewById(R.id.progress_bar);
         login_button.setOnClickListener(v -> {
             try {
                 Login(NetworkStatus.isOnline(context));
@@ -79,99 +82,131 @@ public class LoginFragment extends Fragment {
 
     public void Login(boolean online) throws Exception {
         String Cashed_User_name = UserData.getString("user_name", ""), Cashed_Password = UserData.getString("password", "");
-        ErrorHandling();
+
+        ErrorHandling(); // Checks if the page inputs are valid
         if (!PageValid) {
             Login_message.setText(getString(R.string.NotValid));
             Login_message.setVisibility(View.VISIBLE);
             return;
-        } else Login_message.setVisibility(View.GONE);
+        } else {
+            Login_message.setVisibility(View.GONE);
+        }
 
+        // Show loading indicator while processing login
+        login_button.setEnabled(false);
+        login_button.setText(""); // Hide text while loading
+        progress_bar.setVisibility(View.VISIBLE);
+
+        // If no cached credentials are found, proceed with the online login
         if (Cashed_User_name.isEmpty() || Cashed_Password.isEmpty()) {
             if (online) {
                 requestQueue = Volley.newRequestQueue(context);
-
                 com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
+
                 String url = UrlEndPoint.General + "Service1.svc/MabcoApp_Login/";
                 String encoded_password = URLEncoder.encode(String.valueOf(login_password.getText()), "UTF-8");
                 String EncodedToken = URLEncoder.encode(Token.getString("Token", ""), "UTF-8");
-                url = url + login_user_name.getText() + ","+ encoded_password + ","+EncodedToken;
+                url = url + login_user_name.getText() + "," + encoded_password + "," + EncodedToken;
+
+                // Prepare the network request
                 StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            //JSONObject jsonResponse = new JSONObject(response);
                             JSONArray array = new JSONArray(response);
-                            if (array != null) {
-                                for (int i = 0; i < array.length(); i++) {
-                                    JSONObject arrayObj = array.getJSONObject(i);
-                                    String result = arrayObj.getString("result");
-                                    if (result.equals("success")) {
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject arrayObj = array.getJSONObject(i);
+                                String result = arrayObj.getString("result");
 
-                                        String custm_name = arrayObj.getString("custm_name");
-                                        String PhoneNO = arrayObj.getString("phone1");
-                                        SharedPreferences.Editor editor = UserData.edit();
-                                        editor.putString("UserName", custm_name);
-                                        editor.putString("PhoneNO",PhoneNO);
-                                        editor.putString("Password", String.valueOf(login_password.getText()));
-                                        editor.putBoolean("Verified", true);
-                                        editor.apply();
-                                        final NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
-                                        NavController navController = navHostFragment.getNavController();
-                                        navController.popBackStack();
-                                        Toast.makeText(context, getString(R.string.login_succeded)+" " +custm_name, Toast.LENGTH_SHORT).show();
-                                    }
-                                    else if(result.equals("failed"))
-                                    {
-                                        Toast.makeText(context, getString(R.string.login_failed) , Toast.LENGTH_SHORT).show();
-                                    }
+                                if (result.equals("success")) {
+                                    handleLoginSuccess(arrayObj); // Extract user info and navigate
+                                } else if (result.equals("failed")) {
+                                    showErrorMessage(getString(R.string.login_failed));
                                 }
-                                }
-                            } catch (JSONException ex) {
-                            throw new RuntimeException(ex);
+                            }
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
+                            showErrorMessage(getString(R.string.parsing_error));
+                        } finally {
+                            resetButtonState(); // Reset button after login attempt
                         }
                     }
                 }, new Response.ErrorListener() {
+                    @Override
                     public void onErrorResponse(VolleyError error) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setMessage(getString(R.string.server_error)).setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+                        showErrorDialog(getString(R.string.server_error), context); // Show dialog on network error
+                        resetButtonState(); // Reset button after error
                     }
                 }) {
-
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
                         params.put("X-Content-Type-Options", "nosniff");
                         params.put("X-XSS-Protection", "0");
                         params.put("X-Frame-Options", "DENY");
-                        //..add other headers
                         return params;
                     }
                 };
-                try {
-                    jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                    requestQueue.add(jsonObjectRequest);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(getString(R.string.checkwifi)).setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        }
-        else
-        {
-            final NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
-            NavController navController = navHostFragment.getNavController();
-            navController.popBackStack(R.id.nav_home, false);
-            navController.navigate(R.id.nav_home);
 
+                // Set retry policy for network call
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                requestQueue.add(jsonObjectRequest);
+
+            } else {
+                // Handle offline error
+                showErrorDialog(getString(R.string.checkwifi), context);
+                resetButtonState(); // Reset button for retry
+            }
+        } else {
+            // Cached credentials found, navigate to home directly
+            navigateToHome();
         }
     }
+
+    // Reset button state after login attempt
+    private void resetButtonState() {
+        login_button.setText(R.string.Login);
+        login_button.setEnabled(true);
+        progress_bar.setVisibility(View.GONE);
+    }
+
+    // Handle login success and navigate to home
+    private void handleLoginSuccess(JSONObject arrayObj) throws JSONException {
+        String custm_name = arrayObj.getString("custm_name");
+        String PhoneNO = arrayObj.getString("phone1");
+        SharedPreferences.Editor editor = UserData.edit();
+        editor.putString("UserName", custm_name);
+        editor.putString("PhoneNO", PhoneNO);
+        editor.putString("Password", String.valueOf(login_password.getText()));
+        editor.putBoolean("Verified", true);
+        editor.apply();
+
+        navigateToHome();
+        Toast.makeText(context, getString(R.string.login_succeded) + " " + custm_name, Toast.LENGTH_SHORT).show();
+    }
+
+    // Navigate to home fragment
+    private void navigateToHome() {
+        final NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
+        assert navHostFragment != null;
+        NavController navController = navHostFragment.getNavController();
+        navController.popBackStack();
+        navController.navigate(R.id.nav_home);
+    }
+
+    // Show error message on failed login
+    private void showErrorMessage(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    // Show an error dialog for network/server errors
+    private void showErrorDialog(String message, Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message).setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 
     public void ErrorMode(EditText editText, TextView errorTextView, boolean iserror, String errortext) {
         if (iserror) {

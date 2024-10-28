@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mabcoApp.mabco.Classes.Product;
 import com.mabcoApp.mabco.R;
 
@@ -62,7 +63,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         Product product = products.get(position);
         if (!product.getStk_code().isEmpty()) {
-            Glide.with(context).load(product.getProduct_image()).fitCenter().into(holder.product_image);
+            Glide.with(context).load(product.getProduct_image()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(holder.product_image);
             holder.product_name.setText(product.getProduct_title());
             holder.product_desc.setText(product.getStk_desc());
             holder.product_price.setText(formatPrice(product.getShelf_price()));
@@ -77,7 +78,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 holder.product_tag.setTextColor(Color.WHITE);
                 holder.product_tag.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#af0491cf")));
             } else holder.product_tag.setVisibility(View.GONE);
-
 
             if (!product.getDiscount().equals("0") && !product.getDiscount().equals(".00") && !product.getDiscount().equals("")) {
                 holder.product_disc.setVisibility(View.VISIBLE);

@@ -9,4 +9,9 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+    <!-- Default Price Range for the RangeSlider -->
+    <array name="price_range_default">
+        <item>10000</item> <!-- Min price -->
+        <item>50000000</item> <!-- Max price -->
+    </array>
 </resources>

@@ -1,0 +1,159 @@
+
+a	java:S112Œ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112É"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+p
+java:S2293Ñ"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÆÍî
+u
+java:S2293ı"YReplace the type specification in this constructor call with the diamond operator ("<>").(©ŒóÒüÿÿÿÿ
+F
+java:S1066”"/Merge this if statement with the enclosing one.(ÊÖİ
+F
+java:S1066—"/Merge this if statement with the enclosing one.(ÊÖİ
+|
+java:S1319="fThe type of "Slides" should be an interface such as "List" rather than the implementation "ArrayList".(·¡¶¶
+ƒ
+java:S1319>"mThe type of "offerproducts" should be an interface such as "List" rather than the implementation "ArrayList".(úÅÃ÷
+
+java:S1319>"kThe type of "newproducts" should be an interface such as "List" rather than the implementation "ArrayList".(úÅÃ÷
+Q
+java:S1141Ò"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Q
+java:S1141ş"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+l	java:S117ÿ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŒıÕæıÿÿÿÿ
+l	java:S117½"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ëµµğûÿÿÿÿ
+?
+java:S1604‚"(Make this anonymous inner class a lambda(Û¢Á‹
+D
+java:S1604“"(Make this anonymous inner class a lambda(ò÷à–ıÿÿÿÿ
+?
+java:S1604£"(Make this anonymous inner class a lambda(úÿ®‡
+D
+java:S1604Ú"(Make this anonymous inner class a lambda(ÃáÜ¤üÿÿÿÿ
+>
+java:S1604ï"(Make this anonymous inner class a lambda(–§º
+D
+java:S1604˜"(Make this anonymous inner class a lambda(ÃáÜ¤üÿÿÿÿ
+>
+java:S1604¬"(Make this anonymous inner class a lambda(–§º
+D
+java:S1604í"(Make this anonymous inner class a lambda(ò÷à–ıÿÿÿÿ
+?
+java:S1604š"(Make this anonymous inner class a lambda(Û¢Á‹
+D
+java:S1604­"(Make this anonymous inner class a lambda(ÃáÜ¤üÿÿÿÿ
+>
+java:S1604Ì"(Make this anonymous inner class a lambda(–§º
+y
+java:S1104:"^Make categoriesRecycler a static final constant or non-public and provide accessors if needed.(É¹Ñüÿÿÿÿ
+u
+java:S1104:"ZMake offersRecycler a static final constant or non-public and provide accessors if needed.(É¹Ñüÿÿÿÿ
+|
+java:S1104:"aMake offerproductsRecycler a static final constant or non-public and provide accessors if needed.(É¹Ñüÿÿÿÿ
+z
+java:S1104:"_Make newproductsRecycler a static final constant or non-public and provide accessors if needed.(É¹Ñüÿÿÿÿ
+u
+java:S1104;"ZMake categoryModels a static final constant or non-public and provide accessors if needed.(ëü›†şÿÿÿÿ
+h
+java:S1104<"RMake offers a static final constant or non-public and provide accessors if needed.(¤¤
+h
+java:S1104="RMake Slides a static final constant or non-public and provide accessors if needed.(·¡¶¶
+o
+java:S1104>"YMake offerproducts a static final constant or non-public and provide accessors if needed.(úÅÃ÷
+m
+java:S1104>"WMake newproducts a static final constant or non-public and provide accessors if needed.(úÅÃ÷
+s
+java:S1104?"]Make categoriesAdapter a static final constant or non-public and provide accessors if needed.(ü°Ó“
+o
+java:S1104@"YMake offersAdapter a static final constant or non-public and provide accessors if needed.(ËØÍÕ
+
+java:S1104A"dMake offerproductsHomeAdapter a static final constant or non-public and provide accessors if needed.(öåïşÿÿÿÿ
+}
+java:S1104A"bMake newproductsHomeAdapter a static final constant or non-public and provide accessors if needed.(öåïşÿÿÿÿ
+r
+java:S1104B"WMake imageSlider a static final constant or non-public and provide accessors if needed.(Ê¿ ùÿÿÿÿ
+n
+java:S1104C"XMake requestQueue a static final constant or non-public and provide accessors if needed.(ÚŞØ†
+n
+java:S1104D"SMake context a static final constant or non-public and provide accessors if needed.(±¹ï±úÿÿÿÿ
+f	java:S116="QRename this field "Slides" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·¡¶¶
+w	java:S116F"]Rename this field "PersonalPreference" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÒæÏÄøÿÿÿÿ
+f
+java:S1659:"KDeclare "offersRecycler" and all following declarations on a separate line.(É¹Ñüÿÿÿÿ
+?
+java:S1659>")Declare "newproducts" on a separate line.(úÅÃ÷
+O
+java:S1659A"4Declare "newproductsHomeAdapter" on a separate line.(öåïşÿÿÿÿ
+K
+java:S1659F"0Declare "PersonalPreference" on a separate line.(ÒæÏÄøÿÿÿÿ
+P
+java:S1659I"5Declare "newshimmerViewContainer" on a separate line.(ˆ´ÌÅûÿÿÿÿ
+>
+java:S1185U"(Remove this method to simply inherit it.(ßìê¯
+Q	java:S125~"<This block of commented-out lines of code should be removed.(ŠÕèğ
+L
+java:S1905ˆ"0Remove this unnecessary cast to "NavDirections".(ŒÊ•øÿÿÿÿ
+Q	java:S125’"<This block of commented-out lines of code should be removed.(÷îµ 
+L
+java:S1905™"0Remove this unnecessary cast to "NavDirections".(ŒÊ•øÿÿÿÿ
+X
+java:S1117§"ARename "navController" which hides the field declared at line 69.(‹ğòÁ
+G
+java:S1905«"0Remove this unnecessary cast to "NavDirections".(Ä¨Ã¶
+d	java:S100º"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŸÎË›
+d	java:S100É"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§¤ªş
+d	java:S100Õ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µ––‘
+i
+java:S3776Õ"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(µ––‘
+
+java:S1186ğ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(£µ¢›ÿÿÿÿÿ
+i	java:S100“"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ëğØ¦ùÿÿÿÿ
+n
+java:S3776“"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ëğØ¦ùÿÿÿÿ
+
+java:S1186­"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(£µ¢›ÿÿÿÿÿ
+i	java:S100Î"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øÍ©ıÿÿÿÿ
+Q	java:S125ì"<This block of commented-out lines of code should be removed.(÷îµ 
+L
+java:S1905ó"0Remove this unnecessary cast to "NavDirections".(ŒÊ•øÿÿÿÿ
+d	java:S100ú"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øšéê
+R	java:S125™"<This block of commented-out lines of code should be removed.(ŠÕèğ
+L
+java:S1905 "0Remove this unnecessary cast to "NavDirections".(ŒÊ•øÿÿÿÿ
+d	java:S100¦"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë‰Ïì
+i
+java:S3776¦"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(ë‰Ïì
+\
+java:S3252½"FUse static access with "android.view.View" for "LAYOUT_DIRECTION_LTR".(óÔóB
+F
+java:S1481Ğ"*Remove this unused "array" local variable.(ôÑ²Áøÿÿÿÿ
+\
+java:S3252õ"FUse static access with "android.view.View" for "LAYOUT_DIRECTION_LTR".(óÔóB
+?	java:S108ü")Either remove or fill this block of code.(å¥‡
+s
+java:S1858"W"CONNECTIVITY_SERVICE" is already a string, there's no need to call "toString()" on it.(ÌØØáşÿÿÿÿ
+J
+java:S1874‘"3Remove this use of "NetworkInfo"; it is deprecated.(‡¤ƒá
+P
+java:S1874‘"9Remove this use of "getAllNetworkInfo"; it is deprecated.(‡¤ƒá
+J
+java:S1874’"3Remove this use of "NetworkInfo"; it is deprecated.(Å¼ıá
+O
+java:S1874“"3Remove this use of "getTypeName"; it is deprecated.(›¬®ùÿÿÿÿ
+J
+java:S1874”"3Remove this use of "isConnected"; it is deprecated.(ÊÖİ
+O
+java:S1874–"3Remove this use of "getTypeName"; it is deprecated.(ü×Ô—úÿÿÿÿ
+J
+java:S1874—"3Remove this use of "isConnected"; it is deprecated.(ÊÖİ
+d	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñ”Ê™
+W
+java:S1854 ";Remove this useless assignment to local variable "metrics".(²ö÷Çüÿÿÿÿ
+V
+java:S1854Ÿ":Remove this useless assignment to local variable "assets".(àäºæÿÿÿÿÿ
+G
+java:S1481Ÿ"+Remove this unused "assets" local variable.(àäºæÿÿÿÿÿ
+H
+java:S1481 ",Remove this unused "metrics" local variable.(²ö÷Çüÿÿÿÿ
+W	java:S125¢"<This block of commented-out lines of code should be removed.(Ç†¤ûÿÿÿÿ
+W
+java:S1874¤";Remove this use of "updateConfiguration"; it is deprecated.(˜•µÊûÿÿÿÿ

@@ -1,6 +1,7 @@
 package com.mabcoApp.mabco.ui.Notification;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,18 +29,20 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.gson.Gson;
 import com.mabcoApp.mabco.Classes.Notification;
 import com.mabcoApp.mabco.Classes.NotificationAdapter;
+import com.mabcoApp.mabco.Classes.Offer;
+import com.mabcoApp.mabco.Classes.Product;
 import com.mabcoApp.mabco.HttpsTrustManager;
+import com.mabcoApp.mabco.MainActivity;
 import com.mabcoApp.mabco.R;
 import com.mabcoApp.mabco.UrlEndPoint;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -116,23 +119,28 @@ public class NotificationFragment extends Fragment {
         l1.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
-                mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
-                Bundle params = new Bundle();
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                Date date = new Date();
-                params.putString("type", notifications.get(position).getNotificationType());
-                params.putString("stk_code", String.valueOf(notifications.get(position).getId()).toString().split("_")[0]);
-                params.putString("date", date.toString());
-
-                mFirebaseAnalytics.logEvent("NotificationPress", params);
-
-
-                sharedPreferences = context.getSharedPreferences("NotificationPref", 0);
-                String lang = "EN";
-                if (sharedPreferences.getBoolean("ar", false)) {
-                    lang = "AR";
+                String type = notifications.get(position).getNotificationType2();
+                Product product=null;
+                Offer offer=null;
+                String  productJson="";
+                if ( "product".equals(type)) {
+                    productJson = notifications.get(position).getNotificationInfo();
+                    Gson gson = new Gson();
+                    product = gson.fromJson(productJson, Product.class);
+                } else if ("offer".equals(type)) {
+                    Gson gson = new Gson();
+                    String offerDataJson =  notifications.get(position).getNotificationInfo();
+                    offer = gson.fromJson(offerDataJson, Offer.class);
                 }
+                sendNotificationAcknowledgment(String.valueOf(notifications.get(position).getId()));
+                Intent openIntent = new Intent(context, MainActivity.class);
+                openIntent.putExtra("from", "notification");
+                openIntent.putExtra("Type",type );
+                openIntent.putExtra("Notif_id",  notifications.get(position).getId());
+                if (type.equals("product") && product != null)
+                    openIntent.putExtra("Product", productJson);
+                else if (type.equals("offer") && offer != null) openIntent.putExtra("Offer", offer);
+                startActivityForResult(openIntent, 101);
             }
         });
         try {
@@ -270,6 +278,49 @@ public class NotificationFragment extends Fragment {
         // Add the request to the request queue
         requestQueue.add(jsonObjectRequest);
     }
+    private void sendNotificationAcknowledgment(String Notif_id) {
+        SharedPreferences Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
+        String UserID = Token.getString("UserID", "");
 
+        // Define the URL for your API endpoint
+        String url = UrlEndPoint.General + "service1.svc/insertAPPNotificationLog/"+UserID+","+Notif_id;
+
+        // Create a JSONObject to send in the request body
+
+        // Create a Volley request
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
+        StringRequest jsonObjectRequest = new StringRequest(
+                Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Handle the successful response
+                        Log.d("Volley", "Notification acknowledgment sent: " + response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                        Log.e("Volley", "Error sending acknowledgment: " + error.getMessage());
+                    }
+                }
+        ){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-Content-Type-Options", "nosniff");
+                params.put("X-XSS-Protection", "0");
+                params.put("X-Frame-Options", "DENY");
+                //..add other headers
+                return params;
+            }
+        };
+
+        // Add the request to the request queue
+        requestQueue.add(jsonObjectRequest);
+    }
 }
 

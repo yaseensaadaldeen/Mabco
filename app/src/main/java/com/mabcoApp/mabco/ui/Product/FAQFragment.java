@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -120,6 +121,15 @@ public class FAQFragment extends Fragment {
                     //..add other headers
                     return params;
                 }
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    // Cache the response
+                    if (response.headers.get("Cache-Control") == null) {
+                        response.headers.put("Cache-Control", "max-age=3600"); // Cache for 1 hour
+                    }
+                    return super.parseNetworkResponse(response);
+                }
+
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

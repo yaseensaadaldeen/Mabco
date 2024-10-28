@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -111,12 +112,32 @@ public class CompareFragment extends Fragment {
         product2_add_btn.setOnClickListener(v -> {
             showProductSelectionDialog();
         });
-
         Start_comparison();
         preferences = context.getSharedPreferences("HomeData", Context.MODE_PRIVATE);
+        toggleVisibility();
+
         return fragmentCompareBindings.getRoot();
     }
+    private ActionBar getSupportActionBar() {
+        ActionBar actionBar = null;
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            actionBar = activity.getSupportActionBar();
+        }
+        return actionBar;
+    }
+    public void toggleVisibility() {
+        ActionBar actionBar = getSupportActionBar();
 
+         if (actionBar!=null){
+            actionBar.show();
+            ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+        }
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
+        navBar.setVisibility(View.VISIBLE);
+
+    }
     private void showProductSelectionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = getLayoutInflater();

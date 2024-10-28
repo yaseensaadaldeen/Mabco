@@ -19,6 +19,7 @@ import com.mabcoApp.mabco.Adapters.OfferAdapter;
 import com.mabcoApp.mabco.Classes.Offer;
 import com.mabcoApp.mabco.Classes.Product;
 import com.mabcoApp.mabco.R;
+import com.mabcoApp.mabco.ui.Offers.OfferProductDialog;
 
 import java.util.ArrayList;
 
@@ -57,7 +58,6 @@ public class ProductOfferFragment extends Fragment {
                     @Override
                     public void onClick(int position, Offer offer) {
                         openDialog(offer);
-
                     }
                 });
             }

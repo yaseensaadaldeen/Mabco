@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mabcoApp.mabco.Classes.CategoryModel;
 import com.mabcoApp.mabco.Classes.Product;
 import com.mabcoApp.mabco.R;
@@ -48,7 +49,7 @@ public class ProductSpinnerAdapter extends ArrayAdapter<Object> {
             Product product = (Product) item;
             ImageView ivProduct = view.findViewById(R.id.ivProduct);
             TextView tvProduct = view.findViewById(R.id.tvProduct);
-            Glide.with(context).load(product.getProduct_image()).fitCenter().into(ivProduct);
+            Glide.with(context).load(product.getProduct_image()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(ivProduct);
             tvProduct.setText(product.getProduct_title());
         } else if (!isProduct && item instanceof CategoryModel) {
             CategoryModel category = (CategoryModel) item;
@@ -103,7 +104,7 @@ public class ProductSpinnerAdapter extends ArrayAdapter<Object> {
                     ImageView ivProduct = view.findViewById(R.id.ivProduct);
                     ImageView arrow_down = view.findViewById(R.id.arrow_down);
                     TextView tvProduct = view.findViewById(R.id.tvProduct);
-                    Glide.with(context).load(product.getProduct_image()).fitCenter().into(ivProduct);
+                    Glide.with(context).load(product.getProduct_image()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(ivProduct);
                     tvProduct.setText(product.getProduct_title());
                     if (position > 0) arrow_down.setVisibility(View.GONE);
                 } else if (!isProduct && item instanceof CategoryModel) {

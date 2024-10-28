@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mabcoApp.mabco.R;
 import com.mabcoApp.mabco.UrlEndPoint;
 
@@ -77,12 +78,12 @@ public class ServicesFragment extends Fragment {
         ApplicationImage = view.findViewById(R.id.ApplicationImage);
         printservicesImage = view.findViewById(R.id.printservicesImage);
 
-        Glide.with(context).load("https://mabcoonline.com/images/services/installment.png").fitCenter().centerInside().into(InstallmentImage);
-        Glide.with(context).load("https://mabcoonline.com/images/services/customerservice.png").fitCenter().centerInside().into(PersonalServiceImage);
-        Glide.with(context).load("https://mabcoonline.com/images/services/Epayment.png").fitCenter().centerInside().into(EpaymentImage);
-        Glide.with(context).load("https://mabcoonline.com/images/services/Application.png").fitCenter().centerInside().into(ApplicationImage);
-        Glide.with(context).load("https://mabcoonline.com/images/services/Warranty.png").fitCenter().centerInside().into(WarrantyImage);
-        Glide.with(context).load("https://mabcoonline.com/images/services/printservices.png").fitCenter().centerInside().into(printservicesImage);
+        Glide.with(context).load("https://mabcoonline.com/images/services/installment.png").skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().centerInside().into(InstallmentImage);
+        Glide.with(context).load("https://mabcoonline.com/images/services/customerservice.png").skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().centerInside().into(PersonalServiceImage);
+        Glide.with(context).load("https://mabcoonline.com/images/services/Epayment.png").skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().centerInside().into(EpaymentImage);
+        Glide.with(context).load("https://mabcoonline.com/images/services/Application.png").skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().centerInside().into(ApplicationImage);
+        Glide.with(context).load("https://mabcoonline.com/images/services/Warranty.png").skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().centerInside().into(WarrantyImage);
+        Glide.with(context).load("https://mabcoonline.com/images/services/printservices.png").skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().centerInside().into(printservicesImage);
         PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
         local = PersonalPreference.getString("Language", "ar");
         WarrantyCard.setOnClickListener(new View.OnClickListener() {

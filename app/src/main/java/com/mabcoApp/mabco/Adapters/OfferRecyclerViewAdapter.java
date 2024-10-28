@@ -1,7 +1,5 @@
 package com.mabcoApp.mabco.Adapters;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mabcoApp.mabco.Classes.Offer;
 import com.mabcoApp.mabco.Classes.ProductColor;
 import com.mabcoApp.mabco.databinding.ProductOfferItemBinding;
@@ -49,7 +50,7 @@ public class OfferRecyclerViewAdapter extends RecyclerView.Adapter<OfferRecycler
     @Override
     public void onBindViewHolder(final ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.productOffer = productOffers.get(position);
-        Glide.with(context).load("https://mabcoonline.com/" + holder.productOffer.getOffer_image_url()).fitCenter().into(holder.offerImage);
+        Glide.with(context).load("https://mabcoonline.com/" + holder.productOffer.getOffer_image_url()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(holder.offerImage);
         holder.offerDesc.setText(holder.productOffer.getOffer_title());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

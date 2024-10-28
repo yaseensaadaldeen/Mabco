@@ -3,7 +3,6 @@ package com.mabcoApp.mabco.ui.Offers;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.GridLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,11 +31,11 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mabcoApp.mabco.Adapters.OfferAdapter;
+import com.mabcoApp.mabco.Classes.GridSpacingItemDecoration;
 import com.mabcoApp.mabco.Classes.NetworkStatus;
 import com.mabcoApp.mabco.Classes.Offer;
 import com.mabcoApp.mabco.R;
 import com.mabcoApp.mabco.UrlEndPoint;
-import com.mabcoApp.mabco.ui.Product.OfferProductDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,7 +56,8 @@ public class OffersFragment extends Fragment {
     String lang;
     View view;
     ShimmerFrameLayout OffershimmerViewContainer;
-
+    GridLayoutManager gridLayoutManager;
+    GridLayout offers_grid;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +73,6 @@ public class OffersFragment extends Fragment {
         OffershimmerViewContainer = view.findViewById(R.id.offer_shimmer_view_container);
         OffershimmerViewContainer.startShimmer();
         offerRecyclerView = view.findViewById(R.id.Offers_slider);
-        int orientation = getResources().getConfiguration().orientation;
-        int spanCount;
         if (getArguments() != null) {
             Offer offer = getArguments().getParcelable("Offer");
 
@@ -91,17 +90,19 @@ public class OffersFragment extends Fragment {
         PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
         lang = PersonalPreference.getString("Language", "ar");
         offerRecyclerView.setAdapter(offerAdapter);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            // code for portrait mode
-            spanCount = 2;
+        int orientation = getResources().getConfiguration().orientation;
+        int spanCount = getResources().getInteger(R.integer.offer_grid_column_count);
+        gridLayoutManager = new GridLayoutManager(getActivity(), spanCount);
+        offers_grid = view.findViewById(R.id.Offers_grid);
 
-        } else {
-            // code for landscape mode
-            spanCount = 4;
-        }
+        // Adding space between items
+        int spacing = getResources().getDimensionPixelSize(R.dimen.recycler_spacing);
+        offerRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, false));
+
         gridLayoutManager.setSpanCount(spanCount);
         offerRecyclerView.setLayoutManager(gridLayoutManager);
+        offers_grid.setColumnCount(spanCount);
+        offers_grid.setLayoutDirection(spacing);
         if (savedInstanceState == null) OffersAPI(context, NetworkStatus.isOnline(context));
         else OffersAPI(context, false);
 

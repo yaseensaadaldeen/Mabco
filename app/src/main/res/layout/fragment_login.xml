@@ -115,21 +115,39 @@
                 app:drawableStartCompat="@drawable/error_outline_24"
                 app:drawableTint="@color/holo_red_dark" />
 
-            <Button
-                android:id="@+id/login_button"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_gravity="center|bottom"
-                android:layout_marginStart="80dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="80dp"
-                android:layout_marginBottom="500dp"
-                android:fontFamily="@font/rafat"
-                android:text="@string/Login"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:cornerRadius="13dp" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <!-- Button -->
+                <Button
+                    android:id="@+id/login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="80dp"
+                    android:layout_marginBottom="500dp"
+                    android:fontFamily="@font/rafat"
+                    android:text="@string/Login"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="13dp" />
+
+                <!-- ProgressBar -->
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

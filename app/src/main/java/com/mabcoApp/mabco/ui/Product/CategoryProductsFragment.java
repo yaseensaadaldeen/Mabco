@@ -1,5 +1,6 @@
 package com.mabcoApp.mabco.ui.Product;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -8,8 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -33,6 +37,7 @@ import com.mabcoApp.mabco.Adapters.BrandAdapter;
 import com.mabcoApp.mabco.Adapters.ProductsHomeAdapter;
 import com.mabcoApp.mabco.Classes.Brand;
 import com.mabcoApp.mabco.Classes.CategoryModel;
+import com.mabcoApp.mabco.Classes.GridSpacingItemDecoration;
 import com.mabcoApp.mabco.Classes.NetworkStatus;
 import com.mabcoApp.mabco.Classes.Product;
 import com.mabcoApp.mabco.MainActivity;
@@ -49,7 +54,6 @@ import java.util.Map;
 
 public class CategoryProductsFragment extends Fragment {
     private String cat_code = "00";
-    NavController navController;
     private RequestQueue requestQueue;
     public Context context;
     public RecyclerView BrandRecycleview;
@@ -68,6 +72,8 @@ public class CategoryProductsFragment extends Fragment {
     ShimmerFrameLayout brandshimmerViewContainer, productshimmerViewContainer;
     String from = "";
     int from_position = -1;
+    GridLayoutManager gridLayoutManager;
+    GridLayout products_grid;
 
     public CategoryProductsFragment() {
     }
@@ -100,27 +106,25 @@ public class CategoryProductsFragment extends Fragment {
             Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
             local = PersonalPreference.getString("Language", "ar");
             brandshimmerViewContainer.startShimmer();
+            BrandRecycleview.setVisibility(View.INVISIBLE);
             productshimmerViewContainer = view.findViewById(R.id.product_shimmer_view_container);
             productshimmerViewContainer.startShimmer();
-            if (!from.equals("products")) {
-                show();
-            }
+            toggleVisibility();
             int orientation = getResources().getConfiguration().orientation;
-            int spanCount;
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                // code for portrait mode
-                spanCount = 2;
+            int spanCount = getResources().getInteger(R.integer.grid_column_count);
+             gridLayoutManager = new GridLayoutManager(getActivity(), spanCount);
+            products_grid = view.findViewById(R.id.products_grid);
+            productshimmerViewContainer.startShimmer();
 
-            } else {
-                // code for landscape mode
-                spanCount = 4;
-            }
+            // Adding space between items
+            int spacing = getResources().getDimensionPixelSize(R.dimen.recycler_spacing);
+            ProductsRecycleview.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, false));
 
             gridLayoutManager.setSpanCount(spanCount);
             ProductsRecycleview.setLayoutManager(gridLayoutManager);
+            products_grid.setColumnCount(spanCount);
+            products_grid.setLayoutDirection(spacing);
             Bundle bundle = getArguments();
-
             if (bundle != null) {
                 CategoryProductsFragmentArgs args = CategoryProductsFragmentArgs.fromBundle(bundle);
                 cat_code = args.getCatCode();
@@ -150,16 +154,14 @@ public class CategoryProductsFragment extends Fragment {
         }
         return view;
     }
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
-    public void show() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.show();
-        }
-        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
-        navBar.setVisibility(View.VISIBLE);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        int spanCount = getResources().getInteger(R.integer.grid_column_count);
+        gridLayoutManager.setSpanCount(spanCount);
     }
+
 
     private ActionBar getSupportActionBar() {
         ActionBar actionBar = null;
@@ -169,7 +171,24 @@ public class CategoryProductsFragment extends Fragment {
         }
         return actionBar;
     }
+    public void toggleVisibility() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null && from.equals("products") ) {
+            actionBar.hide();
+            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
+        }
+        else if (actionBar!=null){
+            actionBar.show();
+            ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+        }
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
+        navBar.setVisibility(View.VISIBLE);
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     public void BrandProductsAPI(Context context, boolean isOnline) {
         if (isOnline) {
             SharedPreferences viewpager2 = context.getSharedPreferences("viewpager2", Context.MODE_PRIVATE);
@@ -177,8 +196,8 @@ public class CategoryProductsFragment extends Fragment {
             com.mabcoApp.mabco.HttpsTrustManager.allowAllSSL();
             String UserID = Token.getString("UserID", "0");
 
-            // This condition exists because ViewPager2 caches the next page by default before opening it, and I don't want to log that event.
-// I have stored the selected position in preferences upon selection and then compared if it's from a cached request or a click on a page item.
+            // I have created this line because ViewPager2 caches the next page by default before opening it, and since I don't want to log that event,
+            // I have stored the selected position in preferences upon selection and then compared if it's from a cached request or a click on a page item.
             if (viewpager2.getInt("position", 0) != from_position && from_position != -1)
                 UserID = "0";
             viewpager2.edit().remove("position").apply();
@@ -202,7 +221,7 @@ public class CategoryProductsFragment extends Fragment {
 
                             brandshimmerViewContainer.stopShimmer();
                             brandshimmerViewContainer.setVisibility(View.GONE);
-
+                            BrandRecycleview.setVisibility(View.VISIBLE);
                             brandAdapter.notifyDataSetChanged();
                         }
                     } catch (Exception e) {
@@ -238,6 +257,12 @@ public class CategoryProductsFragment extends Fragment {
                 JSONArray BrandsArray = jsonResponse.optJSONArray("getBrands");
                 JSONArray ProductsArray = jsonResponse.optJSONArray("getStocks");
                 LoadBrands(BrandsArray, ProductsArray);
+                productshimmerViewContainer.stopShimmer();
+                productshimmerViewContainer.setVisibility(View.GONE);
+
+                brandshimmerViewContainer.stopShimmer();
+                brandshimmerViewContainer.setVisibility(View.GONE);
+                BrandRecycleview.setVisibility(View.VISIBLE);
                 brandAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -256,7 +281,7 @@ public class CategoryProductsFragment extends Fragment {
         String brand_name = "";
         ArrayList<Product> products = new ArrayList<>();
         for (int j = 0; j < brands.size(); j++) {
-            if (brands.get(j).getBrand_code().equals(brand_code)) {
+            if (brands.get(j).getBrand_code().equals(brand_code)||brands.get(j).getBrand_code().equals("0"+brand_code)) {
                 products = brands.get(j).getProducts();
                 brand_name = " - " + brands.get(j).getBrand_name();
             }
@@ -283,6 +308,7 @@ public class CategoryProductsFragment extends Fragment {
                 }
             }
         });//.notifyDataSetChanged();
+        Toast.makeText(getContext(), getString(R.string.long_press_compare), Toast.LENGTH_SHORT).show();
         productsAdapter.notifyDataSetChanged();
     }
 
@@ -296,7 +322,7 @@ public class CategoryProductsFragment extends Fragment {
                     for (int i = 0; i < ProductsArray.length(); i++) {
                         JSONObject ProductOBJ = ProductsArray.getJSONObject(i);
                         Product product = new Product();
-                        if ((!cat_code.equals("01") && BrandOBJ.optString("brand_code").equals(ProductOBJ.optString("brand_code"))) || (cat_code.equals("01") && BrandOBJ.optString("acc_cat_id").equals(ProductOBJ.optString("brand_code")))) {
+                        if ((!cat_code.equals("01") && BrandOBJ.optString("brand_code").equals(ProductOBJ.optString("brand_code"))) || (cat_code.equals("01") && (BrandOBJ.optString("acc_cat_id").equals(ProductOBJ.optString("brand_code"))||("0"+BrandOBJ.optString("acc_cat_id")).equals(ProductOBJ.optString("brand_code"))))) {
                             product = new Product(ProductOBJ.optString("stk_code"), ProductOBJ.optString("device_title"), ProductOBJ.optString("stk_desc"), ProductOBJ.optString("shelf_price"), new CategoryModel(ProductOBJ.optString("cat_code")), ProductOBJ.optString("discount"), ProductOBJ.optString("coupon"), "", "https://" + ProductOBJ.optString("image_link"));
                             // product = new Product(ProductOBJ.optString("stk_code"), ProductOBJ.optString("device_title"), ProductOBJ.optString("stk_desc"), ProductOBJ.optString("shelf_price"), new CategoryModel(cat_code), "0", "0", "", "https://" + ProductOBJ.optString("image_link"));
                         } else continue;

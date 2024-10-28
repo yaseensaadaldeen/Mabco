@@ -2,9 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    >
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -18,7 +16,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/slider_card"
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="180dp"
             android:layout_marginStart="13dp"
             android:layout_marginTop="13dp"
             android:layout_marginEnd="13dp"
@@ -28,7 +26,7 @@
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/image_slider"
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
+                android:layout_height="180dp"
                 app:sliderAnimationDuration="600"
                 app:sliderAutoCycleDirection="back_and_forth"
                 app:sliderAutoCycleEnabled="true"
@@ -44,83 +42,24 @@
                 app:sliderStartAutoCycle="true" />
 
         </androidx.cardview.widget.CardView>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="13dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/category_item" />
 
-
+    </LinearLayout>
         <TextView
             android:id="@+id/disc_pro_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/lighGray"
-            android:fontFamily="@font/rafat"
-            android:text="@string/disc_pro_header"
-            android:textSize="20sp"
-            android:textStyle="bold"
-
-            />
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/offershimmerViewContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!-- Your existing product item layout -->
-            <LinearLayout
-                android:minWidth="180dp"
-                android:id="@+id/mobile_item_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_margin="5dp"
-                android:elevation="5dp"
-                android:orientation="horizontal"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:configChanges="orientation|screenSize|keyboardHidden">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <include layout="@layout/shimmering_product_item" />
-
-                    <include layout="@layout/shimmering_product_item" />
-
-                    <include layout="@layout/shimmering_product_item" />
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/offer_products_slider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="13dp"
-            android:layout_marginTop="7dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/product_item_home"
-
-            />
-
-        <TextView
-            android:id="@+id/new_pro_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -141,7 +80,7 @@
             <!-- Your existing product item layout -->
             <LinearLayout
                 android:minWidth="180dp"
-                android:id="@+id/mobile_item_layout_new"
+                android:id="@+id/mobile_item_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -178,6 +117,67 @@
             android:layout_marginTop="7dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/product_item_home"
+
+            />
+
+        <TextView
+            android:id="@+id/new_pro_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/lighGray"
+            android:fontFamily="@font/rafat"
+            android:text="@string/disc_pro_header"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/offershimmerViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Your existing product item layout -->
+            <LinearLayout
+                android:minWidth="180dp"
+                android:id="@+id/mobile_item_layout_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="5dp"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:configChanges="orientation|screenSize|keyboardHidden">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmering_product_item" />
+
+                    <include layout="@layout/shimmering_product_item" />
+
+                    <include layout="@layout/shimmering_product_item" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/offer_products_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/product_item_home" />
 
         <androidx.cardview.widget.CardView
@@ -185,7 +185,7 @@
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="80dp">
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -249,6 +249,46 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/offer_home_item" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/rafat"
+            android:text="@string/blue_list"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/savinglist_slider_card"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginTop="13dp"
+            app:cardBackgroundColor="#eeee"
+            android:layout_marginBottom="80dp"
+            app:cardCornerRadius="7dp">
+
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/savinglist_image_slider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:sliderAnimationDuration="1000"
+                app:sliderAutoCycleDirection="back_and_forth"
+                app:sliderAutoCycleEnabled="true"
+                app:sliderIndicatorAnimationDuration="600"
+                app:sliderIndicatorGravity="center_horizontal|bottom"
+                app:sliderIndicatorMargin="15dp"
+                app:sliderIndicatorOrientation="horizontal"
+                app:sliderIndicatorPadding="3dp"
+                app:sliderIndicatorRadius="2dp"
+                app:sliderIndicatorSelectedColor="#5A5A5A"
+                app:sliderIndicatorUnselectedColor="#FFF"
+                app:sliderScrollTimeInSec="1"
+                app:sliderStartAutoCycle="true" />
+
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 </ScrollView>

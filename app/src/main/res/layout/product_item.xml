@@ -74,21 +74,22 @@
                     android:textStyle="bold" />
 
 
-
                 <TextView
                     android:id="@+id/product_desc"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/product_name"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="start"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:fontFamily="@font/rafat"
-                    android:maxLength="18"
-                    android:text="desc"
+                    android:lines="1"
+                    android:maxHeight="30dp"
+                    android:text="name"
+                    android:layout_below="@id/product_name"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
-
+                    android:textSize="20dp" />
 
             </RelativeLayout>
 
@@ -109,6 +110,7 @@
                     android:fontFamily="@font/rafat"
                     android:text="000SP"
                     android:textAlignment="center"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 

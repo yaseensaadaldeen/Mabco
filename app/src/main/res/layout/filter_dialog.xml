@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Price Range Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="Price Range"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/priceRangeSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stepSize="1"
+        android:valueFrom="10000"
+        android:valueTo="50000000"
+        app:tickVisible="true"
+        app:values="@array/price_range_default" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <!-- Min Value EditText -->
+        <EditText
+            android:id="@+id/minPriceInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/input_background"
+            android:gravity="center"
+            android:hint="Min Price (K)"
+            android:inputType="number"
+            android:padding="10dp"
+            android:digits="0123456789"
+            android:textSize="16sp" />
+
+        <!-- Max Value EditText -->
+        <EditText
+            android:id="@+id/maxPriceInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/input_background"
+            android:gravity="center"
+            android:hint="Max Price (K)"
+            android:inputType="number"
+            android:padding="10dp"
+            android:digits="0123456789"
+
+            android:textSize="16sp" />
+
+    </LinearLayout>
+    <!-- Category Filter Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:text="Category"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/categoryFilterContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+</LinearLayout>

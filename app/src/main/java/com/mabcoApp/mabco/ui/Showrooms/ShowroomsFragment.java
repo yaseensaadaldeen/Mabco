@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -61,9 +63,7 @@ public class ShowroomsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_showrooms, container, false);
         context = getContext();
-        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
-        if (navBar != null && navBar.getVisibility() == View.INVISIBLE)
-            showNavigationBar();
+        toggleVisibility();
         showroomsPreferance = context.getSharedPreferences("ShowroomData", Context.MODE_PRIVATE);
         PersonalPreference = context.getSharedPreferences("PersonalData", Context.MODE_PRIVATE);
         Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
@@ -114,6 +114,7 @@ public class ShowroomsFragment extends Fragment {
                     }
                 }
             },
+
                     new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
                             ShowroomsAPI(context, false);
@@ -129,6 +130,16 @@ public class ShowroomsFragment extends Fragment {
                     //..add other headers
                     return params;
                 }
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    // Cache the response
+                    if (response.headers.get("Cache-Control") == null) {
+                        response.headers.put("Cache-Control", "max-age=3600"); // Cache for 1 hour
+                    }
+                    return super.parseNetworkResponse(response);
+                }
+
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -195,10 +206,26 @@ public class ShowroomsFragment extends Fragment {
         }
     }
 
-    public void showNavigationBar() {
+    public void toggleVisibility() {
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar!=null){
+            actionBar.show();
+            ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+        }
         BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
         navBar.setVisibility(View.VISIBLE);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
     }
+    private ActionBar getSupportActionBar() {
+        ActionBar actionBar = null;
+        if (getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            actionBar = activity.getSupportActionBar();
+        }
+        return actionBar;
+    }
+
 
 }

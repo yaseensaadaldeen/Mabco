@@ -1,0 +1,39 @@
+
+o
+java:S2293:"YReplace the type specification in this constructor call with the diamond operator ("<>").(ë¸Ä›
+>
+java:S1604@"(Make this anonymous inner class a lambda(°Ş¸
+C
+java:S1604H"(Make this anonymous inner class a lambda(ÆÅ»‹øÿÿÿÿ
+w
+java:S1488r"\Immediately return this expression instead of assigning it to the temporary variable "root".(ö±îúÿÿÿÿ
+C
+java:S5411U"(Use a primitive boolean expression here.(‚™¯Êúÿÿÿÿ
+m	java:S116%"XRename this field "Language_Area" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Èê¥Õ
+r	java:S116("]Rename this field "PersonalPreference" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ã¡„İ
+p	java:S116)"[Rename this field "Language_spinner" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(é”ñÂ
+l
+java:S1450$"VRemove the "binding" field and declare it as a local variable in the relevant methods.(ö‘àŠ
+D
+java:S1874=".Remove this use of "locale"; it is deprecated.(ò£ü
+E	java:S106C"+Replace this use of System.out by a logger.(Õ÷×íÿÿÿÿÿ
+<	java:S131Y""Add a default case to this switch.(òÍãÁşÿÿÿÿ
+V
+java:S1854z";Remove this useless assignment to local variable "metrics".(²ö÷Çüÿÿÿÿ
+U
+java:S1854y":Remove this useless assignment to local variable "assets".(àäºæÿÿÿÿÿ
+F
+java:S1481y"+Remove this unused "assets" local variable.(àäºæÿÿÿÿÿ
+G
+java:S1481z",Remove this unused "metrics" local variable.(²ö÷Çüÿÿÿÿ
+W
+java:S1874";Remove this use of "updateConfiguration"; it is deprecated.(˜•µÊûÿÿÿÿ
+a
+java:S1874‰"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Ö‰ü¼
+?
+java:S1185‰"(Remove this method to simply inherit it.(Ö‰ü¼
+P
+java:S1874Š"9Remove this use of "onActivityCreated"; it is deprecated.(€…É’
+W	java:S125‘"<This block of commented-out lines of code should be removed.(Àµ®ãüÿÿÿÿ
+J
+java:S1068'"4Remove this unused "isInitialization" private field.(Ç÷¯Ï

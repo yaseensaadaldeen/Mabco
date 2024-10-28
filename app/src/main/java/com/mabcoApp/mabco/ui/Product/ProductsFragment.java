@@ -6,17 +6,16 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.Layout;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -27,6 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.mabcoApp.mabco.Adapters.CategoryProductsAdapter;
+import com.mabcoApp.mabco.Classes.Product;
 import com.mabcoApp.mabco.Classes.ShoppingCart;
 import com.mabcoApp.mabco.R;
 import com.mabcoApp.mabco.databinding.FragmentProductsBinding;
@@ -39,14 +39,17 @@ public class ProductsFragment extends Fragment {
     SparkButton shopping_cart_btn;
     NavController navController;
     int shoppingcartItems;
-    EditText Edtxt_search;
-    FloatingActionButton btn_back;
+    SearchView Edtxt_search;
+    FloatingActionButton btn_back, compareButton;
     private TabLayout category_tab_layout;
     private ViewPager2 category_products_pager;
     CategoryProductsAdapter categoryProductsAdapter;
-    TextView txt_items_count;
+    TextView txt_items_count,compare_notify;
     String Destenation = "";
-    int selectedTab = 0 ;
+    int selectedTab = 0;
+    SharedPreferences FilterPreference;
+    double maxShelfPrice = 0;
+    double minShelfPrice = 0;
 
     public ProductsFragment() {
     }
@@ -59,8 +62,7 @@ public class ProductsFragment extends Fragment {
 
     @SuppressLint({"NotifyDataSetChanged", "SuspiciousIndentation"})
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         try {
             productsBinding = FragmentProductsBinding.inflate(inflater, container, false);
             context = getContext();
@@ -69,15 +71,23 @@ public class ProductsFragment extends Fragment {
             btn_back = productsBinding.backBtn;
             category_tab_layout = productsBinding.categoryTabLayout;
             category_products_pager = productsBinding.categoryProductsPager;
+            compareButton=productsBinding.compareButton;
             txt_items_count = productsBinding.txtItemsCount;
+            compare_notify=productsBinding.compareNotify;
+            FilterPreference = context.getSharedPreferences("FilterData", Context.MODE_PRIVATE);
             final NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
             navController = navHostFragment.getNavController();
-            if( ShoppingCart.getItemCount(context)==0)
-                txt_items_count.setVisibility(View.GONE);
-            else
-                txt_items_count.setVisibility(View.VISIBLE);
+            if (ShoppingCart.getItemCount(context) == 0) txt_items_count.setVisibility(View.GONE);
+            else txt_items_count.setVisibility(View.VISIBLE);
+            compareButton.setOnClickListener(v->{
+                navController.navigate(R.id.action_productsFragment_to_nav_compare);
+            });
+            hide();
 
-            txt_items_count.setText(String.valueOf( ShoppingCart.getItemCount(context)));
+            int productCount = Product.countComparedProducts(context);
+            boolean notify = productCount > 0;
+            compare_notify.setVisibility(notify ? View.VISIBLE : View.GONE);
+            txt_items_count.setText(String.valueOf(ShoppingCart.getItemCount(context)));
             btn_back.setOnClickListener(v -> getActivity().onBackPressed());
             categoryProductsAdapter = new CategoryProductsAdapter(this);
             category_products_pager.setAdapter(categoryProductsAdapter);
@@ -86,8 +96,7 @@ public class ProductsFragment extends Fragment {
             category_tab_layout.addTab(category_tab_layout.newTab().setText(getString(R.string.power)), 1);
             category_tab_layout.addTab(category_tab_layout.newTab().setText(getString(R.string.Mobile_acc)), 2);
             category_tab_layout.addTab(category_tab_layout.newTab().setText(getString(R.string.spare)), 3);
-            category_tab_layout.addTab(category_tab_layout.newTab().setText(getString(R.string.Gaming)), 4);
-            //cat_codes been set in the adapter manually due to tab position
+
 
             Resources standardResources = context.getResources();
             Configuration config = new Configuration(standardResources.getConfiguration());
@@ -129,25 +138,32 @@ public class ProductsFragment extends Fragment {
                 }
             });
             categoryProductsAdapter.notifyDataSetChanged();
-            Edtxt_search.addTextChangedListener(new TextWatcher() {
+            Edtxt_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                public boolean onQueryTextSubmit(String query) {
+                    // Save search and reload the history
 
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    categoryProductsAdapter.setSearchtext(String.valueOf(Edtxt_search.getText()));
+                    categoryProductsAdapter.setSearchtext(String.valueOf(Edtxt_search.getQuery()));
+                    category_products_pager.setAdapter(categoryProductsAdapter);
                     categoryProductsAdapter.notifyDataSetChanged();
                     category_products_pager.setCurrentItem(selectedTab);
+
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+
+                    if (newText.isEmpty()) {
+                        categoryProductsAdapter.setSearchtext(String.valueOf(Edtxt_search.getQuery()));
+                        category_products_pager.setAdapter(categoryProductsAdapter);
+                        categoryProductsAdapter.notifyDataSetChanged();
+                        category_products_pager.setCurrentItem(selectedTab);
+                    }
+                    return false;
                 }
             });
-            hide();
+            Toast.makeText(getContext(), getString(R.string.long_press_compare), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -159,20 +175,12 @@ public class ProductsFragment extends Fragment {
         if (actionBar != null) {
             actionBar.hide();
         }
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
         BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
         navBar.setVisibility(View.VISIBLE);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
-    public void show() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.show();
-        }
-        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
-        navBar.setVisibility(View.VISIBLE);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-    }
 
     private ActionBar getSupportActionBar() {
         ActionBar actionBar = null;
@@ -189,8 +197,8 @@ public class ProductsFragment extends Fragment {
         try {
             super.onDestroyView();
             NavDestination currentDestination = navController.getCurrentDestination();
-            if (currentDestination != null && ( currentDestination.getId() != R.id.productDetailsFragment)) {
-                show();
+            if (currentDestination != null && (currentDestination.getId() != R.id.productDetailsFragment)) {
+                //show();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -13,22 +13,29 @@
         android:layout_alignParentTop="true"
         android:paddingTop="10dp">
 
-        <EditText
-            android:id="@+id/category_products_search"
-            android:layout_width="170dp"
-            android:layout_height="35dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/searchCard"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
             android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/textedit_shape"
-            android:drawableEnd="@drawable/baseline_search_24"
-            android:fontFamily="@font/rafat"
-            android:hint="@string/search"
-            android:inputType="textFilter"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textAlignment="viewStart"
-            android:textSize="15sp" />
+            android:layout_toEndOf="@+id/cartFrame"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/category_products_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search keyword"
+                android:textColor="@color/black"
+                android:textColorHint="#B0B0C3" />
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/back_btn"
@@ -43,16 +50,57 @@
             android:contextClickable="true"
             android:src="@drawable/back"
             app:backgroundTint="@color/white"
-            app:elevation="1dp"
+            app:elevation="10dp"
             app:fabSize="mini"
             app:tint="@color/colorPrimary" />
+
+        <FrameLayout
+            android:id="@+id/compare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_toEndOf="@+id/back_btn">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/compareButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="#F4F4F4"
+                    android:contextClickable="true"
+                    android:src="@drawable/baseline_compare_arrows_24"
+                    app:backgroundTint="@color/white"
+                    app:elevation="10dp"
+                    app:fabSize="mini"
+                    app:maxImageSize="35dp"
+                    app:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/compare_notify"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="47dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/notification_circle"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/cartFrame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/back_btn"
-            android:layout_toStartOf="@+id/category_products_search">
+            android:layout_toEndOf="@+id/compare">
 
             <RelativeLayout
                 android:id="@+id/cartRelativeLayout"
@@ -87,9 +135,12 @@
                         android:textColor="@color/white"
                         android:textSize="11sp"
                         android:textStyle="bold" />
+
                 </com.varunest.sparkbutton.SparkButton>
             </RelativeLayout>
         </FrameLayout>
+
+
     </RelativeLayout>
 
     <LinearLayout

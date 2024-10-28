@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,119 +8,125 @@
     tools:context=".ui.ShoppingCart.ShoppingCartFragment">
 
     <ScrollView
-        android:layout_alignParentTop="true"
+        android:id="@+id/scrollView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/Submit_Purchase_Order">
+        android:layout_above="@+id/relativeLayout"
+        android:layout_alignParentTop="true">
+
         <LinearLayout
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-    <TextView
 
-        android:id="@+id/cart_hdr"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:fontFamily="@font/rafat"
-        android:padding="15dp"
-        android:text="@string/title_activity_my_cart"
-        android:textAlignment="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"/>
+            <TextView
 
-    <LinearLayout
-        android:id="@+id/cart_itms"
-        android:layout_below="@+id/cart_hdr"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_weight="0.5"
-        android:background="#F4F4F4"
-        android:orientation="vertical">
+                android:id="@+id/cart_hdr"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:fontFamily="@font/rafat"
+                android:padding="15dp"
+                android:text="@string/title_activity_my_cart"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ShoppingcartItemsRecycle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_margin="10dp"
-            android:layout_marginTop="7dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/shoppingcart_product_item" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/cart_itms"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/cart_hdr"
+                android:layout_weight="0.5"
+                android:background="#F4F4F4"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ShoppingcartItemsRecycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="7dp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/shoppingcart_product_item" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="180dp"
+        android:layout_above="@+id/Submit_Purchase_Order"
         android:layout_weight="1"
-        android:layout_below="@+id/cart_itms"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/payment_details_hdr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="viewStart"
-            android:text="@string/payment_details"
             android:fontFamily="@font/rafat"
             android:padding="15dp"
-            android:textStyle="bold"
+            android:text="@string/payment_details"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_total_hdr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/total_price"
+            android:layout_below="@+id/payment_details_hdr"
             android:fontFamily="@font/rafat"
             android:padding="15dp"
-            android:textStyle="bold"
+            android:text="@string/total_price"
             android:textColor="@color/black"
             android:textSize="15dp"
-            android:layout_below="@+id/payment_details_hdr"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_total_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0000SP"
+            android:layout_below="@+id/payment_details_hdr"
+            android:layout_alignParentEnd="true"
             android:fontFamily="@font/rafat"
             android:padding="15dp"
-            android:layout_alignParentEnd="true"
-            android:textStyle="bold"
+            android:text="0000SP"
             android:textColor="@color/black"
             android:textSize="18dp"
-            android:layout_below="@+id/payment_details_hdr"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/total_discount_hdr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/discount"
+            android:layout_below="@+id/txt_total_hdr"
             android:fontFamily="@font/rafat"
             android:padding="15dp"
-            android:textStyle="bold"
+            android:text="@string/discount"
             android:textColor="@color/black"
             android:textSize="15dp"
-            android:layout_below="@+id/txt_total_hdr" />
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/total_discount_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0000SP"
+            android:layout_below="@+id/txt_total_hdr"
+            android:layout_alignParentEnd="true"
             android:fontFamily="@font/rafat"
             android:padding="15dp"
-            android:textStyle="bold"
+            android:text="0000SP"
             android:textColor="#17AD00"
-            android:layout_alignParentEnd="true"
             android:textSize="18dp"
-            android:layout_below="@+id/txt_total_hdr" />
+            android:textStyle="bold" />
     </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
     <LinearLayout
         android:id="@+id/Submit_Purchase_Order"
         android:layout_width="match_parent"
@@ -182,4 +188,4 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
-    </RelativeLayout>
+</RelativeLayout>

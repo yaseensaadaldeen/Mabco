@@ -31,19 +31,6 @@
                 android:textColor="@color/colorPrimaryDarkNoAlpha"
                 android:textSize="22sp" />
 
-            <Button
-                android:id="@+id/edit_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:drawableEnd="@drawable/baseline_manage_accounts_24"
-                android:drawableTint="@color/white"
-                android:fontFamily="@font/rafat"
-                android:text="@string/edit_info"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView

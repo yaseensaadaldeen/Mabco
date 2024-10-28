@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lighGray"
+    tools:context=".ui.Product.SearchFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="80dp"
+        android:layout_height="match_parent">
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="Back"
+            android:src="@drawable/baseline_arrow_back_ios_new_24"
+            app:layout_constraintEnd_toStartOf="@+id/searchCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorPrimaryDarkNoAlpha" />
+
+        <!-- Search Bar -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/searchCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_toStartOf="@+id/FilterButton"
+            android:layout_toEndOf="@+id/backButton"
+            android:layout_marginEnd="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/backButton"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search keyword"
+                android:textColor="@color/black"
+                android:textColorHint="#B0B0C3" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/FilterButton"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Filter"
+            android:src="@drawable/round_filter_list_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/searchCard"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorPrimaryDarkNoAlpha" />
+        <!-- Search History -->
+        <LinearLayout
+            android:id="@+id/searchHistoryContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchCard"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchCard">
+
+            <TextView
+                android:id="@+id/recentSearchLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/recent_searches"
+                android:textColor="@color/black"
+                android:fontFamily="@font/rafat"
+                android:textSize="16sp" />
+
+            <!-- List of saved searches will be displayed dynamically here -->
+            <LinearLayout
+                android:id="@+id/savedSearchesContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="16dp" />
+
+        </LinearLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/search_shimmer_view_containers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchHistoryContainer">
+
+            <!-- Your existing product item layout -->
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/mobile_item_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="5dp"
+                android:configChanges="orientation|screenSize|keyboardHidden"
+                android:elevation="5dp"
+                android:minWidth="180dp"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmering_offer_product_item" />
+
+                    <include layout="@layout/shimmering_offer_product_item" />
+
+                    <include layout="@layout/shimmering_offer_product_item" />
+
+                    <include layout="@layout/shimmering_offer_product_item" />
+
+                    <include layout="@layout/shimmering_offer_product_item" />
+
+                    <include layout="@layout/shimmering_offer_product_item" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_shimmer_view_containers"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="7dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/product_item" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mabcoApp.mabco.Classes.Product;
 import com.mabcoApp.mabco.MainActivity;
 import com.mabcoApp.mabco.R;
@@ -34,6 +35,7 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
     public MainActivity mainActivity;
     String local;
     public static String lang;
+    String fragment_name = "ProductsFragment";
 
     public ProductsHomeAdapter(Context context, ArrayList<Product> products, MainActivity mainActivity, String lang) {
         this.context = context;
@@ -42,17 +44,32 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
         this.lang = lang;
         int productCount = Product.countComparedProducts(context);
         boolean notify = productCount > 0;
-        if (mainActivity instanceof MainActivity)
-            mainActivity.AddToolbarNotification(productCount, R.id.nav_compare, notify);
+
+        //  if (mainActivity != null)
+        //  mainActivity.AddToolbarNotification(productCount, R.id.nav_compare, notify);
+    }
+
+    public ProductsHomeAdapter(Context context, ArrayList<Product> products, MainActivity mainActivity, String lang, String fragment_name) {
+        this.context = context;
+        this.products = products;
+        this.mainActivity = mainActivity;
+        this.lang = lang;
+        int productCount = Product.countComparedProducts(context);
+        boolean notify = productCount > 0;
+        this.fragment_name = fragment_name;
+
+        //  if (mainActivity != null)
+        //  mainActivity.AddToolbarNotification(productCount, R.id.nav_compare, notify);
     }
 
     @NonNull
     @Override
     public ProductsHomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.product_item_home,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.product_item_home, parent, false);
 
         return new ViewHolder(view);
     }
+
     private ProductsHomeAdapter.OnClickListener onClickListener;
     private int selectedPos = RecyclerView.NO_POSITION;
     private int selectedItem;
@@ -72,9 +89,26 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
             Activity activity = unwrap(context);
             activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
             Product product = products.get(position);
+            if (!fragment_name.equals("ProductsFragment")) {
+                // Get the screen width
+
+                int screenWidth = displaymetrics.widthPixels;
+
+                // Define the number of columns (span count)
+                int spanCount = context.getResources().getInteger(R.integer.grid_column_count);
+
+                // Calculate the item width based on the screen width and span count
+                float itemWidthPercentage = 0.5f / spanCount; // Calculate percentage based on span count
+                int itemWidth = (int) (screenWidth * itemWidthPercentage); // Calculate item width
+
+                // Set the item width dynamically
+                ViewGroup.LayoutParams layoutParams = holder.product_card.getLayoutParams();
+                layoutParams.width = itemWidth;
+                holder.product_card.setLayoutParams(layoutParams);
+            }
             if (!product.getStk_code().isEmpty()) {
-                holder.product=product;
-                Glide.with(context).load(product.getProduct_image()).fitCenter().into(holder.product_image);
+                holder.product = product;
+                Glide.with(context).load(product.getProduct_image()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(holder.product_image);
                 holder.product_name.setText(product.getProduct_title());
                 holder.product_desc.setText(product.getStk_desc());
                 holder.product_price.setText(formatPrice(product.getShelf_price()));
@@ -85,10 +119,11 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
                 } else if (product.getTag().equals("best")) {
                     holder.product_tag.setTextColor(Color.WHITE);
                     holder.product_tag.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
-                } else if (!product.getDiscount().equals("0") && !product.getDiscount().equals(".00") && !product.getDiscount().equals("")) {
+                } else if (!product.getDiscount().equals("0") && !product.getDiscount().equals(".00") && !product.getDiscount().equals("")&& !product.getTag().equals("")) {
                     holder.product_tag.setTextColor(Color.WHITE);
                     holder.product_tag.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#af0491cf")));
-                } else holder.product_tag.setVisibility(View.GONE);
+                } else
+                    holder.product_tag.setVisibility(View.GONE);
 
 
                 if (!product.getDiscount().equals("0") && !product.getDiscount().equals(".00") && !product.getDiscount().equals("")) {
@@ -147,13 +182,14 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
 
     @Override
     public int getItemCount() {
-        return products.size();
+        if (products != null) return products.size();
+        else return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener, View.OnLongClickListener {
         TextView product_name, product_desc, product_price, product_disc, product_tag;
         ImageView product_image;
-        CardView compare_Card;
+        CardView compare_Card, product_card;
         boolean isLongPressed = false;
         Product product;
 
@@ -166,6 +202,7 @@ public class ProductsHomeAdapter extends RecyclerView.Adapter<ProductsHomeAdapte
             product_disc = itemView.findViewById(R.id.product_disc);
             product_tag = itemView.findViewById(R.id.product_tag);
             compare_Card = itemView.findViewById(R.id.compare_Card);
+            product_card = itemView.findViewById(R.id.product_card);
             itemView.setOnLongClickListener(this);
             itemView.setOnTouchListener(this);
         }

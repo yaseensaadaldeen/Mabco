@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Product implements Parcelable {
     String stk_code, stk_desc, shelf_price, discount, coupon, tag, product_title, product_image;
@@ -302,6 +303,38 @@ public class Product implements Parcelable {
         }
 
         return false;
+    }
+    public static ArrayList<Product> filterProducts(ArrayList<Product> products, double minPrice, double maxPrice, List<CategoryModel> categories) {
+        ArrayList<Product> filteredProducts = new ArrayList<>();
+
+        for (Product product : products) {
+            // Parse the shelf price from String to double
+            double shelfPrice = Double.parseDouble(product.getShelf_price());
+
+            // Check if the product falls within the price range
+            if (shelfPrice >= minPrice && shelfPrice <= maxPrice) {
+                // Check if the product's category matches at least one category from the list
+                if (product.getCategoryModel() != null) {
+                    String productCategoryCode = product.getCategoryModel().getCat_code();
+
+                    if (categories.size() > 0) {
+                        // Iterate over the selected CategoryModel objects
+                        for (CategoryModel category : categories) {
+                            // Check if the category code matches
+                            if (productCategoryCode.equals(category.getCat_code())) {
+                                filteredProducts.add(product);
+                                break; // Exit the loop if a match is found
+                            }
+                        }
+                    } else {
+                        // If no categories are provided, include the product
+                        filteredProducts.add(product);
+                    }
+                }
+            }
+        }
+
+        return filteredProducts;
     }
 
 }

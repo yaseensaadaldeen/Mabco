@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mabcoApp.mabco.Classes.ProductColor;
 import com.mabcoApp.mabco.R;
 import com.mabcoApp.mabco.SingletonSession;
@@ -94,14 +95,14 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
             viewHolder.textViewDescription.setTextSize(16);
             viewHolder.textViewDescription.setTextColor(Color.WHITE);
             viewHolder.imageViewBackground.setScaleType(ImageView.ScaleType.FIT_XY);
-            Glide.with(viewHolder.itemView.getContext()).load(slide_image_link).into(viewHolder.imageViewBackground);
+            Glide.with(viewHolder.itemView.getContext()).load(slide_image_link).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.imageViewBackground);
         }
         else if (ImagesURL .size() >0) {
 
           //  viewHolder.textViewDescription.setText(title);
             viewHolder.textViewDescription.setTextSize(16);
             viewHolder.textViewDescription.setTextColor(Color.WHITE);
-            Glide.with(viewHolder.itemView.getContext()).load(ImagesURL.get(position)).centerInside().into(viewHolder.imageViewBackground);
+            Glide.with(viewHolder.itemView.getContext()).load(ImagesURL.get(position)).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).centerInside().into(viewHolder.imageViewBackground);
         }
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

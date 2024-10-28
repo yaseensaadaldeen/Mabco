@@ -1,0 +1,55 @@
+
+f	java:S117b"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°Š€Å
+k	java:S117z"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡‘¹Åþÿÿÿÿ
+k	java:S117z"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡‘¹Åþÿÿÿÿ
+k	java:S117z"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡‘¹Åþÿÿÿÿ
+g	java:S117†"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÜøÁÒ
+g	java:S117•"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( ÍÅ
+g	java:S117•"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( ÍÅ
+D
+java:S1604Œ"(Make this anonymous inner class a lambda(ÃáÜ¤üÿÿÿÿ
+>
+java:S1604­"(Make this anonymous inner class a lambda(–§º
+n
+java:S11049"XMake requestQueue a static final constant or non-public and provide accessors if needed.(ÚÞØ†
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ûì„Êùÿÿÿÿ
+}	java:S1164"cRename this field "ShoppingcartItemsRecycle" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯³¤Æýÿÿÿÿ
+p	java:S1166"VRename this field "Total_price" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(š½¯ùÿÿÿÿ
+r	java:S1166"XRename this field "TotalDiscount" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(š½¯ùÿÿÿÿ
+o	java:S1166"URename this field "FinalPrice" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(š½¯ùÿÿÿÿ
+u	java:S1167"[Rename this field "ShoppingcartData" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Óß€¦ûÿÿÿÿ
+m	java:S1167"SRename this field "Userdata" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Óß€¦ûÿÿÿÿ
+~	java:S1168"dRename this field "Submit_Purchase_Order_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»º²‡þÿÿÿÿ
+e
+java:S16596"JDeclare "TotalDiscount" and all following declarations on a separate line.(š½¯ùÿÿÿÿ
+A
+java:S16597"&Declare "Userdata" on a separate line.(Óß€¦ûÿÿÿÿ
+>
+java:S1185D"(Remove this method to simply inherit it.(ßìê¯
+V
+java:S1854W";Remove this useless assignment to local variable "metrics".(²ö÷Çüÿÿÿÿ
+U
+java:S1854V":Remove this useless assignment to local variable "assets".(àäºæÿÿÿÿÿ
+F
+java:S1481V"+Remove this unused "assets" local variable.(àäºæÿÿÿÿÿ
+G
+java:S1481W",Remove this unused "metrics" local variable.(²ö÷Çüÿÿÿÿ
+I
+java:S1874^"3Remove this use of "getDrawable"; it is deprecated.(³ëíë
+>	java:S108c")Either remove or fill this block of code.(‰Ðàà
+h	java:S100r"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(é¦ùßøÿÿÿÿ
+h	java:S100z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡‘¹Åþÿÿÿÿ
+i	java:S100„"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒ€Îøüÿÿÿÿ
+n
+java:S3776„"RRefactor this method to reduce its Cognitive Complexity from 27 to the 15 allowed.(ƒ€Îøüÿÿÿÿ
+X
+java:S1854–"<Remove this useless assignment to local variable "question".(ëö’úÿÿÿÿ
+Z
+java:S1659•"CDeclare "coupon" and all following declarations on a separate line.( ÍÅ
+I
+java:S1481–"-Remove this unused "question" local variable.(ëö’úÿÿÿÿ
+
+java:S1186®"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(£µ¢›ÿÿÿÿÿ
+?	java:S108¼")Either remove or fill this block of code.(å¥ž‡
+?
+java:S1185ß"(Remove this method to simply inherit it.(±íòÑ

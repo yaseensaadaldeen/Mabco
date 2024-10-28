@@ -28,7 +28,7 @@
         android:id="@+id/feedbackInput"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:background="@drawable/feedback_input_background"
+        android:background="@drawable/input_background"
         android:fontFamily="@font/rafat"
         android:gravity="top"
         android:layout_marginTop="20dp"

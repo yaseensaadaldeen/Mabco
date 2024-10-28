@@ -54,7 +54,6 @@ public class FAQ_Adapter extends RecyclerView.Adapter<FAQ_Adapter.ItemViewHolder
         holder.question.setText(question.get(position));
         NestedAdapter adapter = new NestedAdapter(list);
         holder.nestedRecyclerView.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
-        holder.nestedRecyclerView.setHasFixedSize(true);
         holder.nestedRecyclerView.setAdapter(adapter);
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -28,30 +28,25 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".ui.SplashActivity"
+            android:theme="@style/Theme.Mabco.NoActionBar"
+            android:configChanges="orientation|screenSize"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Mabco.NoActionBar"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.Signin.SignUpFragment"
-            android:windowSoftInputMode="adjustPan" >
 
-            <!-- ... other activity configurations ... -->
-        </activity>
-        <activity
-            android:name=".ui.Product.ProductDetailsFragment"
-            android:windowSoftInputMode="adjustResize" >
-
-            <!-- ... other activity configurations ... -->
-        </activity>
         <service
             android:name=".Firebase.MessagingService"
             android:exported="false">
@@ -65,9 +60,9 @@
 
         <service
             android:name=".Firebase.InstanceIDService"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <meta-data

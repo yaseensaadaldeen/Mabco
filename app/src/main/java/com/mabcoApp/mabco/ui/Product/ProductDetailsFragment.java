@@ -3,7 +3,6 @@ package com.mabcoApp.mabco.ui.Product;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -12,7 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Layout;
-import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -136,7 +136,6 @@ public class ProductDetailsFragment extends Fragment {
                     ProductDetailsFragmentArgs args = ProductDetailsFragmentArgs.fromBundle(getArguments());
                     product = args.getProduct();
                 }
-
             }
             else {
                 ProductDetailsFragmentArgs args = ProductDetailsFragmentArgs.fromBundle(getArguments());
@@ -155,10 +154,11 @@ public class ProductDetailsFragment extends Fragment {
           //  product = args.getProduct();
             prod_det = Detailesbinding.prodDet;
             backbtn = Detailesbinding.backBtn;
-            backbtn.setOnClickListener(v -> getActivity().onBackPressed());
+            backbtn.setOnClickListener(v -> requireActivity().onBackPressed());
             add_to_shopping_btn = Detailesbinding.addToShoppingBtn;
             //navController = Navigation.findNavController(view);
-            final NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
+            final NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
+            assert navHostFragment != null;
             navController = navHostFragment.getNavController();
 
             product_main_name = Detailesbinding.productMainName;
@@ -181,8 +181,6 @@ public class ProductDetailsFragment extends Fragment {
             if (product.getCategoryModel().getCat_code().equals("09"))
                 tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.FAQ)), 1);
             Resources standardResources = context.getResources();
-            AssetManager assets = standardResources.getAssets();
-            DisplayMetrics metrics = standardResources.getDisplayMetrics();
             Configuration config = new Configuration(standardResources.getConfiguration());
             if (config.getLayoutDirection() == Layout.DIR_LEFT_TO_RIGHT) {
                 backbtn.setImageResource(R.drawable.back_rtl);
@@ -193,12 +191,8 @@ public class ProductDetailsFragment extends Fragment {
             product_image = Detailesbinding.productImage;
             product_name.setText(product.getProduct_title());
             product_price.setText(formatPrice(product.getShelf_price(),local));
-            //Glide.with(context).load(R.drawable.loading).fitCenter().into(product_image);
             ProductImageViewContainer  =Detailesbinding.ProductImageViewContainer;
             ProductImageViewContainer.startShimmer();
-//            product_image.setHorizontalFadingEdgeEnabled(true);
-//            product_image.setVerticalFadingEdgeEnabled(true);
-//            product_image.setFadingEdgeLength(40);
             if (!product.getDiscount().equals("0")) {
                 product_disc.setVisibility(View.VISIBLE);
                 if (product.getCoupon().equals("0")) {
@@ -249,9 +243,13 @@ public class ProductDetailsFragment extends Fragment {
                 }
             });
         } catch (Exception e) {
+            Log.d("errorporductdetailes", Objects.requireNonNull(e.getMessage()));
+
             Toast.makeText(getContext(), "Error: Product not found!", Toast.LENGTH_SHORT).show();
+
+            // navController.navigate(R.id.action_productDetailsFragment_to_nav_home);
             // Navigate back
-            requireActivity().onBackPressed();
+            // requireActivity().onBackPressed();
             e.printStackTrace();
         }
         return Detailesbinding.getRoot();
@@ -315,6 +313,15 @@ public class ProductDetailsFragment extends Fragment {
                     //..add other headers
                     return params;
                 }
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    // Cache the response
+                    if (response.headers.get("Cache-Control") == null) {
+                        response.headers.put("Cache-Control", "max-age=1800"); // Cache for 1 hour
+                    }
+                    return super.parseNetworkResponse(response);
+                }
+
             };
             try {
                 jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -503,8 +510,8 @@ public class ProductDetailsFragment extends Fragment {
             actionBar.hide();
         }
         BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_nav_view);
-        navBar.setVisibility(View.INVISIBLE);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        if (navBar != null) navBar.setVisibility(View.INVISIBLE);
+        //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
     public void show() {

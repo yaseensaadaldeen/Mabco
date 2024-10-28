@@ -25,7 +25,9 @@ public class InstanceIDService extends FirebaseMessagingService {
     public InstanceIDService(MainActivity activity) {
         this.mainActivity = activity;
     }
-
+    public InstanceIDService() {
+        super();
+    }
 
     public static String returnMeFCMtoken(Context context) {
         SharedPreferences Token = context.getSharedPreferences("Token", Context.MODE_PRIVATE);

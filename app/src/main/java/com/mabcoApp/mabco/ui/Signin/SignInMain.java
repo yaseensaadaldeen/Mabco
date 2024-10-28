@@ -66,7 +66,7 @@ public class SignInMain extends Fragment {
         back_btn.setOnClickListener(v -> {
             final NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
             NavController navController = navHostFragment.getNavController();
-            navController.popBackStack();
+            navController.navigate(R.id.nav_home);;
         });
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.Login)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.signupheader)));

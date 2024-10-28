@@ -56,8 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-
-                android:background="@color/shimmerColor"
+                android:background="@color/transparent"
                 android:layout_toEndOf="@+id/image_card">
 
                 <TextView
@@ -69,7 +68,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:fontFamily="@font/rafat"
-                    android:background="@color/shimmerColor"
+                    android:background="@color/transparent"
                     android:lines="1"
                     android:maxHeight="30dp"
                     android:textAlignment="textStart"
@@ -78,17 +77,17 @@
                     android:textStyle="bold" />
 
 
-
                 <TextView
                     android:id="@+id/product_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/product_name"
-                    android:layout_marginStart="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="-24dp"
                     android:layout_marginEnd="5dp"
+                    android:background="@color/shimmerColor"
                     android:fontFamily="@font/rafat"
                     android:maxLength="18"
-
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -105,31 +104,32 @@
 
                 <TextView
                     android:id="@+id/product_disc"
-                    android:layout_width="match_parent"
+                    android:layout_width="258dp"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/product_price"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:fontFamily="@font/rafat"
+                    android:layout_marginBottom="9dp"
                     android:background="@color/shimmerColor"
+                    android:fontFamily="@font/rafat"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/product_price"
-                    android:layout_width="match_parent"
+                    android:id="@+id/product_disc2"
+                    android:layout_width="257dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:fontFamily="@font/rafat"
+                    android:layout_above="@+id/product_disc"
                     android:layout_marginStart="5dp"
-
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="9dp"
                     android:background="@color/shimmerColor"
-
+                    android:fontFamily="@font/rafat"
                     android:textAlignment="center"
-                    android:layout_alignParentBottom="true"
                     android:textColor="@color/black"
-                    android:textSize="22dp" />
+                    android:textSize="18sp" />
+
             </RelativeLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

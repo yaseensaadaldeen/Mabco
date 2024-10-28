@@ -10,6 +10,10 @@
         android:id="@+id/productsFragment"
         android:icon="@drawable/products"
         android:title="@string/title_activity_products" />
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/baseline_search_24"
+        android:title="@string/search" />
 
     <item
         android:id="@+id/navigation_showrooms"

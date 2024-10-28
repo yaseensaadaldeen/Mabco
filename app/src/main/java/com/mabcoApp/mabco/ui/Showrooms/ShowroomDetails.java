@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.mabcoApp.mabco.Classes.Showroom;
 import com.mabcoApp.mabco.R;
@@ -51,7 +52,7 @@ public class ShowroomDetails extends BottomSheetDialogFragment {
         address.setText(showroom.getLoc_desc());
         Glide.with(context)
                 .load( showroom.getImage_link())
-                .into(showroom_image);
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).into(showroom_image);
         return view;
     }
 }

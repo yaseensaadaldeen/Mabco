@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.Product.OfferProductDialog">
+    tools:context=".ui.Offers.OfferProductDialog">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

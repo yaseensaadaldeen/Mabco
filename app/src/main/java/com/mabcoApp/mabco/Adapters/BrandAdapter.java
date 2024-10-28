@@ -46,10 +46,10 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
         Brand brand = brands.get(position);
         Picasso.get().load(brand.getBrand_image()).into(holder.brandImageView);
         holder.itemView.setSelected(selectedPos == position);
-        if (selectedItem == position) {
-            holder.brandImageView.setBackgroundColor(context.getResources().getColor(R.color.no1));
-        } else
-            holder.brandImageView.setBackgroundColor(context.getResources().getColor(R.color.no2));
+//        if (selectedItem == position) {
+//            holder.brandImageView.setBackgroundColor(context.getResources().getColor(R.color.no1));
+//        } else
+//            holder.brandImageView.setBackgroundColor(context.getResources().getColor(R.color.no2));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

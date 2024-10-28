@@ -1,0 +1,117 @@
+
+a	java:S112ë"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112ø"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112†"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+l
+java:S1192¬"UDefine a constant instead of duplicating this literal "something went wrong" 3 times.(˜ÜÍÑ
+g	java:S117’"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ıçğ¿
+g	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½îÓÁ
+g	java:S117Ğ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±úŸÍ
+l	java:S117‚"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ü¨Ôõıÿÿÿÿ
+g	java:S117“"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ıÁ¼•
+g	java:S117Å"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ññÇÁ
+g	java:S117Å"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ññÇÁ
+l	java:S117é"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óğÀÍıÿÿÿÿ
+l	java:S117¡"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬‘Ã¨úÿÿÿÿ
+l	java:S117×"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆ¶ éøÿÿÿÿ
+C
+java:S1604|"(Make this anonymous inner class a lambda(ÃáÜ¤üÿÿÿÿ
+D
+java:S1604¨"(Make this anonymous inner class a lambda(´¸©”üÿÿÿÿ
+D
+java:S1604Æ"(Make this anonymous inner class a lambda(ÃáÜ¤üÿÿÿÿ
+D
+java:S1604ß"(Make this anonymous inner class a lambda(´¸©”üÿÿÿÿ
+D
+java:S1604à"(Make this anonymous inner class a lambda(§ùëÓûÿÿÿÿ
+?
+java:S1604ï"(Make this anonymous inner class a lambda(É³Ñ
+?
+java:S1604ü"(Make this anonymous inner class a lambda(Ôã½
+?
+java:S1604›"(Make this anonymous inner class a lambda(ª¤Ê„
+?
+java:S1604¤"(Make this anonymous inner class a lambda(ĞŠ¿…
+n
+java:S11041"XMake requestQueue a static final constant or non-public and provide accessors if needed.(ÚŞØ†
+C
+java:S5411w"(Use a primitive boolean expression here.(ğäÚäüÿÿÿÿ
+D
+java:S5411Á"(Use a primitive boolean expression here.(ğäÚäüÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Åìïºüÿÿÿÿ
+m	java:S1160"XRename this field "SignUpbinding" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£Ä°ê
+o	java:S1164"ZRename this field "EdTxt_user_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œÿª†
+n	java:S1164"YRename this field "EdTxt_password" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œÿª†
+v	java:S1164"aRename this field "EdTxt_confirm_password" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œÿª†
+n	java:S1164"YRename this field "EdTxt_phone_no" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œÿª†
+w	java:S1164"bRename this field "EdTxt_verification_Code" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œÿª†
+s	java:S1165"^Rename this field "txt_user_name_error" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡ó³
+r	java:S1165"]Rename this field "txt_password_error" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡ó³
+z	java:S1165"eRename this field "txt_confirm_password_error" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡ó³
+r	java:S1165"]Rename this field "txt_phone_no_error" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡ó³
+j	java:S1166"URename this field "btn_Signup" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›è´Ğ
+h	java:S1166"SRename this field "btn_next" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›è´Ğ
+h	java:S1166"SRename this field "btn_back" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›è´Ğ
+~	java:S1167"dRename this field "signup_phone_verification" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯¾¤àüÿÿÿÿ
+q	java:S1167"WRename this field "SignUpLayout" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯¾¤àüÿÿÿÿ
+n	java:S1168"TRename this field "txt_Timer" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾íú§úÿÿÿÿ
+m	java:S116:"XRename this field "error_phoneRV" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆ¦¯·
+q	java:S116:"\Rename this field "error_user_nameRV" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆ¦¯·
+p	java:S116:"[Rename this field "error_passwordRV" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆ¦¯·
+x	java:S116:"cRename this field "error_confirm_passwordRV" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆ¦¯·
+n	java:S116="TRename this field "PageValid" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æ‡Óïùÿÿÿÿ
+œ
+java:S1186?"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ŸäÚâùÿÿÿÿ
+a
+java:S16594"KDeclare "EdTxt_password" and all following declarations on a separate line.(œÿª†
+e
+java:S16595"ODeclare "txt_password_error" and all following declarations on a separate line.(‡ó³
+[
+java:S16596"EDeclare "btn_next" and all following declarations on a separate line.(›è´Ğ
+E
+java:S16597"*Declare "SignUpLayout" on a separate line.(¯¾¤àüÿÿÿÿ
+d
+java:S1659:"NDeclare "error_user_nameRV" and all following declarations on a separate line.(ˆ¦¯·
+>
+java:S1185C"(Remove this method to simply inherit it.(ßìê¯
+V	java:S125_"<This block of commented-out lines of code should be removed.(ÄŠ«…ùÿÿÿÿ
+c	java:S100o"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸Ö³¸
+h
+java:S3776o"RRefactor this method to reduce its Cognitive Complexity from 41 to the 15 allowed.(¸Ö³¸
+d	java:S100À"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜ä·Õ
+i
+java:S3776À"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(˜ä·Õ
+U
+java:S1854Ğ">Remove this useless assignment to local variable "custm_Code".(±úŸÍ
+F
+java:S1481Ğ"/Remove this unused "custm_Code" local variable.(±úŸÍ
+d	java:S100ö"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„Ò¯˜
+d	java:S100Ä"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ‡
+\
+java:S1659Å"EDeclare "password" and all following declarations on a separate line.(ññÇÁ
+i
+java:S3776å"RRefactor this method to reduce its Cognitive Complexity from 25 to the 15 allowed.(¿´ÍÒ
+˜
+java:S1186ö"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(«û³±
+˜
+java:S1186’"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(«û³±
+_
+java:S1854…"CRemove this useless assignment to local variable "confirmpassword".(„ëöëüÿÿÿÿ
+P
+java:S1481…"4Remove this unused "confirmpassword" local variable.(„ëöëüÿÿÿÿ
+˜
+java:S1186©"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(«û³±
+˜
+java:S1186¶"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(á¬‡İ
+l
+java:S3252Œ"PUse static access with "android.view.ViewGroup$LayoutParams" for "MATCH_PARENT".(ÒÖœªşÿÿÿÿ
+V
+java:S1172–":Remove this unused method parameter "remainingTimeMillis".(¨‹×¥ıÿÿÿÿ
+R	java:S125™"<This block of commented-out lines of code should be removed.(²·œ
+d	java:S100¬"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÊÄáØ
+S
+java:S6353»"<Use concise character class syntax '\\d' instead of '[0-9]'.(ÇûÅ²
+G
+java:S10680"1Remove this unused "SignUpbinding" private field.(£Ä°ê
+F
+java:S1144¿"/Remove this unused private "formatTime" method.(ˆÕó

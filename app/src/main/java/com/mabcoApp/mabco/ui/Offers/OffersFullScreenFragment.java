@@ -26,11 +26,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.mmin18.widget.RealtimeBlurView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mabcoApp.mabco.Classes.Offer;
 import com.mabcoApp.mabco.R;
-import com.mabcoApp.mabco.ui.Product.OfferProductDialog;
 
 import java.util.List;
 
@@ -200,7 +200,7 @@ public class OffersFullScreenFragment extends Fragment {
         if (index < 0 || index >= offers.size()) return;
 
         Offer offer = offers.get(index);
-        Glide.with(this).load("https://" + offer.getOffer_image_url()).into(storyImage);
+        Glide.with(this).load("https://" + offer.getOffer_image_url()).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL).into(storyImage);
         offer_Desc.setText(offer.getOffer_title());
         offer_Desc_card.setOnClickListener(v->{
             openDialog(offer);

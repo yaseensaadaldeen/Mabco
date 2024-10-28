@@ -17,9 +17,10 @@
     android:configChanges="orientation|screenSize|keyboardHidden">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/product"
-        android:layout_width="180dp"
+        android:id="@+id/product_card"
+        android:layout_width="0dp"
         android:layout_height="200dp"
+        android:layout_weight="1"
         android:background="@color/white"
         app:cardCornerRadius="7dp">
 

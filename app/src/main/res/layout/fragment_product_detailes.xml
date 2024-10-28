@@ -59,24 +59,13 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/pro_img"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:layout_weight="1.5"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="0dp"
                         app:cardPreventCornerOverlap="false">
-<!--                        <com.denzcoskun.imageslider.ImageSlider-->
-<!--                            android:id="@+id/product_images"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:forceHasOverlappingRendering="true"-->
-<!--                            app:iss_auto_cycle="false"-->
-<!--                            app:iss_corner_radius="7"-->
-<!--                            app:iss_delay="1000"-->
-<!--                            app:iss_error_image="@color/transparent"-->
-<!--                            app:iss_period="5000"-->
-<!--                            app:iss_placeholder="@color/transparent"-->
-<!--                            app:iss_title_background="@color/transparent" />-->
+
                         <com.facebook.shimmer.ShimmerFrameLayout
                             android:id="@+id/ProductImageViewContainer"
                             android:layout_width="match_parent"
@@ -115,6 +104,7 @@
                             android:id="@+id/product_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:maxHeight="200dp"
                             android:adjustViewBounds="true" />
                         <com.smarteist.autoimageslider.SliderView
                             android:id="@+id/product_images"
@@ -242,7 +232,8 @@
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="RtlCompat" />
                 </com.varunest.sparkbutton.SparkButton>
             </RelativeLayout>
         </FrameLayout>

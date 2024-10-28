@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_nav_home_to_compareFragment"
             app:destination="@id/nav_compare" />
+        <action
+            android:id="@+id/action_nav_home_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 
 
@@ -99,7 +102,7 @@
     </fragment>
     <dialog
         android:id="@+id/offerProductDialog"
-        android:name="com.mabcoApp.mabco.ui.Product.OfferProductDialog"
+        android:name="com.mabcoApp.mabco.ui.Offers.OfferProductDialog"
         tools:layout="@layout/offer_products_dialog">
         <action
             android:id="@+id/action_offerProductDialog_to_productDetailsFragment"
@@ -137,6 +140,9 @@
         <argument
             android:name="product"
             app:argType="com.mabcoApp.mabco.Classes.Product" />
+        <action
+            android:id="@+id/action_productsFragment_to_nav_compare"
+            app:destination="@id/nav_compare" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -273,6 +279,14 @@
         <action
             android:id="@+id/action_feedbackFragment_to_signInMain"
             app:destination="@id/signInMain" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.mabcoApp.mabco.ui.Product.SearchFragment"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
 
 </navigation>

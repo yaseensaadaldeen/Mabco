@@ -71,43 +71,6 @@
 
                         <include layout="@layout/shimmering_offer_hdr_item" />
 
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:spanCount="2">
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-                        <include layout="@layout/shimmering_offer_hdr_item" />
-
-
                     </LinearLayout>
 
                 </LinearLayout>

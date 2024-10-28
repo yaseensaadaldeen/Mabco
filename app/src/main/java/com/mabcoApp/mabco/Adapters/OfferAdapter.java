@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mabcoApp.mabco.Classes.Offer;
 import com.mabcoApp.mabco.R;
 
@@ -56,7 +57,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
             if (offers != null) {
                 Glide.with(context)
                         .load("https://" + offers.get(i).getOffer_image_url())
-                        .fitCenter().into(viewHolder.offer_image);
+                        .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.ALL) .fitCenter().into(viewHolder.offer_image);
                 //viewHolder.offer_image.setImageResource(offers.get(i).getOffer_image());
                 viewHolder.offer_desc.setText(offers.get(i).getOffer_title());
                 viewHolder.Offer = offers.get(i);
